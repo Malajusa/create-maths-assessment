@@ -1,0 +1,148 @@
+{
+  "questions": [
+    {
+      "id": "Q1",
+      "marks": 1,
+      "target_level": "D",
+      "curriculum_targets": [
+        "fixture-target"
+      ],
+      "primary_skill": "fixture-skill",
+      "student_prompt": "Fixture question 1",
+      "data": [],
+      "visual_spec": null,
+      "expected_solution": {
+        "answer": 1
+      },
+      "alternative_valid_methods": [],
+      "marking": [
+        {
+          "marks": 1,
+          "evidence": "fixture evidence"
+        }
+      ],
+      "misconceptions": [],
+      "depends_on": []
+    },
+    {
+      "id": "Q2",
+      "marks": 1,
+      "target_level": "D",
+      "curriculum_targets": [
+        "fixture-target"
+      ],
+      "primary_skill": "fixture-skill",
+      "student_prompt": "Fixture question 2",
+      "data": [],
+      "visual_spec": null,
+      "expected_solution": {
+        "answer": 2
+      },
+      "alternative_valid_methods": [],
+      "marking": [
+        {
+          "marks": 1,
+          "evidence": "fixture evidence"
+        }
+      ],
+      "misconceptions": [],
+      "depends_on": []
+    },
+    {
+      "id": "Q3",
+      "marks": 2,
+      "target_level": "C",
+      "curriculum_targets": [
+        "fixture-target"
+      ],
+      "primary_skill": "fixture-skill",
+      "student_prompt": "Fixture question 3",
+      "data": [],
+      "visual_spec": null,
+      "expected_solution": {
+        "answer": 3
+      },
+      "alternative_valid_methods": [],
+      "marking": [
+        {
+          "marks": 2,
+          "evidence": "fixture evidence"
+        }
+      ],
+      "misconceptions": [],
+      "depends_on": []
+    },
+    {
+      "id": "Q4",
+      "marks": 2,
+      "target_level": "C",
+      "curriculum_targets": [
+        "fixture-target"
+      ],
+      "primary_skill": "fixture-skill",
+      "student_prompt": "Fixture question 4",
+      "data": [],
+      "visual_spec": null,
+      "expected_solution": {
+        "answer": 4
+      },
+      "alternative_valid_methods": [],
+      "marking": [
+        {
+          "marks": 2,
+          "evidence": "fixture evidence"
+        }
+      ],
+      "misconceptions": [],
+      "depends_on": []
+    },
+    {
+      "id": "Q5",
+      "marks": 3,
+      "target_level": "C",
+      "curriculum_targets": [
+        "fixture-target"
+      ],
+      "primary_skill": "fixture-skill",
+      "student_prompt": "Fixture question 5",
+      "data": [],
+      "visual_spec": null,
+      "expected_solution": {
+        "answer": 5
+      },
+      "alternative_valid_methods": [],
+      "marking": [
+        {
+          "marks": 3,
+          "evidence": "fixture evidence"
+        }
+      ],
+      "misconceptions": [],
+      "depends_on": []
+    },
+    {
+      "id": "Q6",
+      "marks": 3,
+      "target_level": "C",
+      "curriculum_targets": [
+        "fixture-target"
+      ],
+      "primary_skill": "fixture-skill",
+      "student_prompt": "Fixture question 6",
+      "data": [],
+      "visual_spec": null,
+      "expected_solution": {
+        "answer": 6
+      },
+      "alternative_valid_methods": [],
+      "marking": [
+        {
+          "marks": 3,
+          "evidence": "fixture evidence"
+        }
+      ],
+      "misconceptions": [],
+      "depends_on": []
+    }
+  ]
+}

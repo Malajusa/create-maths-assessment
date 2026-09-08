@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Question Set",
+  "type": "object",
+  "required": ["questions"],
+  "properties": {
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8
+    }
+  },
+  "additionalProperties": true
+}

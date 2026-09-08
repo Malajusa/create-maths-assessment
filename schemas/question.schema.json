@@ -2,19 +2,68 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Assessment Question",
   "type": "object",
-  "required": ["id", "marks", "target_level", "student_prompt", "expected_solution", "marking"],
+  "required": [
+    "id",
+    "marks",
+    "target_level",
+    "student_prompt",
+    "expected_solution",
+    "marking"
+  ],
   "properties": {
-    "id": {"type": "string", "pattern": "^Q[1-8]$"},
-    "marks": {"type": "integer", "minimum": 1},
-    "target_level": {"type": "string"},
-    "curriculum_targets": {"type": "array", "items": {"type": "string"}},
-    "primary_skill": {"type": "string"},
-    "student_prompt": {"type": "string", "minLength": 1},
-    "data": {"type": "array"},
-    "visual_spec": {"type": ["object", "null"]},
-    "expected_solution": {"type": "object"},
-    "alternative_valid_methods": {"type": "array"},
-    "marking": {"type": "array", "minItems": 1},
-    "misconceptions": {"type": "array"}
+    "id": {
+      "type": "string",
+      "pattern": "^Q[1-8]$"
+    },
+    "marks": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "target_level": {
+      "type": "string"
+    },
+    "curriculum_targets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "primary_skill": {
+      "type": "string"
+    },
+    "student_prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "data": {
+      "type": "array"
+    },
+    "visual_spec": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "expected_solution": {
+      "type": "object"
+    },
+    "alternative_valid_methods": {
+      "type": "array"
+    },
+    "marking": {
+      "type": "array",
+      "minItems": 1
+    },
+    "misconceptions": {
+      "type": "array"
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^Q[1-8]$"
+      },
+      "uniqueItems": true
+    }
   }
 }

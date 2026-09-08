@@ -61,3 +61,17 @@ Model-level pressure tests in `tests/scenarios/` should also be run whenever the
 - deterministic validation;
 - review of affected barriers;
 - version increment.
+
+## v3.1 executable enforcement
+
+The repository includes an executable state-machine controller rather than relying only on agent compliance with Markdown.
+
+```bash
+python -m pip install -r requirements.txt
+python -m runtime.controller --run-dir run/example record 01-orchestrator-curriculum-resolver brief.json
+python -m runtime.controller --run-dir run/example status
+```
+
+Each recorded stage is schema-validated and persisted to the run directory. The controller blocks stage skipping, failed content gates, invalid release claims, Q8 dependency on Q7 and marking keys whose recorded source hash differs from the final Student Test.
+
+`fixtures/` contains one complete gold run and known failure cases. GitHub Actions runs the unit tests, structural validator and fixture suite on every push and pull request.

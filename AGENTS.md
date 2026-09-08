@@ -41,3 +41,7 @@ Agents must report concrete defects, not vague quality impressions. Every failur
 - description;
 - owner;
 - required fix.
+
+## Runtime enforcement
+
+When the Python runtime is available, every structured hand-off must be recorded through `runtime/controller.py`. Do not advance based only on prose claims that an earlier stage passed. The controller state is authoritative for stage completion and gate status.

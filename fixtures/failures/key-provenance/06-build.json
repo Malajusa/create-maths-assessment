@@ -1,0 +1,5 @@
+{
+  "student_test": {"path":"build/student_test.pptx","sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+  "marking_key": {"path":"build/marking_key.pptx","sha256":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","derived_from_test":true,"source_test_sha256":"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"},
+  "curriculum_rationale": {"path":"build/curriculum_rationale.pdf","sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}
+}

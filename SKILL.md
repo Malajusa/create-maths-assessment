@@ -63,3 +63,16 @@ Do not use:
 - “acceptable with fixes”.
 
 A repair invalidates downstream validation for every artefact affected by that repair.
+
+## Executable enforcement
+
+When Python execution is available, the runtime controller is mandatory. Create a run directory and record every stage through `runtime/controller.py`; do not treat free-form agent hand-offs as authoritative state.
+
+Typical usage:
+
+```bash
+python -m runtime.controller --run-dir run/current record 01-orchestrator-curriculum-resolver run/01-brief.json
+python -m runtime.controller --run-dir run/current status
+```
+
+The controller validates schemas, stage order, content/release gates, Q7/Q8 independence and Student Test → Marking Key provenance. A controller rejection is a barrier and cannot be bypassed by an agent's qualitative judgement.

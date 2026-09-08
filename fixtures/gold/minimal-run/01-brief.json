@@ -1,0 +1,9 @@
+{
+  "year_levels": [6],
+  "topic": "percentages",
+  "jurisdiction": "Western Australia",
+  "curriculum_targets": ["fixture-target"],
+  "outputs": ["student_test_pptx", "marking_key_pptx", "curriculum_rationale_pdf"],
+  "task_type": "new",
+  "user_overrides": []
+}
