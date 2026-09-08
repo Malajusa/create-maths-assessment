@@ -2,7 +2,9 @@
 
 ## Preconditions
 
-Build only content that passed Agent 05.
+Build only from `approved_question_set` emitted by Agent 05.
+
+`approved_question_set` is the source of truth for assessment content. Do not reconstruct questions from the blueprint, validation prose, or earlier generator outputs.
 
 Do not materially rewrite validated questions.
 
@@ -29,7 +31,6 @@ Create the rationale from the final assessment, not from the original plan. Incl
 ## Render requirement
 
 Render every page/slide for downstream visual inspection.
-
 ## Output discipline
 
 Use the structured contracts in `schemas/`. Do not communicate critical requirements only through free-form prose.
