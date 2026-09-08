@@ -33,12 +33,21 @@ Apply `standards/maths-conventions.md`.
 ### Marks
 Every mark must map to observable evidence.
 
+## Inputs
+
+Validate against the resolved `assessment_brief` and `assessment_blueprint`, not only the generated question drafts.
+
+Consume both `q1_q6` and `q7_q8`. The blueprint defines the intended curriculum coverage, marks and progression that the questions must satisfy.
+
 ## Output
 
-Produce `content_validation` conforming to `schemas/validation.schema.json`.
+Always produce `content_validation` conforming to `schemas/validation.schema.json`.
 
 `PASS` is legal only when `issues` is empty.
 
+Only on `PASS`, also produce `approved_question_set` conforming to `schemas/approved-question-set.schema.json`. It must contain the exact validated Q1–Q8 content and becomes the immutable downstream source of truth.
+
+On `FAIL`, do not emit `approved_question_set`.
 ## Output discipline
 
 Use the structured contracts in `schemas/`. Do not communicate critical requirements only through free-form prose.

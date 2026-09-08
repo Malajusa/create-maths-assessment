@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Approved Question Set",
+  "description": "The immutable downstream source of truth emitted by Agent 05 only after the content gate passes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "questions"],
+  "properties": {
+    "status": {
+      "const": "PASS"
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "$ref": "./question.schema.json"
+      },
+      "allOf": [
+        {"contains": {"type": "object", "properties": {"id": {"const": "Q1"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "Q2"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "Q3"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "Q4"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "Q5"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "Q6"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "Q7"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "Q8"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1}
+      ]
+    }
+  }
+}

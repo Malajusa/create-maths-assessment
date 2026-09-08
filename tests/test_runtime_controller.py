@@ -12,6 +12,15 @@ def load(name):
     return json.loads((ROOT / name).read_text())
 
 
+def approved_pass_payload():
+    q1_q6 = load("fixtures/gold/minimal-run/03-q1-q6.json")["questions"]
+    q7_q8 = load("fixtures/gold/minimal-run/04-q7-q8.json")["questions"]
+    return {
+        "content_validation": {"status": "PASS", "issues": []},
+        "approved_question_set": {"status": "PASS", "questions": q1_q6 + q7_q8},
+    }
+
+
 class RuntimeControllerTests(unittest.TestCase):
     def make_controller(self):
         tmp = tempfile.TemporaryDirectory()
@@ -44,12 +53,14 @@ class RuntimeControllerTests(unittest.TestCase):
         ]:
             ctl.record(stage, load(f"fixtures/gold/minimal-run/{file}"))
         ctl.record("05-maths-pedagogy-validator", {
-            "status": "FAIL",
-            "issues": [{
-                "id": "M1", "owner": "03-question-designer", "question": "Q3",
-                "category": "mathematical_error", "description": "Wrong answer",
-                "required_fix": "Correct and revalidate"
-            }]
+            "content_validation": {
+                "status": "FAIL",
+                "issues": [{
+                    "id": "M1", "owner": "03-question-designer", "question": "Q3",
+                    "category": "mathematical_error", "description": "Wrong answer",
+                    "required_fix": "Correct and revalidate"
+                }]
+            }
         })
         with self.assertRaisesRegex(PipelineError, "content gate is blocked"):
             ctl.record("06-document-builder", load("fixtures/gold/minimal-run/06-build.json"))
@@ -82,7 +93,8 @@ class RuntimeControllerTests(unittest.TestCase):
             ("05-maths-pedagogy-validator", "05-validation.json"),
             ("06-document-builder", "06-build.json"),
         ]:
-            ctl.record(stage, load(f"fixtures/gold/minimal-run/{file}"))
+            payload = approved_pass_payload() if stage == "05-maths-pedagogy-validator" else load(f"fixtures/gold/minimal-run/{file}")
+            ctl.record(stage, payload)
         ctl.record("07-release-qa", {
             "status": "NOT READY",
             "open_barrier_count": 1,
@@ -97,6 +109,40 @@ class RuntimeControllerTests(unittest.TestCase):
         self.assertEqual("06-document-builder", ctl.state["completed_stages"][-1])
         self.assertEqual(1, ctl.state["repair_counts"]["V1"])
 
+    def test_content_pass_requires_approved_question_set(self):
+        ctl = self.make_controller()
+        bad = {"content_validation": {"status": "PASS", "issues": []}}
+        with self.assertRaisesRegex(PipelineError, "PASS requires approved_question_set"):
+            ctl.validate_stage_payload("05-maths-pedagogy-validator", bad)
+
+    def test_content_fail_forbids_approved_question_set(self):
+        ctl = self.make_controller()
+        bad = approved_pass_payload()
+        bad["content_validation"] = {
+            "status": "FAIL",
+            "issues": [{
+                "id": "M1", "owner": "03-question-designer", "question": "Q3",
+                "category": "mathematical_error", "description": "Wrong answer",
+                "required_fix": "Correct and revalidate"
+            }],
+        }
+        with self.assertRaisesRegex(PipelineError, "FAIL must not emit approved_question_set"):
+            ctl.validate_stage_payload("05-maths-pedagogy-validator", bad)
+
+    def test_approved_question_set_must_match_generated_questions_exactly(self):
+        ctl = self.make_controller()
+        for stage, file in [
+            ("01-orchestrator-curriculum-resolver", "01-brief.json"),
+            ("02-assessment-blueprint", "02-blueprint.json"),
+            ("03-question-designer", "03-q1-q6.json"),
+            ("04-complex-problem-specialist", "04-q7-q8.json"),
+        ]:
+            ctl.record(stage, load(f"fixtures/gold/minimal-run/{file}"))
+        bad = approved_pass_payload()
+        bad["approved_question_set"]["questions"][0]["student_prompt"] += " altered"
+        with self.assertRaisesRegex(PipelineError, "must exactly match the validated Q1-Q8 drafts"):
+            ctl.record("05-maths-pedagogy-validator", bad)
+
     def test_valid_fixture_can_reach_ready(self):
         ctl = self.make_controller()
         sequence = [
@@ -109,7 +155,8 @@ class RuntimeControllerTests(unittest.TestCase):
             ("07-release-qa", "07-release.json"),
         ]
         for stage, file in sequence:
-            ctl.record(stage, load(f"fixtures/gold/minimal-run/{file}"))
+            payload = approved_pass_payload() if stage == "05-maths-pedagogy-validator" else load(f"fixtures/gold/minimal-run/{file}")
+            ctl.record(stage, payload)
         self.assertEqual("READY", ctl.state["release_status"])
         self.assertEqual(sequence[-1][0], ctl.state["completed_stages"][-1])
 

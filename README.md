@@ -62,6 +62,10 @@ Model-level pressure tests in `tests/scenarios/` should also be run whenever the
 - review of affected barriers;
 - version increment.
 
+## v3.2 approved question set contract
+
+Agent 05 now emits an immutable `approved_question_set` only when content validation passes. Agent 06 must build from that exact Q1–Q8 artefact, and Agent 07 verifies the final package against the original brief, blueprint and approved set. The runtime rejects altered approved questions, PASS without an approved set, and FAIL with one.
+
 ## v3.1 executable enforcement
 
 The repository includes an executable state-machine controller rather than relying only on agent compliance with Markdown.

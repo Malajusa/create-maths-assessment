@@ -15,10 +15,10 @@ Assessment generation is a gated pipeline. A generating agent must never certify
 2. **Blueprint** the assessment with `agents/02-assessment-blueprint.md`.
 3. **Generate Q1–Q6** with `agents/03-question-designer.md`.
 4. **Generate Q7–Q8** independently with `agents/04-complex-problem-specialist.md`.
-5. **Validate content** with `agents/05-maths-pedagogy-validator.md`.
+5. **Validate content** with `agents/05-maths-pedagogy-validator.md`. A passing validation emits `approved_question_set`; a failing validation must not.
 6. If validation fails, repair only the owning stage, then revalidate.
-7. **Build all documents** with `agents/06-document-builder.md`.
-8. **Independently release-test** with `agents/07-release-qa.md`.
+7. **Build all documents** with `agents/06-document-builder.md`, using `approved_question_set` as the assessment-content source of truth.
+8. **Independently release-test** with `agents/07-release-qa.md` against the brief, blueprint, approved question set and rendered artefacts.
 9. Release only when the status is exactly `READY`.
 
 Read `orchestration/pipeline.json` for routing and retry rules.
