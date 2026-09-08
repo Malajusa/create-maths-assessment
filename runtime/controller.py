@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator
+from referencing import Registry, Resource
 
 
 class PipelineError(RuntimeError):
@@ -18,7 +19,7 @@ class PipelineController:
         "02-assessment-blueprint": "assessment-blueprint.schema.json",
         "03-question-designer": "question-set.schema.json",
         "04-complex-problem-specialist": "question-set.schema.json",
-        "05-maths-pedagogy-validator": "validation.schema.json",
+        "05-maths-pedagogy-validator": None,
         "06-document-builder": "build-manifest.schema.json",
         "07-release-qa": "release-status.schema.json",
     }
@@ -63,8 +64,17 @@ class PipelineController:
         return self.stage_ids[completed] if completed < len(self.stage_ids) else None
 
     def _validate_schema(self, schema_name: str, payload: Any) -> None:
-        schema = self._load_json(self.repo_root / "schemas" / schema_name)
-        validator = Draft202012Validator(schema)
+        schema_path = (self.repo_root / "schemas" / schema_name).resolve()
+        schema = self._load_json(schema_path)
+        # Give schemas a file URI at validation time so relative $ref values
+        # (for example ./question.schema.json) resolve deterministically.
+        effective_schema = dict(schema)
+        effective_schema.setdefault("$id", schema_path.as_uri())
+        registry = Registry()
+        for candidate in (self.repo_root / "schemas").glob("*.json"):
+            contents = self._load_json(candidate)
+            registry = registry.with_resource(candidate.resolve().as_uri(), Resource.from_contents(contents))
+        validator = Draft202012Validator(effective_schema, registry=registry)
         errors = sorted(validator.iter_errors(payload), key=lambda e: list(e.path))
         if errors:
             detail = "; ".join(error.message for error in errors[:3])
@@ -86,7 +96,8 @@ class PipelineController:
     def validate_stage_payload(self, stage_id: str, payload: Any) -> None:
         if stage_id not in self.SCHEMAS:
             raise PipelineError(f"unknown stage: {stage_id}")
-        self._validate_schema(self.SCHEMAS[stage_id], payload)
+        if stage_id != "05-maths-pedagogy-validator":
+            self._validate_schema(self.SCHEMAS[stage_id], payload)
 
         if stage_id == "02-assessment-blueprint":
             marks = sum(question["marks"] for question in payload["questions"])
@@ -103,12 +114,26 @@ class PipelineController:
                 raise PipelineError("Q8 must be independent of Q7")
 
         if stage_id == "05-maths-pedagogy-validator":
-            status = payload["status"]
-            issues = payload["issues"]
+            if not isinstance(payload, dict) or "content_validation" not in payload:
+                raise PipelineError("Agent 05 output requires content_validation")
+            validation = payload["content_validation"]
+            self._validate_schema("validation.schema.json", validation)
+            status = validation["status"]
+            issues = validation["issues"]
+            approved = payload.get("approved_question_set")
             if status == "PASS" and issues:
                 raise PipelineError("content PASS requires zero issues")
             if status == "FAIL" and not issues:
                 raise PipelineError("content FAIL requires at least one issue")
+            if status == "PASS" and approved is None:
+                raise PipelineError("content PASS requires approved_question_set")
+            if status == "FAIL" and approved is not None:
+                raise PipelineError("content FAIL must not emit approved_question_set")
+            if approved is not None:
+                self._validate_schema("approved-question-set.schema.json", approved)
+                ids = [question.get("id") for question in approved["questions"]]
+                if ids != [f"Q{i}" for i in range(1, 9)]:
+                    raise PipelineError("approved_question_set must contain Q1-Q8 in order")
 
         if stage_id == "06-document-builder":
             test_hash = payload["student_test"]["sha256"]
@@ -127,6 +152,18 @@ class PipelineController:
                 raise PipelineError("READY requires zero open barriers")
             if payload["status"] == "NOT READY" and count == 0:
                 raise PipelineError("NOT READY requires at least one open barrier")
+
+    def _validate_approved_question_set_against_drafts(self, payload: Any) -> None:
+        if "approved_question_set" not in payload:
+            return
+        q1_q6_path = self.state["artifacts"].get("03-question-designer")
+        q7_q8_path = self.state["artifacts"].get("04-complex-problem-specialist")
+        if not q1_q6_path or not q7_q8_path:
+            raise PipelineError("approved_question_set requires recorded Q1-Q8 drafts")
+        q1_q6 = self._load_json(self.run_dir / q1_q6_path)["questions"]
+        q7_q8 = self._load_json(self.run_dir / q7_q8_path)["questions"]
+        if payload["approved_question_set"]["questions"] != q1_q6 + q7_q8:
+            raise PipelineError("approved_question_set must exactly match the validated Q1-Q8 drafts")
 
     def _validate_against_blueprint(self, stage_id: str, payload: Any) -> None:
         if stage_id not in {"03-question-designer", "04-complex-problem-specialist"}:
@@ -152,6 +189,8 @@ class PipelineController:
 
         self.validate_stage_payload(stage_id, payload)
         self._validate_against_blueprint(stage_id, payload)
+        if stage_id == "05-maths-pedagogy-validator":
+            self._validate_approved_question_set_against_drafts(payload)
 
         artifact_path = self.artifact_dir / f"{stage_id}.json"
         artifact_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
@@ -160,8 +199,9 @@ class PipelineController:
         self.state["completed_stages"].append(stage_id)
 
         if stage_id == "05-maths-pedagogy-validator":
-            self.state["open_issues"] = payload["issues"]
-            self.state["blocked_gate"] = None if payload["status"] == "PASS" else "content"
+            validation = payload["content_validation"]
+            self.state["open_issues"] = validation["issues"]
+            self.state["blocked_gate"] = None if validation["status"] == "PASS" else "content"
 
         if stage_id == "07-release-qa":
             self.state["release_status"] = payload["status"]
