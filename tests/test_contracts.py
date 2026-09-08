@@ -19,6 +19,47 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(by_id["05-maths-pedagogy-validator"]["certifies"])
         self.assertTrue(by_id["07-release-qa"]["certifies"])
 
+    def test_content_validator_has_full_context_and_emits_approved_set(self):
+        pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
+        by_id = {stage["id"]: stage for stage in pipeline["stages"]}
+        validator = by_id["05-maths-pedagogy-validator"]
+        self.assertEqual(
+            ["assessment_brief", "assessment_blueprint", "q1_q6", "q7_q8"],
+            validator["consumes"],
+        )
+        self.assertEqual(
+            ["content_validation", "approved_question_set"],
+            validator["produces"],
+        )
+
+    def test_document_builder_uses_only_approved_question_content(self):
+        pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
+        by_id = {stage["id"]: stage for stage in pipeline["stages"]}
+        consumes = by_id["06-document-builder"]["consumes"]
+        self.assertIn("approved_question_set", consumes)
+        self.assertNotIn("q1_q6", consumes)
+        self.assertNotIn("q7_q8", consumes)
+        self.assertNotIn("content_validation", consumes)
+
+    def test_release_qa_can_verify_original_intent_and_validated_content(self):
+        pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
+        by_id = {stage["id"]: stage for stage in pipeline["stages"]}
+        consumes = by_id["07-release-qa"]["consumes"]
+        for artifact in ("assessment_brief", "assessment_blueprint", "approved_question_set"):
+            self.assertIn(artifact, consumes)
+
+    def test_approved_question_set_schema_is_pass_only_and_complete(self):
+        schema = json.loads((ROOT / "schemas/approved-question-set.schema.json").read_text())
+        self.assertEqual("PASS", schema["properties"]["status"]["const"])
+        questions = schema["properties"]["questions"]
+        self.assertEqual(8, questions["minItems"])
+        self.assertEqual(8, questions["maxItems"])
+        required_ids = {
+            rule["contains"]["properties"]["id"]["const"]
+            for rule in questions["allOf"]
+        }
+        self.assertEqual({f"Q{i}" for i in range(1, 9)}, required_ids)
+
     def test_release_gate_is_binary(self):
         pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
         self.assertEqual("READY", pipeline["release_gate"]["pass_status"])
@@ -64,4 +105,4 @@ class V31RepositoryTests(unittest.TestCase):
         version = (ROOT / "VERSION").read_text().strip()
         pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
         self.assertEqual(version, pipeline["version"])
-        self.assertEqual("3.1.0", version)
+        self.assertEqual("3.2.0", version)
