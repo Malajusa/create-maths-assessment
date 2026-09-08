@@ -1,6 +1,6 @@
 ---
 name: create-maths-assessment
-description: Use when creating, revising, adapting, validating, or producing marking keys and curriculum rationales for primary mathematics assessments, especially Western Australian classroom assessments.
+description: Create, revise, review or mark curriculum-aligned mathematics assessments in Mr Leahy's preferred 20-mark format, including an A4 portrait PowerPoint test, duplicate worked marking key and curriculum-rationale PDF, using a fail-closed multi-agent pipeline for Western Australian classroom assessment.
 ---
 
 # Create Maths Assessment
@@ -22,6 +22,19 @@ Assessment generation is a gated pipeline. A generating agent must never certify
 9. Release only when the status is exactly `READY`.
 
 Read `orchestration/pipeline.json` for routing and retry rules.
+
+## Required production references
+
+Load references progressively, but never omit a reference required for the current stage:
+
+- Every task: `references/assessment-format.md` and `references/curriculum-index.md`, followed by only the curriculum file for each assessed year level.
+- Creation, revision or review: `references/assessment-quality-gates.md`.
+- Creation or revision: `references/assessment-production-contract.md`.
+- Q7 or Q8 drafting/review: `references/q7-q8-problem-solving-standard.md` and `references/q7-q8-demand-2025.md`.
+- Any PowerPoint deliverable: `references/powerpoint-output.md`.
+- Any diagram, geometric figure, graph, number line or labelled shape: `references/mathematical-diagram-conventions.md`.
+
+Task-specific curriculum documents supplied by the user override bundled curriculum references. Preserve curriculum codes and scope exactly; do not invent, merge or silently alter them.
 
 ## Canonical standards
 
@@ -76,3 +89,12 @@ python -m runtime.controller --run-dir run/current status
 ```
 
 The controller validates schemas, stage order, content/release gates, Q7/Q8 independence and Student Test → Marking Key provenance. A controller rejection is a barrier and cannot be bypassed by an agent's qualitative judgement.
+
+Run the deterministic production validators where applicable:
+
+```bash
+python scripts/validate_assessment_spec.py <assessment-spec.json>
+python scripts/audit_assessment_package.py <assessment-spec.json>
+```
+
+Use `assets/` and `examples/benchmarks/` only for the quality dimensions assigned to them. An exemplar never overrides the current user request, curriculum or canonical standards.

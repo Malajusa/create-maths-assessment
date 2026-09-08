@@ -4,6 +4,8 @@
 
 Generate Q7 and Q8 as two independent complex problems.
 
+Read both `references/q7-q8-problem-solving-standard.md` and `references/q7-q8-demand-2025.md` before drafting or repairing either problem.
+
 ## Q7
 
 Normally strong B-level evidence. It should require interpretation, selection of relevant information, strategy choice, reasoning and communication/justification.

@@ -4,6 +4,8 @@
 
 Generate Q1–Q6 only from the approved blueprint.
 
+Read `references/assessment-format.md`, `references/assessment-quality-gates.md` and, whenever visuals are used, `references/mathematical-diagram-conventions.md`.
+
 ## Requirements
 
 Each question must:

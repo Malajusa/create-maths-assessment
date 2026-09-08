@@ -1,0 +1,472 @@
+{
+  "schema_version": 1,
+  "assessment": {
+    "title": "Year 5 Fractions and Percentages Combined Assessment",
+    "year_levels": [5],
+    "authorised_variations": [
+      {
+        "source": "user",
+        "statement": "Questions 7 and 8 may use related denominators.",
+        "question_ids": ["q7"]
+      }
+    ]
+  },
+  "curriculum": [
+    {
+      "code": "WA5MNAC2",
+      "year_level": 5,
+      "description": "Add and subtract fractions with the same denominator using flexible and efficient strategies",
+      "alignment": "direct"
+    },
+    {
+      "code": "WA5MNAUN7",
+      "year_level": 5,
+      "description": "Identify the use of percentages in everyday situations and recognise that 100% represents a complete whole, which is equal to one",
+      "alignment": "direct"
+    },
+    {
+      "code": "WA6MNAC5",
+      "year_level": 6,
+      "description": "Determine a familiar fraction, decimal or percentage of a whole number",
+      "alignment": "authorised_extension",
+      "authorisation": {
+        "source": "user",
+        "statement": "For Question 6, make it about finding 10% of a quantity.",
+        "question_ids": ["q6"]
+      }
+    }
+  ],
+  "marks": {
+    "total": 20,
+    "topic_subtotals": {
+      "Fractions": 10,
+      "Percentages": 10
+    }
+  },
+  "page_layout": {
+    "a4_portrait": true,
+    "slide_count": 3,
+    "page1_positions": {
+      "q1": "top_left",
+      "q2": "top_right",
+      "q3": "middle_left",
+      "q4": "middle_right",
+      "q5": "bottom_left",
+      "q6": "bottom_right"
+    },
+    "page2_question": "q7",
+    "page3_question": "q8"
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "topic": "Fractions",
+      "topic_kind": "fractions",
+      "marks": 1,
+      "curriculum_codes": ["WA5MNAC2"],
+      "prompt": "Use the fraction strips to calculate {{frac:3:8:q1-a}} + {{frac:2:8:q1-b}}.",
+      "answer": "{{frac:5:8:q1-answer}}",
+      "solution_steps": [
+        "Combine three eighths and two eighths to obtain five eighths."
+      ],
+      "student_task_restatement": "Combine the two same-denominator fractions shown by the strips and record the total.",
+      "mathematical_action": "calculate from a visual model",
+      "diagnostic_purpose": "Checks whether the student combines equal-sized parts while preserving the denominator.",
+      "observable_evidence": ["Correct total of five eighths"],
+      "mark_evidence": [
+        {"mark": 1, "evidence": "Records five eighths as the sum."}
+      ],
+      "representation": {
+        "required": true,
+        "kind": "aligned fraction strips divided into eighths",
+        "mathematical_purpose": "Makes the equal-sized parts and the additive combination visible.",
+        "omission_reason": "",
+        "instance_ids": ["eighth-strips"]
+      },
+      "response_space": {
+        "kind": "compact_final_answer",
+        "labels": ["Answer:"],
+        "mathematical_justification": "Separates the final symbolic total from the two source strips."
+      },
+      "contains_symbolic_fraction": true,
+      "notation": {
+        "student_fraction_instance_ids": ["q1-a", "q1-b"],
+        "key_fraction_instance_ids": ["q1-answer"]
+      },
+      "prompt_audit_tokens": ["Use the fraction strips to calculate"],
+      "review_assertions": {
+        "clear_to_student": true,
+        "natural_read_aloud": true,
+        "stem_does_not_supply_answer": true,
+        "solution_independently_verified": true,
+        "mark_value_proportional": true
+      }
+    },
+    {
+      "id": "q2",
+      "topic": "Percentages",
+      "topic_kind": "percentages",
+      "marks": 1,
+      "curriculum_codes": ["WA5MNAUN7"],
+      "prompt": "A bottle is 100% full. Write the number of complete wholes represented by 100%.",
+      "answer": "1 whole",
+      "solution_steps": [
+        "Recognise that 100% represents one complete whole."
+      ],
+      "student_task_restatement": "Connect 100% with the number of complete wholes it represents.",
+      "mathematical_action": "identify an equivalent whole",
+      "diagnostic_purpose": "Checks the foundational equivalence between 100% and one complete whole.",
+      "observable_evidence": ["Correct equivalence of 100% and one whole"],
+      "mark_evidence": [
+        {"mark": 1, "evidence": "Records that 100% represents one complete whole."}
+      ],
+      "representation": {
+        "required": false,
+        "kind": "none",
+        "mathematical_purpose": "",
+        "omission_reason": "The item checks the direct 100%-to-one-whole equivalence before later visual and contextual applications.",
+        "instance_ids": []
+      },
+      "response_space": {
+        "kind": "structured_mathematical",
+        "labels": ["100% =", "whole"],
+        "mathematical_justification": "The equality is the mathematical relationship the student must complete."
+      },
+      "contains_symbolic_fraction": false,
+      "notation": {
+        "student_fraction_instance_ids": [],
+        "key_fraction_instance_ids": []
+      },
+      "prompt_audit_tokens": ["A bottle is 100% full", "complete wholes"],
+      "review_assertions": {
+        "clear_to_student": true,
+        "natural_read_aloud": true,
+        "stem_does_not_supply_answer": true,
+        "solution_independently_verified": true,
+        "mark_value_proportional": true
+      }
+    },
+    {
+      "id": "q3",
+      "topic": "Fractions",
+      "topic_kind": "fractions",
+      "marks": 2,
+      "curriculum_codes": ["WA5MNAC2"],
+      "prompt": "One whole is shown. Use the strip to model 1 − {{frac:3:8:q3-subtrahend}}, then calculate.",
+      "answer": "{{frac:5:8:q3-answer}}",
+      "solution_steps": [
+        "Partition the whole into eight equal parts and mark three parts as removed.",
+        "Count the five remaining eighths."
+      ],
+      "student_task_restatement": "Show three eighths removed from one whole and record the amount left.",
+      "mathematical_action": "model and calculate subtraction",
+      "diagnostic_purpose": "Checks whether the student treats one whole as eight eighths before subtracting.",
+      "observable_evidence": ["Correct removal shown on the strip", "Correct remainder of five eighths"],
+      "mark_evidence": [
+        {"mark": 1, "evidence": "Shows three of the eight equal parts removed from the whole strip."},
+        {"mark": 2, "evidence": "Records the remainder as five eighths."}
+      ],
+      "representation": {
+        "required": true,
+        "kind": "editable whole strip partitioned into eighths",
+        "mathematical_purpose": "Elicits conversion of one whole to eight eighths and shows the removed parts.",
+        "omission_reason": "",
+        "instance_ids": ["whole-eighths-strip"]
+      },
+      "response_space": {
+        "kind": "blank_unlined",
+        "labels": [],
+        "mathematical_justification": ""
+      },
+      "contains_symbolic_fraction": true,
+      "notation": {
+        "student_fraction_instance_ids": ["q3-subtrahend"],
+        "key_fraction_instance_ids": ["q3-answer"]
+      },
+      "prompt_audit_tokens": ["One whole is shown", "then calculate"],
+      "review_assertions": {
+        "clear_to_student": true,
+        "natural_read_aloud": true,
+        "stem_does_not_supply_answer": true,
+        "solution_independently_verified": true,
+        "mark_value_proportional": true
+      }
+    },
+    {
+      "id": "q4",
+      "topic": "Percentages",
+      "topic_kind": "percentages",
+      "marks": 2,
+      "curriculum_codes": ["WA5MNAUN7"],
+      "prompt": "For each situation, decide whether the percentage is less than one whole or more than one whole: a battery backup at 65% and a poster target at 120%.",
+      "answer": "65% is less than one whole; 120% is more than one whole.",
+      "solution_steps": [
+        "Compare 65% with 100% and classify it as less than one whole.",
+        "Compare 120% with 100% and classify it as more than one whole."
+      ],
+      "student_task_restatement": "Classify each percentage by comparing it with the complete whole, 100%.",
+      "mathematical_action": "compare and classify",
+      "diagnostic_purpose": "Checks whether the student uses 100% as the reference whole for values below and above one whole.",
+      "observable_evidence": ["Correct classification of 65%", "Correct classification of 120%"],
+      "mark_evidence": [
+        {"mark": 1, "evidence": "Classifies 65% as less than one whole."},
+        {"mark": 2, "evidence": "Classifies 120% as more than one whole."}
+      ],
+      "representation": {
+        "required": false,
+        "kind": "none",
+        "mathematical_purpose": "",
+        "omission_reason": "The item assesses direct comparison with the 100% reference and a visual would supply an unnecessary cue.",
+        "instance_ids": []
+      },
+      "response_space": {
+        "kind": "structured_mathematical",
+        "labels": ["less than one whole", "more than one whole"],
+        "mathematical_justification": "The two response labels are the mathematical categories students must apply to separate contexts."
+      },
+      "contains_symbolic_fraction": false,
+      "notation": {
+        "student_fraction_instance_ids": [],
+        "key_fraction_instance_ids": []
+      },
+      "prompt_audit_tokens": ["battery backup at 65%", "poster target at 120%"],
+      "review_assertions": {
+        "clear_to_student": true,
+        "natural_read_aloud": true,
+        "stem_does_not_supply_answer": true,
+        "solution_independently_verified": true,
+        "mark_value_proportional": true
+      }
+    },
+    {
+      "id": "q5",
+      "topic": "Fractions",
+      "topic_kind": "fractions",
+      "marks": 3,
+      "curriculum_codes": ["WA5MNAC2"],
+      "prompt": "Combine the strips to calculate {{frac:7:10:q5-a}} + {{frac:6:10:q5-b}}. Show a valid strategy and use a different calculation or representation to check your result.",
+      "answer": "{{frac:13:10:q5-answer}}",
+      "solution_steps": [
+        "Combine seven tenths and six tenths to obtain thirteen tenths.",
+        "Record the sum as thirteen tenths.",
+        "Check using a different method, such as showing one whole and three tenths on the strips."
+      ],
+      "student_task_restatement": "Combine the tenths, record the fraction total and verify it in a different way.",
+      "mathematical_action": "combine, calculate and verify",
+      "diagnostic_purpose": "Checks whether the student can add beyond one whole while preserving the denominator and verify the result independently.",
+      "observable_evidence": ["Valid same-denominator strategy", "Correct fraction total", "Independent check"],
+      "mark_evidence": [
+        {"mark": 1, "evidence": "Shows a valid strategy that combines seven tenths and six tenths."},
+        {"mark": 2, "evidence": "Records the total as thirteen tenths."},
+        {"mark": 3, "evidence": "Uses a different valid calculation or representation to verify thirteen tenths."}
+      ],
+      "representation": {
+        "required": true,
+        "kind": "two editable fraction strips divided into tenths",
+        "mathematical_purpose": "Shows the combined thirteen tenths extending beyond one whole without changing the size of each part.",
+        "omission_reason": "",
+        "instance_ids": ["tenths-strips"]
+      },
+      "response_space": {
+        "kind": "blank_unlined",
+        "labels": [],
+        "mathematical_justification": ""
+      },
+      "contains_symbolic_fraction": true,
+      "notation": {
+        "student_fraction_instance_ids": ["q5-a", "q5-b"],
+        "key_fraction_instance_ids": ["q5-answer"]
+      },
+      "prompt_audit_tokens": ["Combine the strips", "use a different calculation or representation to check"],
+      "review_assertions": {
+        "clear_to_student": true,
+        "natural_read_aloud": true,
+        "stem_does_not_supply_answer": true,
+        "solution_independently_verified": true,
+        "mark_value_proportional": true
+      }
+    },
+    {
+      "id": "q6",
+      "topic": "Percentages",
+      "topic_kind": "percentages",
+      "marks": 3,
+      "curriculum_codes": ["WA5MNAUN7", "WA6MNAC5"],
+      "prompt": "The school library has 240 new books. Ten per cent will be placed in a display. How many books will be displayed? Show your method and use a different calculation or representation to check your answer.",
+      "answer": "24 books",
+      "solution_steps": [
+        "Connect 10% with one tenth or dividing by ten.",
+        "Calculate 240 divided by ten to obtain 24 books.",
+        "Verify with a different representation or calculation, such as ten equal groups of 24."
+      ],
+      "student_task_restatement": "Find ten per cent of 240 books and verify the result using a genuinely different method or representation.",
+      "mathematical_action": "calculate and verify",
+      "diagnostic_purpose": "Checks the explicitly authorised Year 6 connection between 10% and division by ten, including independent verification.",
+      "observable_evidence": ["Valid 10% relationship", "Correct quantity and unit", "Independent check"],
+      "mark_evidence": [
+        {"mark": 1, "evidence": "Shows that 10% is found by dividing the whole quantity by ten or by an equivalent method."},
+        {"mark": 2, "evidence": "Calculates and records 24 books."},
+        {"mark": 3, "evidence": "Uses a different valid calculation or representation to verify 24."}
+      ],
+      "representation": {
+        "required": false,
+        "kind": "none",
+        "mathematical_purpose": "",
+        "omission_reason": "Students choose their own second representation or calculation; supplying one would prompt the verification strategy.",
+        "instance_ids": []
+      },
+      "response_space": {
+        "kind": "blank_unlined",
+        "labels": [],
+        "mathematical_justification": ""
+      },
+      "contains_symbolic_fraction": false,
+      "notation": {
+        "student_fraction_instance_ids": [],
+        "key_fraction_instance_ids": []
+      },
+      "prompt_audit_tokens": ["school library has 240 new books", "Ten per cent will be placed in a display"],
+      "review_assertions": {
+        "clear_to_student": true,
+        "natural_read_aloud": true,
+        "stem_does_not_supply_answer": true,
+        "solution_independently_verified": true,
+        "mark_value_proportional": true
+      }
+    },
+    {
+      "id": "q7",
+      "topic": "Fractions",
+      "topic_kind": "fractions",
+      "marks": 4,
+      "curriculum_codes": ["WA5MNAC2"],
+      "prompt": "A ribbon roll was 2 m long. Maya cut {{frac:5:8:q7-a}} m for a sash and {{frac:3:4:q7-b}} m for a border. After she cut one more piece, {{frac:1:4:q7-c}} m of ribbon was left. How long was the third piece? Show how you worked it out and check that all the ribbon lengths total 2 m.",
+      "answer": "{{frac:3:8:q7-answer}} m",
+      "solution_steps": [
+        "Rename three quarters as six eighths and one quarter as two eighths.",
+        "Add the known cut and remaining lengths to obtain thirteen eighths.",
+        "Rename 2 m as sixteen eighths and subtract to obtain three eighths for the third piece.",
+        "Check that five eighths, six eighths, three eighths and two eighths total sixteen eighths or 2 m."
+      ],
+      "student_task_restatement": "Work backwards from the whole roll, two known cuts and the remainder to find the missing cut, then verify the complete total.",
+      "mathematical_action": "infer, rename, subtract and verify",
+      "diagnostic_purpose": "Checks transfer of same-denominator fraction operations to a reverse, related-denominator context with a whole-total check.",
+      "observable_evidence": ["Relevant quantities and common denominator", "Correct known total", "Correct missing length", "Valid whole-total check"],
+      "mark_evidence": [
+        {"mark": 1, "evidence": "Renames the quarter quantities as eighths or otherwise establishes a valid common representation."},
+        {"mark": 2, "evidence": "Correctly combines the known cut and remaining lengths as thirteen eighths."},
+        {"mark": 3, "evidence": "Finds the third piece as three eighths of a metre."},
+        {"mark": 4, "evidence": "Checks all cut lengths and the remainder total 2 m."}
+      ],
+      "representation": {
+        "required": false,
+        "kind": "none",
+        "mathematical_purpose": "",
+        "omission_reason": "Extracting the related lengths and relationships from prose is part of the assessed reasoning.",
+        "instance_ids": []
+      },
+      "response_space": {
+        "kind": "blank_unlined",
+        "labels": [],
+        "mathematical_justification": ""
+      },
+      "contains_symbolic_fraction": true,
+      "notation": {
+        "student_fraction_instance_ids": ["q7-a", "q7-b", "q7-c"],
+        "key_fraction_instance_ids": ["q7-answer"]
+      },
+      "prompt_audit_tokens": ["A ribbon roll was 2 m long", "How long was the third piece"],
+      "problem_solving": {
+        "prose_first": true,
+        "information_source": "sentences",
+        "independent": true,
+        "preorganised_solution_display": false,
+        "supporting_display_role": "none",
+        "extracted_information": ["whole roll is 2 m", "first cut is five eighths of a metre", "second cut is three quarters of a metre", "remainder is one quarter of a metre"],
+        "demand_features": ["interacting_constraints", "inference", "reverse_process", "reasonableness_check", "justification"],
+        "justified_conclusion": true
+      },
+      "review_assertions": {
+        "clear_to_student": true,
+        "natural_read_aloud": true,
+        "stem_does_not_supply_answer": true,
+        "solution_independently_verified": true,
+        "mark_value_proportional": true
+      }
+    },
+    {
+      "id": "q8",
+      "topic": "Percentages",
+      "topic_kind": "percentages",
+      "marks": 4,
+      "curriculum_codes": ["WA5MNAUN7"],
+      "prompt": "A class completed 65% of its original reading goal. During the next week, it recorded another 55% of the original goal, but 15% of the original goal had been counted in both records. The teacher had also increased the complete goal to 125% of the original goal. The display then read, ‘New goal: 100% complete.’ Is the display correct? Determine the corrected total as a percentage of the original goal and explain whether the original and new goals were complete.",
+      "answer": "The corrected total is 105% of the original goal. The original goal is complete, but the 125% new goal is not complete, so the display is incorrect.",
+      "solution_steps": [
+        "Combine the two records, then remove the duplicated 15 percentage points: 65% + 55% − 15% = 105%.",
+        "Compare 105% with the original complete whole, 100%, to decide the original goal is complete.",
+        "Compare 105% with the revised complete goal, 125%, to decide the new goal is incomplete.",
+        "Conclude that the display is incorrect because the reference whole for the new goal is 125% of the original goal."
+      ],
+      "student_task_restatement": "Correct the overlapping records and compare the result with both reference wholes before judging the display.",
+      "mathematical_action": "correct, compare and justify",
+      "diagnostic_purpose": "Checks sustained reference-whole reasoning when data overlap and the complete target changes.",
+      "observable_evidence": ["Correct overlap adjustment", "Corrected percentage", "Original-goal judgement", "New-goal judgement with explanation"],
+      "mark_evidence": [
+        {"mark": 1, "evidence": "Subtracts the duplicated 15 percentage points once from the combined records."},
+        {"mark": 2, "evidence": "Determines the corrected total as 105% of the original goal."},
+        {"mark": 3, "evidence": "Explains that 105% means the original 100% goal is complete."},
+        {"mark": 4, "evidence": "Explains that 105% is below the revised 125% goal and therefore the display is incorrect."}
+      ],
+      "representation": {
+        "required": false,
+        "kind": "none",
+        "mathematical_purpose": "",
+        "omission_reason": "The student must extract and coordinate the overlapping records and two reference wholes from sentences.",
+        "instance_ids": []
+      },
+      "response_space": {
+        "kind": "blank_unlined",
+        "labels": [],
+        "mathematical_justification": ""
+      },
+      "contains_symbolic_fraction": false,
+      "notation": {
+        "student_fraction_instance_ids": [],
+        "key_fraction_instance_ids": []
+      },
+      "prompt_audit_tokens": ["completed 65% of its original reading goal", "increased the complete goal to 125%"],
+      "problem_solving": {
+        "prose_first": true,
+        "information_source": "sentences",
+        "independent": true,
+        "preorganised_solution_display": false,
+        "supporting_display_role": "none",
+        "extracted_information": ["first record is 65% of the original goal", "second record is 55% of the original goal", "15% was counted twice", "the revised whole is 125% of the original goal"],
+        "demand_features": ["interacting_constraints", "inference", "dependent_result", "comparison_or_evaluation", "justification"],
+        "justified_conclusion": true
+      },
+      "review_assertions": {
+        "clear_to_student": true,
+        "natural_read_aloud": true,
+        "stem_does_not_supply_answer": true,
+        "solution_independently_verified": true,
+        "mark_value_proportional": true
+      }
+    }
+  ],
+  "package": {
+    "test_slide_count": 3,
+    "key_slide_count": 3,
+    "rationale_page_count": 4,
+    "rationale_required_tokens": [
+      "Year 5 Fractions and Percentages Combined Assessment",
+      "WA5MNAC2",
+      "WA5MNAUN7",
+      "WA6MNAC5",
+      "authorised extension",
+      "20 marks",
+      "Q8"
+    ]
+  }
+}

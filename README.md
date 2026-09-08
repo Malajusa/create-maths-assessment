@@ -66,6 +66,19 @@ Model-level pressure tests in `tests/scenarios/` should also be run whenever the
 
 Agent 05 now emits an immutable `approved_question_set` only when content validation passes. Agent 06 must build from that exact Q1–Q8 artefact, and Agent 07 verifies the final package against the original brief, blueprint and approved set. The runtime rejects altered approved questions, PASS without an approved set, and FAIL with one.
 
+## v3.3 combined skill distribution
+
+Version 3.3 packages the enforced agent pipeline together with the production resources required to generate classroom-ready assessments:
+
+- Western Australian curriculum references from Pre-primary to Year 10;
+- assessment format, quality-gate and production contracts;
+- Q7/Q8 problem-solving and demand standards;
+- PowerPoint and mathematical-diagram conventions;
+- benchmark assessments and machine-readable regression cases;
+- deterministic assessment-specification and package-audit scripts.
+
+`SKILL.md` and each stage-agent file route to the relevant resources. The v3.2 `approved_question_set` gate and runtime protections remain mandatory.
+
 ## v3.1 executable enforcement
 
 The repository includes an executable state-machine controller rather than relying only on agent compliance with Markdown.

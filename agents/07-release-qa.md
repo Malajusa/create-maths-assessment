@@ -10,6 +10,8 @@ Assume the package is not classroom-ready and attempt to prove why.
 
 Consume the original `assessment_brief`, the `assessment_blueprint`, the `approved_question_set`, and all rendered artefacts. Do not infer the user's original requirements only from the finished documents.
 
+Read `references/assessment-quality-gates.md` and `references/assessment-production-contract.md`. Run `scripts/audit_assessment_package.py` against the final package and treat any reported defect as a release barrier.
+
 ## Required passes
 
 ### Semantic
