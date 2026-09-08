@@ -48,3 +48,20 @@ class ContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class V31RepositoryTests(unittest.TestCase):
+    def test_runtime_controller_and_fixture_runner_exist(self):
+        self.assertTrue((ROOT / "runtime/controller.py").exists())
+        self.assertTrue((ROOT / "scripts/run_regression_fixtures.py").exists())
+
+    def test_ci_workflow_runs_full_validation(self):
+        workflow = (ROOT / ".github/workflows/validate-skill.yml").read_text()
+        self.assertIn("python -m unittest discover -s tests -v", workflow)
+        self.assertIn("python scripts/validate_repository.py", workflow)
+        self.assertIn("python scripts/run_regression_fixtures.py", workflow)
+
+    def test_version_matches_pipeline(self):
+        version = (ROOT / "VERSION").read_text().strip()
+        pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
+        self.assertEqual(version, pipeline["version"])
+        self.assertEqual("3.1.0", version)

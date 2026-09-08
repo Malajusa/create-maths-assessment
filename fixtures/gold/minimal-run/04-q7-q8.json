@@ -1,0 +1,52 @@
+{
+  "questions": [
+    {
+      "id": "Q7",
+      "marks": 4,
+      "target_level": "B",
+      "curriculum_targets": [
+        "fixture-target"
+      ],
+      "primary_skill": "fixture-skill",
+      "student_prompt": "Fixture question 7",
+      "data": [],
+      "visual_spec": null,
+      "expected_solution": {
+        "answer": 7
+      },
+      "alternative_valid_methods": [],
+      "marking": [
+        {
+          "marks": 4,
+          "evidence": "fixture evidence"
+        }
+      ],
+      "misconceptions": [],
+      "depends_on": []
+    },
+    {
+      "id": "Q8",
+      "marks": 4,
+      "target_level": "A",
+      "curriculum_targets": [
+        "fixture-target"
+      ],
+      "primary_skill": "fixture-skill",
+      "student_prompt": "Fixture question 8",
+      "data": [],
+      "visual_spec": null,
+      "expected_solution": {
+        "answer": 8
+      },
+      "alternative_valid_methods": [],
+      "marking": [
+        {
+          "marks": 4,
+          "evidence": "fixture evidence"
+        }
+      ],
+      "misconceptions": [],
+      "depends_on": []
+    }
+  ]
+}

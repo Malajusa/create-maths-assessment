@@ -1,0 +1,14 @@
+{
+  "status": "READY",
+  "open_barrier_count": 1,
+  "barriers": [
+    {
+      "id": "V1",
+      "description": "triangle label overlap",
+      "owner": "06-document-builder",
+      "question": null,
+      "category": "visual",
+      "required_fix": "Correct the label overlap and re-render"
+    }
+  ]
+}

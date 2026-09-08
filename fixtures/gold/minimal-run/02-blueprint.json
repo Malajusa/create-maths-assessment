@@ -1,0 +1,13 @@
+{
+  "total_marks": 20,
+  "questions": [
+    {"id":"Q1","marks":1,"primary_skill":"identify","evidence":"identify","target_level":"D","response_form":"short"},
+    {"id":"Q2","marks":1,"primary_skill":"identify","evidence":"identify","target_level":"D","response_form":"short"},
+    {"id":"Q3","marks":2,"primary_skill":"calculate","evidence":"calculate","target_level":"C","response_form":"working"},
+    {"id":"Q4","marks":2,"primary_skill":"calculate","evidence":"calculate","target_level":"C","response_form":"working"},
+    {"id":"Q5","marks":3,"primary_skill":"apply","evidence":"apply","target_level":"C","response_form":"working"},
+    {"id":"Q6","marks":3,"primary_skill":"apply","evidence":"apply","target_level":"C","response_form":"working"},
+    {"id":"Q7","marks":4,"primary_skill":"reason","evidence":"transfer and justify","target_level":"B","response_form":"reasoning"},
+    {"id":"Q8","marks":4,"primary_skill":"reason","evidence":"novel transfer and justify","target_level":"A","response_form":"reasoning"}
+  ]
+}

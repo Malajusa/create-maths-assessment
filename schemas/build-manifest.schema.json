@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Assessment Build Manifest",
+  "type": "object",
+  "required": ["student_test", "marking_key", "curriculum_rationale"],
+  "properties": {
+    "student_test": {"$ref": "#/$defs/file"},
+    "marking_key": {
+      "allOf": [
+        {"$ref": "#/$defs/file"},
+        {
+          "type": "object",
+          "required": ["derived_from_test", "source_test_sha256"],
+          "properties": {
+            "derived_from_test": {"const": true},
+            "source_test_sha256": {"$ref": "#/$defs/sha"}
+          }
+        }
+      ]
+    },
+    "curriculum_rationale": {"$ref": "#/$defs/file"}
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "file": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
