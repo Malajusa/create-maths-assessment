@@ -6,10 +6,14 @@ This is the only agent that may issue final `READY`.
 
 Assume the package is not classroom-ready and attempt to prove why.
 
+## Required inputs
+
+Consume the original `assessment_brief`, the `assessment_blueprint`, the `approved_question_set`, and all rendered artefacts. Do not infer the user's original requirements only from the finished documents.
+
 ## Required passes
 
 ### Semantic
-Verify user request, year level, topic, curriculum, question count, marks and intended progression.
+Verify the rendered package against the original `assessment_brief`, the intended structure in `assessment_blueprint`, and the exact validated content in `approved_question_set`.
 
 ### Mathematical
 Independently solve every question and compare with the marking key.
@@ -33,7 +37,6 @@ Return `READY` only when `open_barrier_count == 0`.
 Otherwise return `NOT READY`.
 
 Never return “mostly ready”, “ready with minor changes”, or equivalent.
-
 ## Output discipline
 
 Use the structured contracts in `schemas/`. Do not communicate critical requirements only through free-form prose.
