@@ -15,6 +15,7 @@ REQUIRED = [
     ".github/workflows/validate-skill.yml",
     "scripts/run_regression_fixtures.py",
     "schemas/question-set.schema.json",
+    "schemas/approved-question-set.schema.json",
     "schemas/build-manifest.schema.json",
     "fixtures/README.md",
     "standards/assessment-contract.md",
@@ -47,8 +48,8 @@ if len(stages) != 7 or len(set(stages)) != 7:
 version = (ROOT / "VERSION").read_text().strip()
 if pipeline["version"] != version:
     raise SystemExit("VERSION must match orchestration/pipeline.json version.")
-if version != "3.1.0":
-    raise SystemExit("Expected v3.1.0 repository contract.")
+if version != "3.2.0":
+    raise SystemExit("Expected v3.2.0 repository contract.")
 if not pipeline.get("runtime_enforced"):
     raise SystemExit("Pipeline must declare runtime_enforced=true.")
 if pipeline.get("controller") != "runtime/controller.py":
@@ -60,6 +61,9 @@ if pipeline["release_gate"]["fail_status"] != "NOT READY":
     raise SystemExit("Release fail status must be NOT READY.")
 if pipeline["max_targeted_repairs_per_barrier"] != 3:
     raise SystemExit("Repair limit must be 3.")
+
+if pipeline["content_gate"].get("approved_artifact") != "approved_question_set":
+    raise SystemExit("Content gate must define approved_question_set as its approved artefact.")
 
 skill = (ROOT / "SKILL.md").read_text()
 for phrase in ["Q7 and Q8 are independent", "READY", "NOT READY"]:
