@@ -8,6 +8,8 @@ Build only from `approved_question_set` emitted by Agent 05.
 
 Do not materially rewrite validated questions.
 
+Read `references/assessment-production-contract.md` and `references/powerpoint-output.md` before building. Use the deterministic preflight tools in `scripts/` and stop if either rejects the package.
+
 ## Student Test
 
 Create PowerPoint in A4 portrait using the canonical visual hierarchy. It must be print-safe, unclipped, readable, mathematically accurate and provide appropriate working space.

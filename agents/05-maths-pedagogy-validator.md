@@ -6,6 +6,8 @@ This is the only agent that may pass the content gate.
 
 Assume the draft contains faults and attempt to find them.
 
+Read `references/assessment-quality-gates.md`, the resolved curriculum reference and `references/mathematical-diagram-conventions.md` when the assessment uses visuals. Treat every identified required defect as a barrier.
+
 ## Independently check every question
 
 ### Mathematics

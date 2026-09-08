@@ -1,0 +1,69 @@
+{
+  "spec_cases": [
+    {
+      "name": "swapped-page-1-cells",
+      "operations": [
+        {"op": "replace", "path": "/page_layout/page1_positions/q1", "value": "top_right"}
+      ],
+      "expected_code": "E_LAYOUT"
+    },
+    {
+      "name": "missing-fraction-visual",
+      "operations": [
+        {"op": "replace", "path": "/questions/4/representation/required", "value": false},
+        {"op": "replace", "path": "/questions/4/representation/kind", "value": "none"},
+        {"op": "replace", "path": "/questions/4/representation/mathematical_purpose", "value": ""},
+        {"op": "replace", "path": "/questions/4/representation/omission_reason", "value": "Space was limited."},
+        {"op": "replace", "path": "/questions/4/representation/instance_ids", "value": []}
+      ],
+      "expected_code": "E_FRACTION_VISUAL"
+    },
+    {
+      "name": "self-answering-question",
+      "operations": [
+        {"op": "replace", "path": "/questions/5/review_assertions/stem_does_not_supply_answer", "value": false}
+      ],
+      "expected_code": "E_REVIEW_ASSERTION"
+    },
+    {
+      "name": "artificial-wording",
+      "operations": [
+        {"op": "replace", "path": "/questions/5/review_assertions/natural_read_aloud", "value": false}
+      ],
+      "expected_code": "E_REVIEW_ASSERTION"
+    },
+    {
+      "name": "routine-q8",
+      "operations": [
+        {"op": "replace", "path": "/questions/7/problem_solving/demand_features", "value": ["justification"]}
+      ],
+      "expected_code": "E_DEMAND"
+    },
+    {
+      "name": "undeclared-year-6-content",
+      "operations": [
+        {"op": "replace", "path": "/curriculum/2/alignment", "value": "direct"}
+      ],
+      "expected_code": "E_EXTENSION"
+    },
+    {
+      "name": "redundant-response-labels",
+      "operations": [
+        {"op": "replace", "path": "/questions/5/response_space/labels", "value": ["Working and check", "Answer:"]},
+        {"op": "replace", "path": "/questions/5/response_space/mathematical_justification", "value": ""}
+      ],
+      "expected_code": "E_RESPONSE_SCAFFOLD"
+    }
+  ],
+  "package_cases": [
+    {"name": "touching-fraction", "mutation": "touching_fraction", "expected_code": "E_FRACTION_CLEARANCE"},
+    {"name": "small-key-annotation", "mutation": "small_key_annotation", "expected_code": "E_FONT_SIZE"},
+    {"name": "changed-student-prompt-in-key", "mutation": "changed_student_prompt", "expected_code": "E_TEST_KEY_IDENTITY"},
+    {"name": "missing-key-mark", "mutation": "missing_key_mark", "expected_code": "E_KEY_COVERAGE"},
+    {"name": "solution-ready-q7-table", "mutation": "q7_table", "expected_code": "E_PROSE_FIRST"},
+    {"name": "bordered-blank-response", "mutation": "bordered_blank_response", "expected_code": "E_RESPONSE_SCAFFOLD"},
+    {"name": "vague-release-evidence", "mutation": "vague_ledger", "expected_code": "E_LEDGER_EVIDENCE"},
+    {"name": "swapped-rendered-page-1-cells", "mutation": "swapped_page1_cells", "expected_code": "E_PAGE1_POSITION"},
+    {"name": "missing-rendered-fraction-model", "mutation": "missing_representation", "expected_code": "E_REPRESENTATION"}
+  ]
+}

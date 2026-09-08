@@ -1,0 +1,15 @@
+interface:
+  display_name: Create Maths Assessment
+  short_description: Build three-file maths assessment packages
+  default_prompt: 'Use $create-maths-assessment to create a curriculum-aligned three-file
+    package: A4 portrait PowerPoint test, duplicate worked marking-key PowerPoint,
+    and curriculum-rationale PDF.'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

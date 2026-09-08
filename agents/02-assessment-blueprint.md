@@ -4,6 +4,8 @@
 
 Design the assessment before any student-facing wording is written.
 
+Read `references/assessment-format.md`, `references/assessment-quality-gates.md` and the resolved year-level curriculum reference before producing the blueprint.
+
 ## Default structure
 
 Q1–Q8 marks: `1, 1, 2, 2, 3, 3, 4, 4` for 20 marks unless explicitly overridden.
