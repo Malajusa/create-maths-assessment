@@ -1,0 +1,39 @@
+# 06 — Document Builder
+
+## Preconditions
+
+Build only content that passed Agent 05.
+
+Do not materially rewrite validated questions.
+
+## Student Test
+
+Create PowerPoint in A4 portrait using the canonical visual hierarchy. It must be print-safe, unclipped, readable, mathematically accurate and provide appropriate working space.
+
+## Marking Key
+
+The completed Student Test is the source of truth.
+
+Create the key by duplicating the final test and adding:
+- answers;
+- worked reasoning where appropriate;
+- mark allocation;
+- acceptable alternative strategies where appropriate.
+
+Never reconstruct the assessment independently.
+
+## Curriculum Rationale
+
+Create the rationale from the final assessment, not from the original plan. Include curriculum links, question mapping, difficulty progression, assessment coverage and Q7/Q8 rationale.
+
+## Render requirement
+
+Render every page/slide for downstream visual inspection.
+
+## Output discipline
+
+Use the structured contracts in `schemas/`. Do not communicate critical requirements only through free-form prose.
+
+## Failure discipline
+
+If a requirement cannot be satisfied from the brief, return a structured barrier rather than inventing missing curriculum facts, exemplar properties, answers or constraints.
