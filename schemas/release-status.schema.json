@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Release Status",
+  "type": "object",
+  "required": ["status", "open_barrier_count", "barriers"],
+  "properties": {
+    "status": {"enum": ["READY", "NOT READY"]},
+    "open_barrier_count": {"type": "integer", "minimum": 0},
+    "barriers": {"type": "array"}
+  }
+}
