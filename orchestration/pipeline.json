@@ -1,0 +1,42 @@
+{
+  "version": "3.0.0",
+  "entrypoint": "01-orchestrator-curriculum-resolver",
+  "stages": [
+    {"id":"01-orchestrator-curriculum-resolver","produces":"assessment_brief","certifies":false},
+    {"id":"02-assessment-blueprint","consumes":"assessment_brief","produces":"assessment_blueprint","certifies":false},
+    {"id":"03-question-designer","consumes":"assessment_blueprint","produces":"q1_q6","certifies":false},
+    {"id":"04-complex-problem-specialist","consumes":"assessment_blueprint","produces":"q7_q8","certifies":false},
+    {"id":"05-maths-pedagogy-validator","consumes":["q1_q6","q7_q8"],"produces":"content_validation","certifies":true},
+    {"id":"06-document-builder","consumes":["assessment_brief","assessment_blueprint","content_validation"],"produces":["student_test","marking_key","curriculum_rationale"],"certifies":false},
+    {"id":"07-release-qa","consumes":["student_test","marking_key","curriculum_rationale"],"produces":"release_status","certifies":true}
+  ],
+  "content_gate": {
+    "pass_condition": "issues.length == 0",
+    "pass_status": "PASS",
+    "fail_status": "FAIL"
+  },
+  "release_gate": {
+    "pass_condition": "open_barrier_count == 0",
+    "pass_status": "READY",
+    "fail_status": "NOT READY"
+  },
+  "repair_routes": {
+    "curriculum_scope":"01-orchestrator-curriculum-resolver",
+    "assessment_progression":"02-assessment-blueprint",
+    "q1_q6":"03-question-designer",
+    "q7_q8":"04-complex-problem-specialist",
+    "mathematical_error":"generating_agent",
+    "ambiguity":"generating_agent",
+    "excessive_scaffolding":"generating_agent",
+    "difficulty_calibration":"02-assessment-blueprint"
+  },
+  "max_targeted_repairs_per_barrier": 3,
+  "after_max_repairs": "replace_approach",
+  "downstream_invalidation": [
+    "mathematical_validation",
+    "marking_key_validation",
+    "rationale_validation_if_affected",
+    "visual_render_validation",
+    "release_qa"
+  ]
+}
