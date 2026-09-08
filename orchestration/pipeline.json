@@ -1,5 +1,5 @@
 {
-  "version": "3.1.0",
+  "version": "3.2.0",
   "entrypoint": "01-orchestrator-curriculum-resolver",
   "stages": [
     {
@@ -28,10 +28,15 @@
     {
       "id": "05-maths-pedagogy-validator",
       "consumes": [
+        "assessment_brief",
+        "assessment_blueprint",
         "q1_q6",
         "q7_q8"
       ],
-      "produces": "content_validation",
+      "produces": [
+        "content_validation",
+        "approved_question_set"
+      ],
       "certifies": true
     },
     {
@@ -39,7 +44,7 @@
       "consumes": [
         "assessment_brief",
         "assessment_blueprint",
-        "content_validation"
+        "approved_question_set"
       ],
       "produces": [
         "student_test",
@@ -51,6 +56,9 @@
     {
       "id": "07-release-qa",
       "consumes": [
+        "assessment_brief",
+        "assessment_blueprint",
+        "approved_question_set",
         "student_test",
         "marking_key",
         "curriculum_rationale"
@@ -62,7 +70,9 @@
   "content_gate": {
     "pass_condition": "issues.length == 0",
     "pass_status": "PASS",
-    "fail_status": "FAIL"
+    "fail_status": "FAIL",
+    "approved_artifact": "approved_question_set",
+    "approved_artifact_condition": "status == PASS && issues.length == 0"
   },
   "release_gate": {
     "pass_condition": "open_barrier_count == 0",
