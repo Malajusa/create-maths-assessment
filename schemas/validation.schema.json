@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Validation Result",
+  "type": "object",
+  "required": ["status", "issues"],
+  "properties": {
+    "status": {"enum": ["PASS", "FAIL"]},
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "owner", "category", "description", "required_fix"],
+        "properties": {
+          "id": {"type": "string"},
+          "owner": {"type": "string"},
+          "question": {"type": ["string", "null"]},
+          "category": {"type": "string"},
+          "description": {"type": "string"},
+          "required_fix": {"type": "string"}
+        }
+      }
+    }
+  }
+}
