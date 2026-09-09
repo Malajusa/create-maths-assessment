@@ -68,7 +68,7 @@ Agent 05 now emits an immutable `approved_question_set` only when content valida
 
 ## v3.4 combined skill distribution
 
-Version 3.3 packages the enforced agent pipeline together with the production resources required to generate classroom-ready assessments:
+Version 3.4 packages the enforced agent pipeline together with the production resources required to generate classroom-ready assessments:
 
 - Western Australian curriculum references from Pre-primary to Year 10;
 - assessment format, quality-gate and production contracts;
