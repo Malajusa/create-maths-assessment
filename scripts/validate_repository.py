@@ -14,6 +14,12 @@ REQUIRED = [
     "requirements.txt",
     "orchestration/pipeline.json",
     "runtime/controller.py",
+    "runtime/release_evidence.py",
+    "standards/project-context.md",
+    "standards/release-evidence.md",
+    "schemas/release-evidence.schema.json",
+    "tests/test_project_context_runtime.py",
+    "tests/test_release_evidence.py",
     ".github/workflows/validate-skill.yml",
     "scripts/run_regression_fixtures.py",
     "schemas/question-set.schema.json",
@@ -60,8 +66,8 @@ if len(stages) != 7 or len(set(stages)) != 7:
 version = (ROOT / "VERSION").read_text().strip()
 if pipeline["version"] != version:
     raise SystemExit("VERSION must match orchestration/pipeline.json version.")
-if version != "3.5.0":
-    raise SystemExit("Expected v3.5.0 repository contract.")
+if version != "3.6.0":
+    raise SystemExit("Expected v3.6.0 repository contract.")
 if not pipeline.get("runtime_enforced"):
     raise SystemExit("Pipeline must declare runtime_enforced=true.")
 if pipeline.get("controller") != "runtime/controller.py":
@@ -71,6 +77,8 @@ if pipeline["release_gate"]["pass_status"] != "READY":
     raise SystemExit("Release pass status must be READY.")
 if pipeline["release_gate"]["fail_status"] != "NOT READY":
     raise SystemExit("Release fail status must be NOT READY.")
+if pipeline["release_gate"].get("evidence_guard") != "runtime/release_evidence.py" or pipeline["release_gate"].get("evidence_required") is not True:
+    raise SystemExit("Release must require the current evidence guard.")
 if pipeline["max_targeted_repairs_per_barrier"] != 3:
     raise SystemExit("Repair limit must be 3.")
 
@@ -78,7 +86,7 @@ if pipeline["content_gate"].get("approved_artifact") != "approved_question_set":
     raise SystemExit("Content gate must define approved_question_set as its approved artefact.")
 
 skill = (ROOT / "SKILL.md").read_text()
-for phrase in ["Q7 and Q8 are independent", "READY", "NOT READY"]:
+for phrase in ["Q7 and Q8 are independent", "READY", "NOT READY", "standards/project-context.md", "standards/release-evidence.md"]:
     if phrase not in skill:
         raise SystemExit(f"SKILL.md missing required contract phrase: {phrase}")
 

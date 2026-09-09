@@ -1,5 +1,5 @@
 {
-  "version": "3.5.0",
+  "version": "3.6.0",
   "entrypoint": "01-orchestrator-curriculum-resolver",
   "stages": [
     {
@@ -77,9 +77,11 @@
     "approved_artifact_condition": "status == PASS && issues.length == 0"
   },
   "release_gate": {
-    "pass_condition": "open_barrier_count == 0",
+    "pass_condition": "open_barrier_count == 0 && current_release_evidence_verified",
     "pass_status": "READY",
-    "fail_status": "NOT READY"
+    "fail_status": "NOT READY",
+    "evidence_guard": "runtime/release_evidence.py",
+    "evidence_required": true
   },
   "repair_routes": {
     "curriculum_scope": "01-orchestrator-curriculum-resolver",

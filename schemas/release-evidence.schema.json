@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Release Evidence",
+  "type": "object",
+  "required": [
+    "assessment_spec",
+    "qa_ledger",
+    "design_manifest",
+    "render_review"
+  ],
+  "properties": {
+    "assessment_spec": {
+      "$ref": "#/$defs/file"
+    },
+    "qa_ledger": {
+      "$ref": "#/$defs/file"
+    },
+    "design_manifest": {
+      "$ref": "#/$defs/file"
+    },
+    "render_review": {
+      "$ref": "#/$defs/file"
+    }
+  },
+  "$defs": {
+    "file": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
