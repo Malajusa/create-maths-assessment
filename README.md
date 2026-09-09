@@ -66,7 +66,7 @@ Model-level pressure tests in `tests/scenarios/` should also be run whenever the
 
 Agent 05 now emits an immutable `approved_question_set` only when content validation passes. Agent 06 must build from that exact Q1–Q8 artefact, and Agent 07 verifies the final package against the original brief, blueprint and approved set. The runtime rejects altered approved questions, PASS without an approved set, and FAIL with one.
 
-## v3.3 combined skill distribution
+## v3.4 combined skill distribution
 
 Version 3.3 packages the enforced agent pipeline together with the production resources required to generate classroom-ready assessments:
 

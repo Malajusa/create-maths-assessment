@@ -30,6 +30,12 @@ Contexts must be meaningful enough that the mathematics has a purpose.
 
 Provide expected reasoning, alternative legitimate methods, misconception analysis and proposed mark evidence.
 
+Before handoff, perform a simplest-valid-solution challenge for Q7 and Q8. Record the
+simplest legitimate route and identify the decision, inference, interacting constraint,
+evaluation or justification the student must contribute. If the simplest valid route is
+routine substitution, repeated arithmetic or following a supplied decomposition, redesign
+the item rather than defending its difficulty label.
+
 ## Handoff
 
 Produce two question objects conforming to `schemas/question.schema.json`.

@@ -1,0 +1,69 @@
+{
+  "profile_id": "classic-assessment-v1",
+  "version": "1.0.0",
+  "source_role": "visual_only",
+  "source_exemplar": "Volume_Rectangular_Prisms_Test (1).pptx",
+  "typography": {
+    "assessment_title": {
+      "target_min_pt": 20,
+      "target_max_pt": 22,
+      "floor_pt": 18
+    },
+    "task_heading": {
+      "target_min_pt": 14,
+      "target_max_pt": 16,
+      "floor_pt": 13
+    },
+    "student_body": {
+      "target_min_pt": 11.25,
+      "target_max_pt": 12,
+      "floor_pt": 10.5
+    },
+    "essential_diagram_label": {
+      "target_min_pt": 11,
+      "target_max_pt": 12,
+      "floor_pt": 10.5
+    },
+    "mark_badge": {
+      "target_min_pt": 10.5,
+      "target_max_pt": 11.5,
+      "floor_pt": 10
+    },
+    "footer": {
+      "target_min_pt": 8.5,
+      "target_max_pt": 9.5,
+      "floor_pt": 8
+    }
+  },
+  "page": {
+    "a4_portrait": true,
+    "page1_grid": "2_columns_x_3_rows",
+    "question_cell_padding_mm": 4,
+    "gutter_mm": 4
+  },
+  "extended_response": {
+    "q7_recipe": "stimulus_diagram_working_decision",
+    "q8_recipe": "constraint_working_justification"
+  },
+  "diagram": {
+    "minimum_area_ratio_when_required": 0.16,
+    "dimension_label_min_target_pt": 11,
+    "prefer_central_prominence": true
+  },
+  "response_space": {
+    "calculation_default": "blank_unlined",
+    "written_explanation_default": "subtle_guides",
+    "multi_stage_default": "calculation_plus_decision",
+    "reserve_before_layout": true
+  },
+  "marking_key": {
+    "duplicate_student_test": true,
+    "annotation_treatment": "integrated_response_regions",
+    "max_annotation_area_ratio": 0.28
+  },
+  "rationale": {
+    "hierarchy": "navy_two_level",
+    "curriculum_table": true,
+    "callouts": true
+  }
+}

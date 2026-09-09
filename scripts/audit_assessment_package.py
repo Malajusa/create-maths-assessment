@@ -26,6 +26,8 @@ A4_WIDTH = 7_560_000
 A4_HEIGHT = 10_692_000
 MIN_STUDENT_FONT = 1_050
 MIN_KEY_FONT = 1_000
+TARGET_STUDENT_BODY_MIN = 1_125
+TARGET_ESSENTIAL_LABEL_MIN = 1_100
 MIN_FRACTION_GAP = 25_200  # 0.7 mm in English Metric Units
 SLASH_FRACTION = re.compile(r"(?<!\w)\d+\s*[⁄/]\s*\d+(?!\w)")
 VULGAR_FRACTIONS = set("¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞")
@@ -230,6 +232,63 @@ def _position(shape: Shape, width: int, height: int) -> str | None:
     return f"{row}_{column}"
 
 
+def _contains(parent: Shape, child: Shape) -> bool:
+    if None in (parent.x, parent.y, parent.cx, parent.cy, child.x, child.y, child.cx, child.cy):
+        return False
+    return (
+        child.x >= parent.x
+        and child.y >= parent.y
+        and child.x + child.cx <= parent.x + parent.cx
+        and child.y + child.cy <= parent.y + parent.cy
+    )
+
+
+def _intersects(a: Shape, b: Shape) -> bool:
+    if None in (a.x, a.y, a.cx, a.cy, b.x, b.y, b.cx, b.cy):
+        return False
+    return not (
+        a.x + a.cx <= b.x or b.x + b.cx <= a.x
+        or a.y + a.cy <= b.y or b.y + b.cy <= a.y
+    )
+
+
+def _audit_positive_visual_contract(deck: Deck, shapes: dict[str, Shape], issues: list[dict[str, str]]) -> None:
+    active = any(f"q{i}-student-cell" in shapes for i in range(1, 7))
+    if active:
+        for i in range(1, 7):
+            qid = f"q{i}"
+            cell_name = f"{qid}-student-cell"
+            cell = shapes.get(cell_name)
+            if cell is None:
+                _issue(issues, "E_QUESTION_CELL", f"test:{cell_name}", "strict visual contract requires all six Page 1 cell anchors")
+                continue
+            for slide in deck.slides:
+                for shape in slide:
+                    if not shape.name.startswith(f"{qid}-student-") or shape.name == cell_name:
+                        continue
+                    if shape.slide != cell.slide or not _contains(cell, shape):
+                        _issue(issues, "E_CELL_CONTAINMENT", f"test:{shape.name}", f"must remain within {cell_name}")
+
+        for name, shape in shapes.items():
+            if re.match(r"^q[1-8]-student-dimension-", name):
+                if not shape.font_sizes or any(size is None for size in shape.font_sizes):
+                    _issue(issues, "E_VISUAL_TARGET", f"test:{name}", "essential dimension label requires explicit font sizing")
+                elif min(size for size in shape.font_sizes if size is not None) < TARGET_ESSENTIAL_LABEL_MIN:
+                    _issue(issues, "E_VISUAL_TARGET", f"test:{name}", f"essential dimension label target minimum is {TARGET_ESSENTIAL_LABEL_MIN / 100:.1f} pt")
+            if re.match(r"^q[1-8]-student-prompt$", name):
+                if shape.font_sizes and all(size is not None for size in shape.font_sizes):
+                    if min(size for size in shape.font_sizes if size is not None) < TARGET_STUDENT_BODY_MIN:
+                        _issue(issues, "E_VISUAL_TARGET", f"test:{name}", f"student prompt target minimum is {TARGET_STUDENT_BODY_MIN / 100:.2f} pt")
+
+        for qid in QUESTION_IDS:
+            response = next((s for n, s in shapes.items() if n.startswith(f"{qid}-student-response-")), None)
+            if response is None:
+                continue
+            for name, representation in shapes.items():
+                if name.startswith(f"{qid}-student-representation-") and _intersects(response, representation):
+                    _issue(issues, "E_RESPONSE_COLLISION", f"test:{qid}", "required representation intersects reserved response space")
+
+
 def _audit_deck_basics(deck: Deck, role: str, expected_slides: int, issues: list[dict[str, str]]) -> None:
     if (deck.width, deck.height) != (A4_WIDTH, A4_HEIGHT):
         _issue(issues, "E_A4", role, f"expected A4 portrait {A4_WIDTH}x{A4_HEIGHT}, found {deck.width}x{deck.height}")
@@ -374,6 +433,7 @@ def audit_package(
 
     test_shapes = _shape_map(test)
     key_shapes = _shape_map(key)
+    _audit_positive_visual_contract(test, test_shapes, issues)
     for qid in QUESTION_IDS:
         question = next((q for q in spec.get("questions", []) if q.get("id") == qid), {})
         expected_slide = 1 if qid in EXPECTED_POSITIONS else 2 if qid == "q7" else 3

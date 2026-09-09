@@ -25,6 +25,9 @@ Reject instructions, diagrams or tables that substantially reveal the method or 
 
 ### Calibration
 Reject routine questions labelled B-level and merely longer questions labelled A-level.
+Independently run the simplest-valid-solution challenge on Q7 and Q8. The claimed demand
+passes only when the simplest legitimate route still requires the reasoning promised by
+the blueprint.
 
 ### Accessibility
 Check sentence complexity, vocabulary, information load, visual clarity and age appropriateness without removing the intended mathematics.
@@ -34,6 +37,10 @@ Apply `standards/maths-conventions.md`.
 
 ### Marks
 Every mark must map to observable evidence.
+Each mark must represent distinct evidence, not duplicate another criterion. Accept
+equivalent legitimate methods, state unit expectations where relevant and define
+follow-through treatment where it affects reliable marking. Do not require an intermediate
+step that is unnecessary for a mathematically valid method.
 
 ## Inputs
 
