@@ -39,9 +39,9 @@
       "type": "array"
     },
     "visual_spec": {
-      "type": [
-        "object",
-        "null"
+      "oneOf": [
+        {"$ref": "./visual-spec.schema.json"},
+        {"type": "null"}
       ]
     },
     "expected_solution": {

@@ -47,3 +47,7 @@ Every required defect is a barrier. There is no “non-barrier” defect class.
 
 ## Verdict
 Any failed item means `NOT READY`.
+
+## Visual-system barriers
+
+Treat a visual as a required defect when its purpose or source is undeclared, its geometry or scale claim is false, it relies on colour alone, it is illegible at printed size, its provenance is not distributable, or it changes the intended cognitive demand. Missing or inconsistent visual-profile, token-set, asset-manifest or per-question build evidence is also a barrier.

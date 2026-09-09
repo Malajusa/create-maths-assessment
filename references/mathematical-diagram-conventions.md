@@ -35,6 +35,28 @@ Apply these conventions to the student test and its duplicated marking key. Use 
 - Keep reflection lines, rotation centres, vectors and translation arrows visually distinct from shape outlines and labels.
 - Use mathematically meaningful line styles and a legend only when the distinction is not otherwise clear.
 
+## Equality, parallel and angle markers
+
+- Use matching tick counts to show equal sides. Do not use colour alone.
+- Use matching arrow marks to show parallel sides and a square marker for a right angle.
+- Keep angle arcs inside the relevant angle and clear of vertex labels.
+- Use identical marker forms only when the represented relationships are identical.
+
+## Dimensions and scale
+
+- Place dimensions beside the feature they measure, using extension lines where needed.
+- Keep units attached to their values unless one common unit is explicitly declared for the whole diagram.
+- Declare each diagram as `exact`, `to_scale`, `not_to_scale` or `schematic` in its visual specification.
+- Display `not to scale` when a student could reasonably infer scale from a non-scale drawing.
+
+## Three-dimensional objects
+
+- Use one consistent oblique or isometric projection within a task.
+- Draw visible edges as solid lines. Add dashed hidden edges only when they contribute to the assessed mathematics.
+- Render circular faces as consistent ellipses and align matching faces.
+- Use stepped neutral face fills to show depth; do not use photorealistic shading or gradients.
+- Ensure a net and its solid have matching faces, dimensions and adjacency.
+
 ## Rendering check
 
 After rendering, inspect every diagram at normal page view and zoomed view. Reject or revise any label that:

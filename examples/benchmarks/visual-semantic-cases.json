@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "purpose": "Regression cases for semantic visual decisions. Each rejected case must remain a release barrier.",
+  "accepted": [
+    {"name": "exact-canonical-figure", "reason": "Registered geometry carries information the student must interpret."},
+    {"name": "quiet-contextual-setting", "reason": "Original context clarifies the situation without sorting quantities or sequencing operations."},
+    {"name": "specific-omission", "reason": "The prose extraction is deliberately assessed and the omission reason is explicit."}
+  ],
+  "rejected": [
+    {"name": "decorative-only", "code": "E_VISUAL_PURPOSE"},
+    {"name": "solution-ready-q8", "code": "E_VISUAL_STRATEGY"},
+    {"name": "unknown-asset", "code": "E_VISUAL_SOURCE"},
+    {"name": "colour-only-cue", "code": "E_VISUAL_ACCESSIBILITY"},
+    {"name": "stale-build-hash", "code": "E_VISUAL_ASSET_HASH"},
+    {"name": "failed-greyscale-review", "code": "E_VISUAL_GREYSCALE"},
+    {"name": "reduced-rendered-demand", "code": "E_VISUAL_DEMAND"}
+  ]
+}

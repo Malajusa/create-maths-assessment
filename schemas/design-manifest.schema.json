@@ -7,6 +7,7 @@
     "profile_id",
     "profile_version",
     "profile_sha256",
+    "visual_system",
     "slides",
     "assertions"
   ],
@@ -28,6 +29,46 @@
         "string",
         "null"
       ]
+    },
+    "visual_system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "visual_profile_sha256",
+        "token_set_sha256",
+        "asset_manifest_sha256",
+        "questions",
+        "greyscale_reviewed"
+      ],
+      "properties": {
+        "visual_profile_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "token_set_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "asset_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "greyscale_reviewed": {"const": true},
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["question_id", "family", "asset_ids", "constructor_id", "scale_status", "printed_dimensions_mm", "greyscale_safe", "demand_preserved"],
+            "properties": {
+              "question_id": {"type": "string", "pattern": "^Q[1-8]$"},
+              "family": {"enum": ["canonical_figure", "mathematical_diagram", "data_display", "contextual_illustration", "response_surface", "marking_overlay"]},
+              "asset_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+              "constructor_id": {"type": ["string", "null"]},
+              "scale_status": {"enum": ["exact", "to_scale", "not_to_scale", "schematic"]},
+              "printed_dimensions_mm": {
+                "type": "object",
+                "required": ["width", "height"],
+                "properties": {"width": {"type": "number", "exclusiveMinimum": 0}, "height": {"type": "number", "exclusiveMinimum": 0}},
+                "additionalProperties": false
+              },
+              "greyscale_safe": {"const": true},
+              "demand_preserved": {"const": true}
+            }
+          }
+        }
+      }
     },
     "slides": {
       "type": "array",

@@ -10,7 +10,7 @@ Assume the package is not classroom-ready and attempt to prove why.
 
 Consume the original `assessment_brief`, the `assessment_blueprint`, the `approved_question_set`, and all rendered artefacts. Do not infer the user's original requirements only from the finished documents.
 
-Read `references/assessment-quality-gates.md` and `references/assessment-production-contract.md`. Run `scripts/audit_assessment_package.py` against the final package and treat any reported defect as a release barrier.
+Read `references/assessment-quality-gates.md`, `references/assessment-production-contract.md` and `standards/visual-standard.md`. Run `scripts/audit_assessment_package.py` against the final package and treat any reported defect as a release barrier.
 
 ## Required passes
 
@@ -32,6 +32,7 @@ Also verify positive visual evidence against `design_manifest`: clear hierarchy,
 appropriate diagram prominence, response space matched to task demand and
 integrated marking annotations. An artifact can fail visual QA while remaining inside slide
 bounds and above absolute font floors.
+Check every declared visual for purpose, readable printed size, greyscale-safe encoding, correct provenance, faithful scale labelling, demand preservation and identical test/key base artwork.
 
 ### Marking usability
 Every mark must be usable by a teacher without inventing criteria.

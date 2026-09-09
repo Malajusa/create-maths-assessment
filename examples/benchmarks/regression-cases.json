@@ -64,6 +64,9 @@
     {"name": "bordered-blank-response", "mutation": "bordered_blank_response", "expected_code": "E_RESPONSE_SCAFFOLD"},
     {"name": "vague-release-evidence", "mutation": "vague_ledger", "expected_code": "E_LEDGER_EVIDENCE"},
     {"name": "swapped-rendered-page-1-cells", "mutation": "swapped_page1_cells", "expected_code": "E_PAGE1_POSITION"},
-    {"name": "missing-rendered-fraction-model", "mutation": "missing_representation", "expected_code": "E_REPRESENTATION"}
+    {"name": "missing-rendered-fraction-model", "mutation": "missing_representation", "expected_code": "E_REPRESENTATION"},
+    {"name": "unverified-greyscale-visual", "mutation": "visual_greyscale", "expected_code": "E_VISUAL_GREYSCALE"},
+    {"name": "stale-asset-manifest-hash", "mutation": "visual_asset_hash", "expected_code": "E_VISUAL_ASSET_HASH"},
+    {"name": "visual-reduces-demand", "mutation": "visual_demand", "expected_code": "E_VISUAL_DEMAND"}
   ]
 }

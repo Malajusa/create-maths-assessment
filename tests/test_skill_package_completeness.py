@@ -16,6 +16,8 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "references/curriculum-pre-primary.md",
             *[f"references/curriculum-year-{year}.md" for year in range(1, 11)],
             "references/mathematical-diagram-conventions.md",
+            "standards/visual-standard.md",
+            "references/contextual-illustration-standard.md",
             "references/powerpoint-output.md",
             "references/q7-q8-demand-2025.md",
             "references/q7-q8-problem-solving-standard.md",
@@ -25,6 +27,10 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "scripts/audit_assessment_package.py",
             "scripts/test_assessment_workflow.py",
             "scripts/validate_assessment_spec.py",
+            "scripts/validate_visual_assets.py",
+            "schemas/visual-spec.schema.json",
+            "schemas/visual-asset-manifest.schema.json",
+            "assets/maths-visuals/v1/manifest.json",
         ]
 
         missing = [path for path in required if not (ROOT / path).is_file()]
@@ -51,7 +57,7 @@ class SkillPackageCompletenessTests(unittest.TestCase):
                 self.assertIn(link, skill)
 
     def test_version_is_bumped_for_combined_distribution(self):
-        self.assertEqual("3.4.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
+        self.assertEqual("3.5.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
 
     def test_each_stage_routes_to_its_required_production_reference(self):
         routes = {

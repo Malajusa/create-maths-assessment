@@ -35,6 +35,8 @@ Generation agents cannot certify their own work. Failed checks route back to the
 - `orchestration/pipeline.json` — machine-readable stage graph and repair routing
 - `schemas/` — contracts passed between agents
 - `standards/` — assessment, maths, exemplar and QA requirements
+- `assets/maths-visuals/` — versioned, validated canonical SVG assets and provenance manifest
+- `assets/visual-tokens/` — shared visual tokens for assessment diagrams and illustrations
 - `tests/` — deterministic repository/contract tests
 - `tests/scenarios/` — adversarial pressure scenarios for model-level skill testing
 - `docs/superpowers/specs/` — approved architecture specification
@@ -46,6 +48,7 @@ Run:
 
 ```bash
 python -m unittest discover -s tests -v
+python scripts/validate_visual_assets.py
 python scripts/validate_repository.py
 ```
 
@@ -78,6 +81,20 @@ Version 3.4 packages the enforced agent pipeline together with the production re
 - deterministic assessment-specification and package-audit scripts.
 
 `SKILL.md` and each stage-agent file route to the relevant resources. The v3.2 `approved_question_set` gate and runtime protections remain mandatory.
+
+## v3.5 assessment visual system
+
+Version 3.5 adds an assessment-native visual standard derived from the supplied quality references without copying protected artwork. It provides:
+
+- a dual-mode standard for exact mathematical figures and restrained contextual illustrations;
+- shared colour, line, spacing, accessibility and scale tokens;
+- validated, versioned SVG assets for the square, circle and equilateral triangle;
+- per-question `visual_spec` decisions covering purpose, information, removal effect, source, scale, accessibility and strategy-reveal risk;
+- Q7/Q8 safeguards that reject solution-ready illustrations;
+- design-manifest evidence for resource hashes, printed dimensions, greyscale safety and demand preservation; and
+- release-audit checks plus original proof sheets for visual calibration.
+
+Run `python scripts/validate_visual_assets.py` whenever an asset or its manifest changes. The validator rejects altered geometry, unapproved provenance, forbidden raster/text effects and stale hashes.
 
 ## v3.1 executable enforcement
 

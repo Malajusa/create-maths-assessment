@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "visual-spec.schema.json",
+  "title": "Semantic Visual Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "family",
+    "purpose",
+    "information_carried",
+    "removal_effect",
+    "scale_status",
+    "student_action",
+    "strategy_reveal_risk",
+    "source_kind",
+    "asset_ids",
+    "constructor_id",
+    "accessibility_cues",
+    "editable_required",
+    "minimum_print_dimensions_mm"
+  ],
+  "properties": {
+    "family": {
+      "enum": ["canonical_figure", "mathematical_diagram", "data_display", "contextual_illustration", "response_surface", "marking_overlay"]
+    },
+    "purpose": {"type": "string", "minLength": 12},
+    "information_carried": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 3}
+    },
+    "removal_effect": {"type": "string", "minLength": 12},
+    "scale_status": {"enum": ["exact", "to_scale", "not_to_scale", "schematic"]},
+    "student_action": {"type": "string", "minLength": 8},
+    "strategy_reveal_risk": {"enum": ["none", "reviewed_no_reveal", "preorganises_solution", "reveals_strategy"]},
+    "source_kind": {"enum": ["approved_asset", "registered_constructor", "original_contextual", "none"]},
+    "asset_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+      "uniqueItems": true
+    },
+    "constructor_id": {"type": ["string", "null"]},
+    "accessibility_cues": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 5}
+    },
+    "editable_required": {"type": "boolean"},
+    "minimum_print_dimensions_mm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "number", "exclusiveMinimum": 0},
+        "height": {"type": "number", "exclusiveMinimum": 0}
+      }
+    }
+  }
+}

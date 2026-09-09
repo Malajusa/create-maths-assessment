@@ -85,8 +85,15 @@ class PipelineController:
         ids = [question.get("id") for question in questions]
         if ids != expected_ids:
             raise PipelineError(f"question set must contain {', '.join(expected_ids)} in order")
-        question_schema = self._load_json(self.repo_root / "schemas/question.schema.json")
-        validator = Draft202012Validator(question_schema)
+        schema_path = (self.repo_root / "schemas/question.schema.json").resolve()
+        question_schema = self._load_json(schema_path)
+        effective_schema = dict(question_schema)
+        effective_schema.setdefault("$id", schema_path.as_uri())
+        registry = Registry()
+        for candidate in (self.repo_root / "schemas").glob("*.json"):
+            contents = self._load_json(candidate)
+            registry = registry.with_resource(candidate.resolve().as_uri(), Resource.from_contents(contents))
+        validator = Draft202012Validator(effective_schema, registry=registry)
         for question in questions:
             errors = sorted(validator.iter_errors(question), key=lambda e: list(e.path))
             if errors:

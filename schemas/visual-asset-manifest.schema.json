@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Maths visual asset manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "manifest_id", "version", "token_set", "assets"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "manifest_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+    "version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "token_set": {"type": "string", "pattern": "^assets/visual-tokens/.+\\.json$"},
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/asset"}
+    }
+  },
+  "$defs": {
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_id", "version", "display_name", "aliases", "family", "path",
+        "format", "view_box", "padding_units", "geometry", "year_bands",
+        "label_anchors", "allowed_transformations", "aspect_ratio_locked",
+        "scale_status", "accessibility", "provenance", "sha256",
+        "validation_status"
+      ],
+      "properties": {
+        "asset_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+        "version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+        "display_name": {"type": "string", "minLength": 1},
+        "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "family": {"const": "canonical_figure"},
+        "path": {"type": "string", "pattern": "^assets/maths-visuals/v1/.+\\.svg$"},
+        "format": {"const": "svg"},
+        "view_box": {"const": "0 0 1000 1000"},
+        "padding_units": {"type": "number", "minimum": 100},
+        "geometry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "parameters"],
+          "properties": {
+            "kind": {"enum": ["square", "circle", "equilateral_triangle"]},
+            "parameters": {"type": "object"}
+          }
+        },
+        "year_bands": {
+          "type": "array",
+          "items": {"enum": ["pre_primary_year_1", "years_2_4", "years_5_7"]},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "label_anchors": {"type": "object"},
+        "allowed_transformations": {
+          "type": "array",
+          "items": {"enum": ["uniform_scale", "rotate", "reflect", "recolour_authorised_regions"]},
+          "uniqueItems": true
+        },
+        "aspect_ratio_locked": {"const": true},
+        "scale_status": {"const": "exact"},
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["title", "description", "greyscale_safe"],
+          "properties": {
+            "title": {"type": "string", "minLength": 1},
+            "description": {"type": "string", "minLength": 1},
+            "greyscale_safe": {"const": true}
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source", "licence"],
+          "properties": {
+            "source": {"const": "project_original"},
+            "licence": {"enum": ["project-original-distributable", "CC0-1.0"]}
+          }
+        },
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "validation_status": {"const": "approved"}
+      }
+    }
+  }
+}

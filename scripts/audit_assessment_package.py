@@ -33,6 +33,7 @@ SLASH_FRACTION = re.compile(r"(?<!\w)\d+\s*[⁄/]\s*\d+(?!\w)")
 VULGAR_FRACTIONS = set("¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞")
 FRACTION_NAME = re.compile(r"^(q[1-8])-(student|key)-frac-(.+)-(num|bar|den)$")
 REQUIRED_GATES = [f"P{i:02d}" for i in range(1, 30)] + [f"R{i:02d}" for i in range(1, 19)]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 @dataclass(frozen=True)
@@ -392,6 +393,70 @@ def _audit_ledger(path: Path, spec_bytes: bytes, issues: list[dict[str, str]]) -
         _issue(issues, "E_LEDGER_OPEN", "ledger.open_items", "must be an empty list")
 
 
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _audit_visual_system(
+    spec: dict[str, Any], design_manifest_path: Path | None, issues: list[dict[str, str]]
+) -> None:
+    if design_manifest_path is None:
+        _issue(issues, "E_VISUAL_ASSET_HASH", "design_manifest", "a design manifest is required for visual-system verification")
+        return
+    try:
+        design = json.loads(design_manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        _issue(issues, "E_VISUAL_ASSET_HASH", str(design_manifest_path), str(exc))
+        return
+
+    visual = design.get("visual_system") if isinstance(design.get("visual_system"), dict) else {}
+    profile_path = REPO_ROOT / "assets/visual-profiles/classic-assessment-v1.json"
+    profile = json.loads(profile_path.read_text(encoding="utf-8"))
+    token_path = REPO_ROOT / profile["token_set"]
+    asset_manifest_path = REPO_ROOT / profile["asset_manifest"]
+    assets = json.loads(asset_manifest_path.read_text(encoding="utf-8"))["assets"]
+    known_asset_ids = {asset["asset_id"] for asset in assets if asset.get("validation_status") == "approved"}
+    expected_hashes = {
+        "visual_profile_sha256": _sha256(profile_path),
+        "token_set_sha256": _sha256(token_path),
+        "asset_manifest_sha256": _sha256(asset_manifest_path),
+    }
+    for field, expected in expected_hashes.items():
+        if visual.get(field) != expected:
+            _issue(issues, "E_VISUAL_ASSET_HASH", f"design_manifest.visual_system.{field}", "does not match the approved repository resource")
+    if design.get("profile_sha256") != expected_hashes["visual_profile_sha256"]:
+        _issue(issues, "E_VISUAL_ASSET_HASH", "design_manifest.profile_sha256", "does not match the resolved visual profile")
+    if visual.get("greyscale_reviewed") is not True:
+        _issue(issues, "E_VISUAL_GREYSCALE", "design_manifest.visual_system.greyscale_reviewed", "must record a completed greyscale review")
+
+    evidence_rows = visual.get("questions") if isinstance(visual.get("questions"), list) else []
+    evidence_by_qid = {row.get("question_id", "").casefold(): row for row in evidence_rows if isinstance(row, dict)}
+    for question in spec.get("questions", []):
+        visual_spec = question.get("visual_spec")
+        if not isinstance(visual_spec, dict):
+            continue
+        qid = question.get("id", "")
+        evidence = evidence_by_qid.get(qid)
+        if not evidence:
+            _issue(issues, "E_VISUAL_ASSET_HASH", f"design_manifest.visual_system.questions.{qid}", "required visual has no build evidence")
+            continue
+        unknown = set(evidence.get("asset_ids", [])) - known_asset_ids
+        if unknown:
+            _issue(issues, "E_VISUAL_ASSET_HASH", f"design_manifest.visual_system.questions.{qid}.asset_ids", f"contains unapproved asset IDs: {sorted(unknown)}")
+        if evidence.get("asset_ids", []) != visual_spec.get("asset_ids", []):
+            _issue(issues, "E_VISUAL_ASSET_HASH", f"design_manifest.visual_system.questions.{qid}.asset_ids", "does not match the approved visual specification")
+        if evidence.get("constructor_id") != visual_spec.get("constructor_id") or evidence.get("scale_status") != visual_spec.get("scale_status"):
+            _issue(issues, "E_VISUAL_ASSET_HASH", f"design_manifest.visual_system.questions.{qid}", "constructor or scale evidence does not match the approved visual specification")
+        dimensions = evidence.get("printed_dimensions_mm", {})
+        minimum = visual_spec.get("minimum_print_dimensions_mm", {})
+        if any(not isinstance(dimensions.get(axis), (int, float)) or dimensions[axis] < minimum.get(axis, 0) for axis in ("width", "height")):
+            _issue(issues, "E_VISUAL_ASSET_HASH", f"design_manifest.visual_system.questions.{qid}.printed_dimensions_mm", "rendered visual is smaller than its approved print minimum")
+        if evidence.get("greyscale_safe") is not True:
+            _issue(issues, "E_VISUAL_GREYSCALE", f"design_manifest.visual_system.questions.{qid}", "visual is not evidenced as greyscale-safe")
+        if evidence.get("demand_preserved") is not True:
+            _issue(issues, "E_VISUAL_DEMAND", f"design_manifest.visual_system.questions.{qid}", "visual does not preserve the approved assessment demand")
+
+
 def _extract_pdf(path: Path) -> tuple[int, list[str]]:
     try:
         import fitz  # type: ignore
@@ -407,6 +472,7 @@ def audit_package(
     key_path: Path,
     rationale_path: Path,
     ledger_path: Path,
+    design_manifest_path: Path | None = None,
 ) -> dict[str, Any]:
     issues: list[dict[str, str]] = []
     try:
@@ -553,6 +619,7 @@ def audit_package(
     except (OSError, RuntimeError, ValueError) as exc:
         _issue(issues, "E_PDF", "rationale", str(exc))
 
+    _audit_visual_system(spec, design_manifest_path, issues)
     _audit_ledger(ledger_path, spec_bytes, issues)
     return {"status": "READY" if not issues else "NOT READY", "issues": issues}
 
@@ -564,10 +631,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--key", type=Path, required=True)
     parser.add_argument("--rationale", type=Path, required=True)
     parser.add_argument("--ledger", type=Path, required=True)
+    parser.add_argument("--design-manifest", type=Path, required=True)
     parser.add_argument("--report", type=Path)
     args = parser.parse_args(argv)
 
-    report = audit_package(args.spec, args.test, args.key, args.rationale, args.ledger)
+    report = audit_package(args.spec, args.test, args.key, args.rationale, args.ledger, args.design_manifest)
     rendered = json.dumps(report, indent=2, ensure_ascii=False)
     if args.report:
         args.report.write_text(rendered + "\n", encoding="utf-8")

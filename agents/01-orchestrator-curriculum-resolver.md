@@ -6,7 +6,7 @@ Convert the user request and authoritative sources into `assessment_brief.json`.
 
 ## Responsibilities
 
-Read `references/curriculum-index.md`, then only the curriculum file for each assessed year level. Read `references/assessment-format.md` to resolve the expected package and question structure. A newer user-supplied curriculum source is authoritative.
+Read `references/curriculum-index.md`, then only the curriculum file for each assessed year level. Read `references/assessment-format.md` to resolve the expected package and question structure. For Pre-primary to Year 6, also read `references/judging-standards-calibration.md` and record it as non-authoritative calibration context. A newer user-supplied curriculum source is authoritative.
 
 Resolve:
 - year level or combined year levels;

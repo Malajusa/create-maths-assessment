@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "source_role": "visual_only",
   "source_exemplar": "Volume_Rectangular_Prisms_Test (1).pptx",
+  "token_set": "assets/visual-tokens/assessment-visual-tokens-v1.json",
+  "asset_manifest": "assets/maths-visuals/v1/manifest.json",
   "typography": {
     "assessment_title": {
       "target_min_pt": 20,

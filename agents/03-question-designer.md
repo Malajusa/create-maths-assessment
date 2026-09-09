@@ -4,7 +4,7 @@
 
 Generate Q1–Q6 only from the approved blueprint.
 
-Read `references/assessment-format.md`, `references/assessment-quality-gates.md` and, whenever visuals are used, `references/mathematical-diagram-conventions.md`.
+Read `references/assessment-format.md`, `references/assessment-quality-gates.md` and, whenever visuals are used, `standards/visual-standard.md` plus `references/mathematical-diagram-conventions.md`.
 
 ## Requirements
 
@@ -29,6 +29,8 @@ Each question must:
 - scaffolded instructions that perform the reasoning for the student.
 
 Solve each candidate question before handoff, but do not certify it.
+
+For every required visual, populate `visual_spec` with its information role, removal effect, scale status, student action, source, accessibility cues and strategy-reveal risk. Use only registered assets, registered constructors or original contextual work.
 
 ## Handoff
 
