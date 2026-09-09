@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
+
+from runtime.release_evidence import ReleaseEvidenceError, verify_release
 
 
 class PipelineError(RuntimeError):
@@ -29,6 +32,16 @@ class PipelineController:
         self.run_dir = Path(run_dir).resolve()
         self.pipeline = self._load_json(self.repo_root / "orchestration/pipeline.json")
         self.stage_ids = [stage["id"] for stage in self.pipeline["stages"]]
+        producers = {}
+        for stage in self.pipeline["stages"]:
+            produced = stage.get("produces", [])
+            for name in ([produced] if isinstance(produced, str) else produced):
+                producers[name] = stage["id"]
+        self.dependencies = {}
+        for stage in self.pipeline["stages"]:
+            consumed = stage.get("consumes", [])
+            names = [consumed] if isinstance(consumed, str) else consumed
+            self.dependencies[stage["id"]] = {producers[name] for name in names}
         self.state_path = self.run_dir / "state.json"
         self.artifact_dir = self.run_dir / "artifacts"
         self.run_dir.mkdir(parents=True, exist_ok=True)
@@ -48,6 +61,14 @@ class PipelineController:
                 "open_issues": [],
             }
             self._save_state()
+        if self.state.get("release_status") == "READY":
+            release = self.state["artifacts"].get("07-release-qa")
+            if not release:
+                raise PipelineError("release evidence: recorded release artefact is missing")
+            try:
+                self._verify_ready(self._load_json(self.run_dir / release))
+            except (OSError, ValueError) as exc:
+                raise PipelineError(f"release evidence: {exc}") from exc
 
     @staticmethod
     def _load_json(path: Path) -> Any:
@@ -60,8 +81,35 @@ class PipelineController:
 
     @property
     def expected_stage(self) -> str | None:
-        completed = len(self.state["completed_stages"])
-        return self.stage_ids[completed] if completed < len(self.stage_ids) else None
+        completed = set(self.state["completed_stages"])
+        return next((stage for stage in self.stage_ids
+                     if stage not in completed and self.dependencies[stage] <= completed), None)
+
+    def _affected_stages(self, owner: str) -> set[str]:
+        affected = {owner}
+        while True:
+            expanded = affected | {stage for stage, deps in self.dependencies.items() if deps & affected}
+            if expanded == affected:
+                return affected
+            affected = expanded
+
+    def _verify_ready(self, payload: Any) -> dict[str, str]:
+        self.validate_stage_payload("07-release-qa", payload)
+        if payload["status"] != "READY":
+            raise PipelineError("release evidence: stored release is not READY")
+        if self.state.get("open_issues"):
+            raise PipelineError("unresolved issues prevent READY")
+        if not isinstance(payload.get("evidence"), dict):
+            raise PipelineError("release evidence is required before READY")
+        build = self.state["artifacts"].get("06-document-builder")
+        content = self.state["artifacts"].get("05-maths-pedagogy-validator")
+        if not build or not content:
+            raise PipelineError("release evidence requires recorded build and content validation")
+        try:
+            return verify_release(self.repo_root, self.run_dir, self.run_dir / build,
+                                  self.run_dir / content, payload["evidence"])
+        except ReleaseEvidenceError as exc:
+            raise PipelineError(f"release evidence: {exc}") from exc
 
     def _validate_schema(self, schema_name: str, payload: Any) -> None:
         schema_path = (self.repo_root / "schemas" / schema_name).resolve()
@@ -198,6 +246,11 @@ class PipelineController:
         self._validate_against_blueprint(stage_id, payload)
         if stage_id == "05-maths-pedagogy-validator":
             self._validate_approved_question_set_against_drafts(payload)
+            if payload["content_validation"]["status"] == "PASS" and self.state.get("open_issues"):
+                raise PipelineError("unresolved issues require repair before content PASS")
+        audit = None
+        if stage_id == "07-release-qa" and payload["status"] == "READY":
+            audit = self._verify_ready(payload)
 
         artifact_path = self.artifact_dir / f"{stage_id}.json"
         artifact_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
@@ -207,11 +260,14 @@ class PipelineController:
 
         if stage_id == "05-maths-pedagogy-validator":
             validation = payload["content_validation"]
-            self.state["open_issues"] = validation["issues"]
+            remaining = {issue["id"]: issue for issue in self.state.get("open_issues", [])}
+            remaining.update({issue["id"]: issue for issue in validation["issues"]})
+            self.state["open_issues"] = list(remaining.values())
             self.state["blocked_gate"] = None if validation["status"] == "PASS" else "content"
 
         if stage_id == "07-release-qa":
             self.state["release_status"] = payload["status"]
+            self.state["release_audit"] = audit
             self.state["open_issues"] = payload["barriers"]
             self.state["blocked_gate"] = None if payload["status"] == "READY" else "release"
 
@@ -229,19 +285,33 @@ class PipelineController:
         maximum = self.pipeline["max_targeted_repairs_per_barrier"]
         if attempts > maximum:
             raise PipelineError("targeted repair limit exceeded; replace the approach")
+        # Validate before touching the recorded state or invalidating sibling work.
+        self.validate_stage_payload(owner, replacement_payload)
+        self._validate_against_blueprint(owner, replacement_payload)
+        if owner == "05-maths-pedagogy-validator":
+            self._validate_approved_question_set_against_drafts(replacement_payload)
+        previous = copy.deepcopy(self.state)
+        artifact_path = self.artifact_dir / f"{owner}.json"
+        previous_bytes = artifact_path.read_bytes() if artifact_path.exists() else None
+        affected = self._affected_stages(owner)
         self.state["repair_counts"][issue_id] = attempts
-
-        owner_index = self.stage_ids.index(owner)
-        completed = self.state["completed_stages"]
-        self.state["completed_stages"] = [s for s in completed if self.stage_ids.index(s) < owner_index]
-        for stage in list(self.state["artifacts"]):
-            if self.stage_ids.index(stage) >= owner_index:
-                del self.state["artifacts"][stage]
+        self.state["completed_stages"] = [s for s in self.state["completed_stages"] if s not in affected]
+        self.state["artifacts"] = {s: path for s, path in self.state["artifacts"].items() if s not in affected}
         self.state["blocked_gate"] = None
         self.state["release_status"] = None
-        self.state["open_issues"] = []
-        self._save_state()
-        self.record(owner, replacement_payload)
+        self.state["release_audit"] = None
+        self.state["open_issues"] = [issue for issue in self.state.get("open_issues", []) if issue["id"] != issue_id]
+        try:
+            self.record(owner, replacement_payload)
+        except Exception:
+            self.state = previous
+            if previous_bytes is None:
+                artifact_path.unlink(missing_ok=True)
+            else:
+                artifact_path.write_bytes(previous_bytes)
+            self._save_state()
+            raise
+
 
 
 def _cli() -> int:
@@ -265,8 +335,8 @@ def _cli() -> int:
     sub.add_parser("status")
 
     args = parser.parse_args()
-    ctl = PipelineController(args.repo, args.run_dir)
     try:
+        ctl = PipelineController(args.repo, args.run_dir)
         if args.command == "record":
             ctl.record(args.stage, json.loads(Path(args.artifact).read_text()))
         elif args.command == "validate":
@@ -275,7 +345,7 @@ def _cli() -> int:
             ctl.repair(args.issue_id, json.loads(Path(args.artifact).read_text()))
         elif args.command == "status":
             print(json.dumps(ctl.state, indent=2))
-    except PipelineError as exc:
+    except (PipelineError, OSError, ValueError) as exc:
         print(f"ERROR: {exc}")
         return 2
     return 0

@@ -8,7 +8,7 @@ Build only from `approved_question_set` emitted by Agent 05.
 
 Do not materially rewrite validated questions.
 
-Read `references/assessment-production-contract.md`, `references/powerpoint-output.md` and `standards/visual-standard.md` before building. Use the deterministic preflight tools in `scripts/` and stop if either rejects the package.
+Read `references/assessment-production-contract.md`, `references/powerpoint-output.md`, `standards/visual-standard.md`, `standards/project-context.md` and `standards/release-evidence.md` before building. Use the deterministic preflight tools in `scripts/` and stop if either rejects the package.
 
 Resolve one `visual_profile` before layout. Prefer a user-approved profile in the brief;
 otherwise use `assets/visual-profiles/classic-assessment-v1.json`. The profile is visual-only
@@ -32,7 +32,7 @@ Create the key by duplicating the final test and adding:
 - mark allocation;
 - acceptable alternative strategies where appropriate.
 
-Never reconstruct the assessment independently.
+Never reconstruct the assessment independently. For a key-only request, use the exact supplied presentation and record its filename and hash; do not substitute another version.
 
 Keep marking annotations integrated with the duplicated student layout. Do not cover
 essential diagrams, labels or response structure with large generic solution panels.
@@ -43,13 +43,16 @@ Create the rationale from the final assessment, not from the original plan. Incl
 
 ## Render requirement
 
-Render every page/slide for downstream visual inspection.
+Render every page/slide for downstream visual inspection, including the rationale. Keep each full-page PNG inside the run directory at no less than 1240 × 1754 pixels; thumbnails and contact sheets alone are insufficient. Hash the final source files and renders after the last edit.
 
 Emit `design_manifest` conforming to `schemas/design-manifest.schema.json` and persist the
 same object as `design-manifest.json` with the package. Record the exact visual-profile hash,
 slide recipes and measured typography/area metrics. Do not claim a visual rule was applied
 unless it can be evidenced in the rendered package.
 Resolve every visual from its `visual_spec`. Record visual-profile, token-set and asset-manifest hashes; per-question asset or constructor IDs; scale state; printed dimensions; greyscale evidence; and demand-preservation evidence in `design_manifest.visual_system`.
+
+Persist the assessment specification and authoring QA ledger for Agent 07. Do not fill in independent-review evidence on the reviewer's behalf. Recording a build is not release authorisation.
+
 ## Output discipline
 
 Use the structured contracts in `schemas/`. Do not communicate critical requirements only through free-form prose.

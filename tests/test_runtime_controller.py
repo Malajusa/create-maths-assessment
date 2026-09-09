@@ -143,7 +143,7 @@ class RuntimeControllerTests(unittest.TestCase):
         with self.assertRaisesRegex(PipelineError, "must exactly match the validated Q1-Q8 drafts"):
             ctl.record("05-maths-pedagogy-validator", bad)
 
-    def test_valid_fixture_can_reach_ready(self):
+    def test_structural_fixture_cannot_release_without_real_evidence(self):
         ctl = self.make_controller()
         sequence = [
             ("01-orchestrator-curriculum-resolver", "01-brief.json"),
@@ -152,13 +152,35 @@ class RuntimeControllerTests(unittest.TestCase):
             ("04-complex-problem-specialist", "04-q7-q8.json"),
             ("05-maths-pedagogy-validator", "05-validation.json"),
             ("06-document-builder", "06-build.json"),
-            ("07-release-qa", "07-release.json"),
         ]
         for stage, file in sequence:
             payload = approved_pass_payload() if stage == "05-maths-pedagogy-validator" else load(f"fixtures/gold/minimal-run/{file}")
             ctl.record(stage, payload)
-        self.assertEqual("READY", ctl.state["release_status"])
-        self.assertEqual(sequence[-1][0], ctl.state["completed_stages"][-1])
+        with self.assertRaisesRegex(PipelineError, "release evidence"):
+            ctl.record("07-release-qa", load("fixtures/gold/minimal-run/07-release.json"))
+        self.assertIsNone(ctl.state["release_status"])
+        self.assertEqual("07-release-qa", ctl.expected_stage)
+
+    def test_real_question_repair_preserves_sibling_draft(self):
+        ctl = self.make_controller()
+        for stage, file in [
+            ("01-orchestrator-curriculum-resolver", "01-brief.json"),
+            ("02-assessment-blueprint", "02-blueprint.json"),
+            ("03-question-designer", "03-q1-q6.json"),
+            ("04-complex-problem-specialist", "04-q7-q8.json"),
+        ]:
+            ctl.record(stage, load(f"fixtures/gold/minimal-run/{file}"))
+        sibling = ctl.run_dir / ctl.state["artifacts"]["04-complex-problem-specialist"]
+        before = sibling.read_bytes()
+        ctl.record("05-maths-pedagogy-validator", {"content_validation": {"status": "FAIL", "issues": [{
+            "id": "M1", "owner": "03-question-designer", "category": "mathematical_error",
+            "description": "Wrong answer", "required_fix": "Correct and revalidate"}]}})
+        ctl.repair("M1", load("fixtures/gold/minimal-run/03-q1-q6.json"))
+        self.assertIn("04-complex-problem-specialist", ctl.state["artifacts"])
+        self.assertEqual(before, sibling.read_bytes())
+        self.assertEqual("05-maths-pedagogy-validator", ctl.expected_stage)
+        ctl.record("05-maths-pedagogy-validator", approved_pass_payload())
+        self.assertEqual("06-document-builder", ctl.expected_stage)
 
 
 if __name__ == "__main__":

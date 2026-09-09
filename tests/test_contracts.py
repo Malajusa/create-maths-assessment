@@ -64,7 +64,9 @@ class ContractTests(unittest.TestCase):
         pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
         self.assertEqual("READY", pipeline["release_gate"]["pass_status"])
         self.assertEqual("NOT READY", pipeline["release_gate"]["fail_status"])
-        self.assertEqual("open_barrier_count == 0", pipeline["release_gate"]["pass_condition"])
+        self.assertEqual("open_barrier_count == 0 && current_release_evidence_verified", pipeline["release_gate"]["pass_condition"])
+        self.assertTrue(pipeline["release_gate"]["evidence_required"])
+        self.assertEqual("runtime/release_evidence.py", pipeline["release_gate"]["evidence_guard"])
 
     def test_q7_q8_independence_is_canonical(self):
         skill = (ROOT / "SKILL.md").read_text()
@@ -105,4 +107,4 @@ class V31RepositoryTests(unittest.TestCase):
         version = (ROOT / "VERSION").read_text().strip()
         pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
         self.assertEqual(version, pipeline["version"])
-        self.assertEqual("3.5.0", version)
+        self.assertEqual("3.6.0", version)

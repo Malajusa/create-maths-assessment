@@ -57,7 +57,7 @@ class SkillPackageCompletenessTests(unittest.TestCase):
                 self.assertIn(link, skill)
 
     def test_version_is_bumped_for_combined_distribution(self):
-        self.assertEqual("3.5.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
+        self.assertEqual("3.6.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
 
     def test_each_stage_routes_to_its_required_production_reference(self):
         routes = {

@@ -18,7 +18,6 @@ def _load(path: Path):
 
 def run_fixtures(root: Path) -> list[dict[str, object]]:
     results: list[dict[str, object]] = []
-
     sequence = [
         ("01-orchestrator-curriculum-resolver", "01-brief.json"),
         ("02-assessment-blueprint", "02-blueprint.json"),
@@ -31,10 +30,16 @@ def run_fixtures(root: Path) -> list[dict[str, object]]:
     with tempfile.TemporaryDirectory() as tmp:
         ctl = PipelineController(root, Path(tmp))
         try:
-            for stage, filename in sequence:
+            for stage, filename in sequence[:-1]:
                 ctl.record(stage, _load(root / "fixtures/gold/minimal-run" / filename))
-            passed = ctl.state["release_status"] == "READY"
-            detail = "reached READY" if passed else f"release_status={ctl.state['release_status']}"
+            try:
+                ctl.record(sequence[-1][0], _load(root / "fixtures/gold/minimal-run" / sequence[-1][1]))
+            except PipelineError as exc:
+                passed = "release evidence" in str(exc) and ctl.state["release_status"] is None
+                detail = "structural stages accepted; synthetic READY correctly blocked: " + str(exc)
+            else:
+                passed = False
+                detail = "synthetic fixture incorrectly reached READY without real release evidence"
         except Exception as exc:
             passed = False
             detail = str(exc)
@@ -57,7 +62,6 @@ def run_fixtures(root: Path) -> list[dict[str, object]]:
                 passed = False
                 detail = "invalid fixture was accepted"
         results.append({"fixture": fixture, "passed": passed, "detail": detail})
-
     return results
 
 

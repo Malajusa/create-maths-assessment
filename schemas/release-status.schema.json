@@ -59,6 +59,9 @@
         },
         "additionalProperties": true
       }
+    },
+    "evidence": {
+      "$ref": "./release-evidence.schema.json"
     }
   }
 }
