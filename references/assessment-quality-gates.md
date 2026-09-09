@@ -208,3 +208,6 @@ For creation and revision, retain these working artefacts until release:
 - rendered images or PDFs used for the 100%-scale visual inspection.
 
 The specification validator and package auditor are compulsory controls. Run them as described in `assessment-production-contract.md`. Automated checks do not judge natural language, curriculum validity, mathematical demand or visual usefulness; those remain human-review gates and must be supported by specific evidence in both review passes.
+# Visual evidence gate
+
+Apply `standards/visual-standard.md` to every visual. Confirm that its declared purpose and removal effect match the assessed construct, mathematical information is accurate, colour is not the sole cue, print dimensions are legible and Q7/Q8 demand is preserved. A decorative, untraceable or solution-ready visual fails the content gate.

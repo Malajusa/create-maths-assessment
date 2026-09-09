@@ -1,0 +1,57 @@
+{
+  "token_set_id": "assessment-visual-tokens-v1",
+  "version": "1.0.0",
+  "colours": {
+    "primary_outline": "#1F2937",
+    "canonical_fill": "#F8FAFC",
+    "secondary_fill": "#E5E7EB",
+    "tertiary_fill": "#CBD5E1",
+    "grid": "#CBD5E1",
+    "construction": "#64748B",
+    "marking_overlay": "#0B63CE",
+    "paper": "#FFFFFF"
+  },
+  "strokes_pt": {
+    "primary_geometry": 1.5,
+    "axis_or_mirror": 1.5,
+    "grid": 0.5,
+    "leader": 0.8,
+    "hidden_edge": 0.8,
+    "marking_overlay": 1.5
+  },
+  "markers": {
+    "line_cap": "round",
+    "geometric_join": "miter",
+    "leader_join": "round",
+    "hidden_edge_dash": [4, 3],
+    "arrowhead": "triangle"
+  },
+  "svg": {
+    "canonical_view_box": "0 0 1000 1000",
+    "transparent_outer_background": true,
+    "padding_units": 150,
+    "authoritative_format": "svg",
+    "png_fallback_px": 2000,
+    "preserve_aspect_ratio": true
+  },
+  "print_minimums_mm": {
+    "canonical_figure_width": 20,
+    "mathematical_diagram_width": 35,
+    "data_display_width": 45,
+    "contextual_illustration_width": 28,
+    "essential_label_height": 3.7
+  },
+  "accessibility": {
+    "greyscale_required": true,
+    "colour_never_sole_cue": true,
+    "minimum_text_contrast_ratio": 4.5,
+    "minimum_large_graphic_contrast_ratio": 3.0,
+    "photocopy_check_required": true,
+    "a4_100_percent_check_required": true
+  },
+  "marking_overlay": {
+    "colour": "#0B63CE",
+    "requires_non_colour_cue": true,
+    "student_visual_must_remain_unchanged": true
+  }
+}

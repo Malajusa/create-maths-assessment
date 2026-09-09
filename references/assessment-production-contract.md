@@ -120,6 +120,7 @@ python scripts/audit_assessment_package.py \
   --key Topic_Marking_Key.pptx \
   --rationale Topic_Curriculum_Rationale.pdf \
   --ledger release-ledger.json \
+  --design-manifest design-manifest.json \
   --report assessment-audit.json
 ```
 
@@ -142,3 +143,6 @@ python scripts/test_assessment_workflow.py
 The regression suite must accept the controlled positive specification and reject cases representing the failures that prompted this contract: swapped Page 1 cells, missing fraction visuals, self-answering or artificial wording, routine Q8 demand, undeclared extension content, redundant response scaffolds, touching fractions and sub-10 pt marking annotations.
 
 When a new defect reaches review, add a failing fixture before changing the rule or script. Keep the fixture focused on the invariant that failed; do not turn one topic-specific preference into a universal rule.
+# Visual-system evidence
+
+The builder must resolve the selected visual profile, token set and asset manifest before layout. `design_manifest.visual_system` records their SHA-256 hashes and one entry for every rendered question visual: asset IDs or constructor ID, family, scale state, measured printed dimensions, greyscale review and demand-preservation review. Student-test and marking-key base visuals must remain identical; marking overlays are additive.

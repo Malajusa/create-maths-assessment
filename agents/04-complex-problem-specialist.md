@@ -4,7 +4,7 @@
 
 Generate Q7 and Q8 as two independent complex problems.
 
-Read both `references/q7-q8-problem-solving-standard.md` and `references/q7-q8-demand-2025.md` before drafting or repairing either problem.
+Read `standards/visual-standard.md`, `references/contextual-illustration-standard.md`, `references/q7-q8-problem-solving-standard.md` and `references/q7-q8-demand-2025.md` before drafting or repairing either problem.
 
 ## Q7
 
@@ -35,6 +35,8 @@ simplest legitimate route and identify the decision, inference, interacting cons
 evaluation or justification the student must contribute. If the simplest valid route is
 routine substitution, repeated arithmetic or following a supplied decomposition, redesign
 the item rather than defending its difficulty label.
+
+When a visual is proposed, test the prose-first task both with and without it. Reject the visual if it sorts quantities, sequences operations, reveals a strategy or otherwise reduces the intended Q7/Q8 demand.
 
 ## Handoff
 

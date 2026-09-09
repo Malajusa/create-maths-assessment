@@ -7,6 +7,8 @@
     "profile_id",
     "version",
     "source_role",
+    "token_set",
+    "asset_manifest",
     "typography",
     "page",
     "extended_response",
@@ -32,6 +34,14 @@
         "string",
         "null"
       ]
+    },
+    "token_set": {
+      "type": "string",
+      "pattern": "^assets/visual-tokens/[a-z0-9][a-z0-9_-]*\\.json$"
+    },
+    "asset_manifest": {
+      "type": "string",
+      "pattern": "^assets/maths-visuals/v[0-9]+/manifest\\.json$"
     },
     "typography": {
       "type": "object",

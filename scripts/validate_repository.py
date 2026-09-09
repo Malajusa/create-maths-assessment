@@ -2,6 +2,8 @@ from pathlib import Path
 import json
 import sys
 
+from validate_visual_assets import validate_manifest
+
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED = [
@@ -22,6 +24,16 @@ REQUIRED = [
     "standards/maths-conventions.md",
     "standards/exemplar-policy.md",
     "standards/qa-barriers.md",
+    "standards/visual-standard.md",
+    "references/contextual-illustration-standard.md",
+    "assets/visual-tokens/assessment-visual-tokens-v1.json",
+    "assets/maths-visuals/v1/manifest.json",
+    "assets/maths-visuals/v1/canonical-figures/square.svg",
+    "assets/maths-visuals/v1/canonical-figures/circle.svg",
+    "assets/maths-visuals/v1/canonical-figures/equilateral-triangle.svg",
+    "schemas/visual-spec.schema.json",
+    "schemas/visual-asset-manifest.schema.json",
+    "scripts/validate_visual_assets.py",
 ]
 REQUIRED += [f"agents/0{i}-{name}.md" for i, name in [
     (1, "orchestrator-curriculum-resolver"),
@@ -48,8 +60,8 @@ if len(stages) != 7 or len(set(stages)) != 7:
 version = (ROOT / "VERSION").read_text().strip()
 if pipeline["version"] != version:
     raise SystemExit("VERSION must match orchestration/pipeline.json version.")
-if version != "3.4.0":
-    raise SystemExit("Expected v3.4.0 repository contract.")
+if version != "3.5.0":
+    raise SystemExit("Expected v3.5.0 repository contract.")
 if not pipeline.get("runtime_enforced"):
     raise SystemExit("Pipeline must declare runtime_enforced=true.")
 if pipeline.get("controller") != "runtime/controller.py":
@@ -73,5 +85,11 @@ for phrase in ["Q7 and Q8 are independent", "READY", "NOT READY"]:
 fixture_files = list((ROOT / "fixtures/failures").glob("*/*.json"))
 if len(fixture_files) < 3:
     raise SystemExit("At least three known failure fixtures are required.")
+
+visual_issues = validate_manifest(ROOT, ROOT / "assets/maths-visuals/v1/manifest.json")
+if visual_issues:
+    for issue in visual_issues:
+        print(f"{issue['code']} {issue['path']}: {issue['message']}")
+    raise SystemExit("Visual asset validation failed.")
 
 print("Repository validation passed.")

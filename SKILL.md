@@ -28,13 +28,17 @@ Read `orchestration/pipeline.json` for routing and retry rules.
 Load references progressively, but never omit a reference required for the current stage:
 
 - Every task: `references/assessment-format.md` and `references/curriculum-index.md`, followed by only the curriculum file for each assessed year level.
+- Pre-primary to Year 6 creation, revision or review: `references/judging-standards-calibration.md`. Use it only as a loose grade-demand reference; it is not current curriculum authority.
 - Creation, revision or review: `references/assessment-quality-gates.md`.
 - Creation or revision: `references/assessment-production-contract.md`.
 - Q7 or Q8 drafting/review: `references/q7-q8-problem-solving-standard.md` and `references/q7-q8-demand-2025.md`.
 - Any PowerPoint deliverable: `references/powerpoint-output.md`.
 - Any diagram, geometric figure, graph, number line or labelled shape: `references/mathematical-diagram-conventions.md`.
+- Any visual decision or rendered visual: `standards/visual-standard.md`; also load `references/contextual-illustration-standard.md` for situated problem-solving art.
 
 Task-specific curriculum documents supplied by the user override bundled curriculum references. Preserve curriculum codes and scope exactly; do not invent, merge or silently alter them.
+
+The 2016 judging standards must never override the 2026 curriculum, current canonical standards or an explicit user instruction. Do not use them as a checklist or import superseded content merely because it appears in an older descriptor.
 
 ## Canonical standards
 
@@ -44,6 +48,7 @@ Before producing content, load:
 - `standards/maths-conventions.md`
 - `standards/exemplar-policy.md`
 - `standards/qa-barriers.md`
+- `standards/visual-standard.md`
 
 Explicit user instructions override defaults. Current canonical standards override older exemplars where they conflict.
 

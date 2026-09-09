@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="794" height="1123" viewBox="0 0 794 1123">
+  <title>Contextual problem-page visual proof</title>
+  <desc>An original assessment page with prose, an exact patio diagram, working space and a greyscale-safe marking overlay example.</desc>
+  <rect width="794" height="1123" fill="#FFFFFF"/>
+  <text x="62" y="72" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#1F2937">7  Garden plan</text>
+  <text x="704" y="72" text-anchor="end" font-family="Arial, sans-serif" font-size="17" fill="#475569">4 marks</text>
+  <g font-family="Arial, sans-serif" font-size="20" fill="#1F2937">
+    <text x="62" y="125">A rectangular patio is 6 m long and 4 m wide.</text>
+    <text x="62" y="157">A square garden bed with side length 2 m is built in one corner.</text>
+    <text x="62" y="189">What area is left for paving? Show how you worked it out.</text>
+  </g>
+  <g transform="translate(208 250)">
+    <rect x="0" y="0" width="378" height="252" fill="#F8FAFC" stroke="#1F2937" stroke-width="5"/>
+    <rect x="0" y="126" width="126" height="126" fill="#E2E8F0" stroke="#1F2937" stroke-width="5"/>
+    <line x1="0" y1="-22" x2="378" y2="-22" stroke="#475569" stroke-width="2"/>
+    <path d="M0 -29 V-15 M378 -29 V-15" stroke="#475569" stroke-width="2"/>
+    <text x="189" y="-34" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#1F2937">6 m</text>
+    <line x1="400" y1="0" x2="400" y2="252" stroke="#475569" stroke-width="2"/>
+    <path d="M393 0 H407 M393 252 H407" stroke="#475569" stroke-width="2"/>
+    <text x="427" y="132" font-family="Arial, sans-serif" font-size="18" fill="#1F2937">4 m</text>
+    <text x="63" y="196" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#1F2937">2 m × 2 m</text>
+  </g>
+  <text x="62" y="580" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#475569">WORKING SPACE</text>
+  <line x1="62" y1="602" x2="732" y2="602" stroke="#CBD5E1" stroke-width="2"/>
+  <g transform="translate(62 930)" font-family="Arial, sans-serif">
+    <rect width="670" height="118" rx="10" fill="#F8FAFC" stroke="#475569" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="20" y="34" font-size="15" font-weight="700" fill="#1F2937">MARKING OVERLAY EXAMPLE — key only</text>
+    <text x="20" y="65" font-size="16" fill="#1F2937">✓ Patio: 24 m²   ✓ Garden: 4 m²   ✓ Paving: 20 m²</text>
+    <text x="20" y="94" font-size="15" fill="#475569">Ticks, labels and boundary style remain meaningful without colour.</text>
+  </g>
+</svg>

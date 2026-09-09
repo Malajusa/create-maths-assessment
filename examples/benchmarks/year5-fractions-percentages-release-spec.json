@@ -83,6 +83,21 @@
         "omission_reason": "",
         "instance_ids": ["eighth-strips"]
       },
+      "visual_spec": {
+        "family": "mathematical_diagram",
+        "purpose": "Make equal-sized eighths available as mathematical evidence for the addition.",
+        "information_carried": ["Both addends use equal-sized eighths", "The shaded parts may be combined"],
+        "removal_effect": "The question would no longer assess calculation from the stated visual model.",
+        "scale_status": "exact",
+        "student_action": "Read and combine the represented eighths.",
+        "strategy_reveal_risk": "reviewed_no_reveal",
+        "source_kind": "registered_constructor",
+        "asset_ids": [],
+        "constructor_id": "fraction-strip-eighths-v1",
+        "accessibility_cues": ["Equal partitions remain distinguishable in greyscale", "Labels and boundaries do not rely on colour alone"],
+        "editable_required": true,
+        "minimum_print_dimensions_mm": {"width": 55, "height": 18}
+      },
       "response_space": {
         "kind": "compact_final_answer",
         "labels": ["Answer:"],
@@ -172,6 +187,21 @@
         "mathematical_purpose": "Elicits conversion of one whole to eight eighths and shows the removed parts.",
         "omission_reason": "",
         "instance_ids": ["whole-eighths-strip"]
+      },
+      "visual_spec": {
+        "family": "response_surface",
+        "purpose": "Provide an exact partitioned whole on which the student can model subtraction.",
+        "information_carried": ["One whole contains eight equal parts"],
+        "removal_effect": "The required modelling action and its observable evidence would be removed.",
+        "scale_status": "exact",
+        "student_action": "Mark three eighths as removed and interpret the remainder.",
+        "strategy_reveal_risk": "reviewed_no_reveal",
+        "source_kind": "registered_constructor",
+        "asset_ids": [],
+        "constructor_id": "editable-fraction-strip-eighths-v1",
+        "accessibility_cues": ["Partition boundaries remain visible in greyscale", "Student marks need not rely on colour"],
+        "editable_required": true,
+        "minimum_print_dimensions_mm": {"width": 60, "height": 18}
       },
       "response_space": {
         "kind": "blank_unlined",
@@ -266,6 +296,21 @@
         "mathematical_purpose": "Shows the combined thirteen tenths extending beyond one whole without changing the size of each part.",
         "omission_reason": "",
         "instance_ids": ["tenths-strips"]
+      },
+      "visual_spec": {
+        "family": "mathematical_diagram",
+        "purpose": "Represent equal tenths across two strips while preserving the need to select a combining strategy.",
+        "information_carried": ["Both quantities use equal tenths", "The combined amount may exceed one whole"],
+        "removal_effect": "The item would cease to assess addition and verification using fraction strips.",
+        "scale_status": "exact",
+        "student_action": "Combine the represented tenths and use the diagram as one possible check.",
+        "strategy_reveal_risk": "reviewed_no_reveal",
+        "source_kind": "registered_constructor",
+        "asset_ids": [],
+        "constructor_id": "fraction-strip-tenths-v1",
+        "accessibility_cues": ["Equal partitions remain distinguishable in greyscale", "Boundaries and labels do not rely on colour alone"],
+        "editable_required": true,
+        "minimum_print_dimensions_mm": {"width": 60, "height": 28}
       },
       "response_space": {
         "kind": "blank_unlined",

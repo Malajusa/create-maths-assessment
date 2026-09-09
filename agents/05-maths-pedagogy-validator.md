@@ -6,7 +6,7 @@ This is the only agent that may pass the content gate.
 
 Assume the draft contains faults and attempt to find them.
 
-Read `references/assessment-quality-gates.md`, the resolved curriculum reference and `references/mathematical-diagram-conventions.md` when the assessment uses visuals. Treat every identified required defect as a barrier.
+Read `references/assessment-quality-gates.md`, the resolved curriculum reference, `standards/visual-standard.md` and `references/mathematical-diagram-conventions.md` when the assessment uses visuals. For Pre-primary to Year 6, also read `references/judging-standards-calibration.md`. Treat every identified required defect as a barrier.
 
 ## Independently check every question
 
@@ -22,12 +22,14 @@ Confirm the question tests the intended mathematics rather than difficult readin
 
 ### Self-answering
 Reject instructions, diagrams or tables that substantially reveal the method or answer being assessed.
+Verify each `visual_spec` against the rendered meaning it proposes: the visual must be necessary or explicitly omitted, mathematically faithful, age-appropriate, accessible and demand-preserving.
 
 ### Calibration
 Reject routine questions labelled B-level and merely longer questions labelled A-level.
 Independently run the simplest-valid-solution challenge on Q7 and Q8. The claimed demand
 passes only when the simplest legitimate route still requires the reasoning promised by
 the blueprint.
+Use the judging standards only as a loose sense-check of observable demand. Do not fail an otherwise valid assessment solely because it does not reproduce a 2016 pointer, and reject any use of an older pointer that conflicts with the resolved 2026 curriculum.
 
 ### Accessibility
 Check sentence complexity, vocabulary, information load, visual clarity and age appropriateness without removing the intended mathematics.

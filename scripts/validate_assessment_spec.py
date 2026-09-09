@@ -50,6 +50,13 @@ DEPENDENCY_FEATURES = {"interacting_constraints", "inference", "dependent_result
 VULGAR_FRACTIONS = set("¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞")
 SLASH_FRACTION = re.compile(r"(?<!\w)\d+\s*[⁄/]\s*\d+(?!\w)")
 SAFE_ID = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
+VISUAL_FAMILIES = {
+    "canonical_figure", "mathematical_diagram", "data_display",
+    "contextual_illustration", "response_surface", "marking_overlay",
+}
+VISUAL_SCALE_STATES = {"exact", "to_scale", "not_to_scale", "schematic"}
+VISUAL_SOURCE_KINDS = {"approved_asset", "registered_constructor", "original_contextual", "none"}
+VISUAL_STRATEGY_RISKS = {"none", "reviewed_no_reveal", "preorganises_solution", "reveals_strategy"}
 
 
 def _text(value: Any) -> str:
@@ -81,6 +88,56 @@ def _contains_banned_fraction_notation(value: Any) -> bool:
     if not isinstance(value, str):
         return False
     return bool(SLASH_FRACTION.search(value) or any(ch in value for ch in VULGAR_FRACTIONS))
+
+
+def _validate_visual_spec(
+    errors: list[dict[str, str]], visual_spec: Any, representation: dict[str, Any], qid: str, path: str
+) -> None:
+    required = representation.get("required") is True
+    if visual_spec is None:
+        if required:
+            _error(errors, "E_VISUAL_PURPOSE", path, "a required representation needs a semantic visual specification")
+        return
+    if not isinstance(visual_spec, dict):
+        _error(errors, "E_VISUAL_PURPOSE", path, "must be an object or null")
+        return
+
+    purpose = _text(visual_spec.get("purpose"))
+    removal_effect = _text(visual_spec.get("removal_effect"))
+    information = _list(visual_spec.get("information_carried"))
+    if not purpose or "decorat" in purpose.casefold() or not removal_effect or not information:
+        _error(errors, "E_VISUAL_PURPOSE", path, "must declare a non-decorative purpose, information carried and removal effect")
+    if visual_spec.get("family") not in VISUAL_FAMILIES:
+        _error(errors, "E_VISUAL_PURPOSE", f"{path}.family", "has an unsupported visual family")
+    if visual_spec.get("scale_status") not in VISUAL_SCALE_STATES:
+        _error(errors, "E_VISUAL_SCALE", f"{path}.scale_status", "has an unsupported scale status")
+
+    risk = visual_spec.get("strategy_reveal_risk")
+    if risk not in VISUAL_STRATEGY_RISKS:
+        _error(errors, "E_VISUAL_STRATEGY", f"{path}.strategy_reveal_risk", "has an unsupported strategy-risk decision")
+    if qid in {"q7", "q8"} and risk in {"preorganises_solution", "reveals_strategy"}:
+        _error(errors, "E_VISUAL_STRATEGY", f"{path}.strategy_reveal_risk", "Q7/Q8 visuals must not organise or reveal the solution strategy")
+
+    source = visual_spec.get("source_kind")
+    asset_ids = _list(visual_spec.get("asset_ids"))
+    constructor_id = visual_spec.get("constructor_id")
+    if source not in VISUAL_SOURCE_KINDS:
+        _error(errors, "E_VISUAL_SOURCE", f"{path}.source_kind", "has an unsupported visual source")
+    elif source == "approved_asset" and not asset_ids:
+        _error(errors, "E_VISUAL_SOURCE", f"{path}.asset_ids", "approved assets require at least one registered asset ID")
+    elif source == "registered_constructor" and not _text(constructor_id):
+        _error(errors, "E_VISUAL_SOURCE", f"{path}.constructor_id", "registered constructors require a constructor ID")
+    elif source in {"original_contextual", "none"} and (asset_ids or _text(constructor_id)):
+        _error(errors, "E_VISUAL_SOURCE", path, "this source kind must not claim a registered asset or constructor")
+
+    cues = [str(cue).casefold() for cue in _list(visual_spec.get("accessibility_cues"))]
+    if not cues or not any("greyscale" in cue or "color" in cue or "colour" in cue for cue in cues):
+        _error(errors, "E_VISUAL_ACCESSIBILITY", f"{path}.accessibility_cues", "must record a greyscale or non-colour cue")
+    if not _text(visual_spec.get("student_action")):
+        _error(errors, "E_VISUAL_DEMAND", f"{path}.student_action", "must state what the student does with the visual")
+    dimensions = _dict(visual_spec.get("minimum_print_dimensions_mm"))
+    if not all(isinstance(dimensions.get(key), (int, float)) and dimensions[key] > 0 for key in ("width", "height")):
+        _error(errors, "E_VISUAL_SCALE", f"{path}.minimum_print_dimensions_mm", "must declare positive printed dimensions")
 
 
 def validate_spec(spec: Any) -> list[dict[str, str]]:
@@ -266,6 +323,8 @@ def validate_spec(spec: Any) -> list[dict[str, str]]:
                 _error(errors, "E_REPRESENTATION", f"{path}.representation.instance_ids", "omitted representation must not declare instances")
         if q.get("topic_kind") == "fractions" and qid in QUESTION_IDS[:6] and representation_required is not True:
             _error(errors, "E_FRACTION_VISUAL", f"{path}.representation", "fraction questions Q1-Q6 require a purposeful visual model")
+
+        _validate_visual_spec(errors, q.get("visual_spec"), representation, qid, f"{path}.visual_spec")
 
         notation = _dict(q.get("notation"))
         student_fraction_ids = _list(notation.get("student_fraction_instance_ids"))

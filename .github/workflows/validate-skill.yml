@@ -22,5 +22,7 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Structural validation
         run: python scripts/validate_repository.py
+      - name: Canonical visual assets
+        run: python scripts/validate_visual_assets.py
       - name: Regression fixtures
         run: python scripts/run_regression_fixtures.py

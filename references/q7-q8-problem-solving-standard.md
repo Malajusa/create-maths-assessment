@@ -16,6 +16,8 @@ Use two independent, self-contained complex problems:
 - The questions may assess the same curriculum topic, but each must provide all information needed to solve it independently.
 - Both questions are prose-first word problems. Students must extract the relevant values, conditions and relationships from sentences.
 - Do not pre-organise the scenario into a table, labelled list or data display that identifies what each value is for. A diagram, graph, number line, table or model may accompany the prose only when interpreting that representation is part of the assessed mathematics.
+- Any visual must include a `visual_spec` demand review. Reject `strategy_reveal_risk` values of `preorganises_solution` or `reveals_strategy`; removing the illustration must not remove a strategy the student was expected to select.
+- Contextual illustrations may establish a setting or make a physical constraint perceivable, but must not pre-solve, sort the quantities, sequence operations or turn prose extraction into copying.
 
 ## Q7: main-problem demand
 

@@ -251,6 +251,53 @@ def _write_ledger(path: Path, spec_path: Path, mutation: str | None = None) -> N
     path.write_text(json.dumps(ledger, indent=2) + "\n", encoding="utf-8")
 
 
+def _write_design_manifest(path: Path, spec: dict, mutation: str | None = None) -> None:
+    profile_path = ROOT / "assets/visual-profiles/classic-assessment-v1.json"
+    profile = json.loads(profile_path.read_text(encoding="utf-8"))
+    token_path = ROOT / profile["token_set"]
+    asset_manifest_path = ROOT / profile["asset_manifest"]
+    digest = lambda item: hashlib.sha256(item.read_bytes()).hexdigest()
+    questions = []
+    for question in spec["questions"]:
+        visual = question.get("visual_spec")
+        if not isinstance(visual, dict):
+            continue
+        questions.append({
+            "question_id": question["id"].upper(),
+            "family": visual["family"],
+            "asset_ids": visual["asset_ids"],
+            "constructor_id": visual["constructor_id"],
+            "scale_status": visual["scale_status"],
+            "printed_dimensions_mm": visual["minimum_print_dimensions_mm"],
+            "greyscale_safe": mutation != "visual_greyscale",
+            "demand_preserved": mutation != "visual_demand",
+        })
+    manifest = {
+        "profile_id": profile["profile_id"],
+        "profile_version": profile["version"],
+        "profile_sha256": digest(profile_path),
+        "visual_system": {
+            "visual_profile_sha256": digest(profile_path),
+            "token_set_sha256": digest(token_path),
+            "asset_manifest_sha256": "0" * 64 if mutation == "visual_asset_hash" else digest(asset_manifest_path),
+            "questions": questions,
+            "greyscale_reviewed": True,
+        },
+        "slides": [
+            {"slide_number": number, "recipe": recipe, "metrics": {"minimum_student_body_pt": 11.25, "response_area_ratio": 0.3}}
+            for number, recipe in enumerate(("page1_grid", "extended_response", "extended_response"), start=1)
+        ],
+        "assertions": {
+            "hierarchy_clear": True,
+            "page_balance_reviewed": True,
+            "required_diagrams_prominent": True,
+            "response_space_matches_demand": True,
+            "key_annotations_integrated": True,
+        },
+    }
+    path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+
 def _run_package_case(spec: dict, mutation: str | None) -> dict:
     with tempfile.TemporaryDirectory(prefix="maths-assessment-regression-") as temp_dir:
         temp = Path(temp_dir)
@@ -259,12 +306,14 @@ def _run_package_case(spec: dict, mutation: str | None) -> dict:
         key_path = temp / "key.pptx"
         rationale_path = temp / "rationale.pdf"
         ledger_path = temp / "release-ledger.json"
+        design_manifest_path = temp / "design-manifest.json"
         spec_path.write_text(json.dumps(spec, indent=2) + "\n", encoding="utf-8")
         _write_deck(test_path, spec, "test", mutation)
         _write_deck(key_path, spec, "key", mutation)
         _write_pdf(rationale_path, spec)
         _write_ledger(ledger_path, spec_path, mutation)
-        return audit_package(spec_path, test_path, key_path, rationale_path, ledger_path)
+        _write_design_manifest(design_manifest_path, spec, mutation)
+        return audit_package(spec_path, test_path, key_path, rationale_path, ledger_path, design_manifest_path)
 
 
 def main() -> int:

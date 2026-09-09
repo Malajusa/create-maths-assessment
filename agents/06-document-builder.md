@@ -8,7 +8,7 @@ Build only from `approved_question_set` emitted by Agent 05.
 
 Do not materially rewrite validated questions.
 
-Read `references/assessment-production-contract.md` and `references/powerpoint-output.md` before building. Use the deterministic preflight tools in `scripts/` and stop if either rejects the package.
+Read `references/assessment-production-contract.md`, `references/powerpoint-output.md` and `standards/visual-standard.md` before building. Use the deterministic preflight tools in `scripts/` and stop if either rejects the package.
 
 Resolve one `visual_profile` before layout. Prefer a user-approved profile in the brief;
 otherwise use `assets/visual-profiles/classic-assessment-v1.json`. The profile is visual-only
@@ -49,6 +49,7 @@ Emit `design_manifest` conforming to `schemas/design-manifest.schema.json` and p
 same object as `design-manifest.json` with the package. Record the exact visual-profile hash,
 slide recipes and measured typography/area metrics. Do not claim a visual rule was applied
 unless it can be evidenced in the rendered package.
+Resolve every visual from its `visual_spec`. Record visual-profile, token-set and asset-manifest hashes; per-question asset or constructor IDs; scale state; printed dimensions; greyscale evidence; and demand-preservation evidence in `design_manifest.visual_system`.
 ## Output discipline
 
 Use the structured contracts in `schemas/`. Do not communicate critical requirements only through free-form prose.

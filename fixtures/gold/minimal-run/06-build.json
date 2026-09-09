@@ -6,6 +6,13 @@
     "profile_id": "classic-assessment-v1",
     "profile_version": "1.0.0",
     "profile_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "visual_system": {
+      "visual_profile_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "token_set_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "asset_manifest_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "questions": [],
+      "greyscale_reviewed": true
+    },
     "slides": [
       {"slide_number": 1, "recipe": "page1_grid", "metrics": {"minimum_student_body_pt": 11.25, "response_area_ratio": 0.30}},
       {"slide_number": 2, "recipe": "stimulus_diagram_working_decision", "metrics": {"minimum_student_body_pt": 11.25, "response_area_ratio": 0.40}},

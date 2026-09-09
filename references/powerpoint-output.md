@@ -12,6 +12,10 @@ Use this workflow for a complete assessment package or whenever the user request
 
 ## Use the canonical assessment layout
 
+Resolve and follow `../standards/visual-standard.md`, the active visual profile,
+its `token_set` and its `asset_manifest` before constructing any visual. Read
+`contextual-illustration-standard.md` when a contextual illustration is proposed.
+
 Use one consistent visual system across every run:
 
 - A4 portrait with balanced outer margins and a compact header;
@@ -82,6 +86,9 @@ Keep the rationale separate from both PowerPoints.
 - Leave visible white space between each numerator and its vinculum. If the numerator touches or appears to touch the bar in a normal A4 page render, rebuild the fraction; recognisability is not enough.
 - Use full-page rendered images only when converting an already approved fixed-layout source and exact visual preservation is more important than editability. Tell the user when the delivered slides are image-based.
 - Keep diagrams functional rather than decorative.
+- Reuse a registered asset or constructor before creating a new visual. Record
+  asset IDs, scale status, intended print dimensions and greyscale evidence in
+  `design-manifest.json`.
 - Use type sizes suitable for a legible A4 print assessment. Treat this print-layout form factor as distinct from an on-screen presentation.
 - Use at least 10.5 pt for student-facing body text and at least 10 pt for marking-key annotations. Larger type remains preferable where space permits.
 - Add the required `[Sources]` block to speaker notes on each slide.
@@ -118,4 +125,4 @@ Use a transparent, unbordered response-space anchor when the response area is in
 12. Deliver all three final files, not only preview images or intermediate exports.
 13. Inspect a 100%-scale A4 render of every page. A zoomed view alone does not establish print legibility; any unreadable or crowded element blocks release.
 14. Confirm the release ledger has zero failures, warnings, conditional passes or deferred corrections before delivery.
-15. Run `scripts/audit_assessment_package.py` with the final specification, test, key, rationale and ledger. Release only when it reports `READY`.
+15. Run `scripts/audit_assessment_package.py` with the final specification, test, key, rationale, ledger and design manifest. Release only when it reports `READY`.
