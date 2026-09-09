@@ -87,6 +87,10 @@ Keep the rationale separate from both PowerPoints.
 - Add the required `[Sources]` block to speaker notes on each slide.
 
 Use stable element names so the package can be audited. Apply these exact patterns:
+- `qN-student-cell` for each Page 1 question-cell audit region;
+- `qN-student-title` for an extended-response task title;
+- `qN-student-prompt` for the principal student prompt block;
+- `qN-student-dimension-<id>` for every essential geometric dimension label;
 
 - `qN-student-anchor` for the question-number anchor;
 - `qN-student-mark` for the original mark label;

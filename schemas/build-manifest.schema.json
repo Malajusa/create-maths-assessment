@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Assessment Build Manifest",
   "type": "object",
-  "required": ["student_test", "marking_key", "curriculum_rationale"],
+  "required": ["student_test", "marking_key", "curriculum_rationale", "design_manifest"],
   "properties": {
     "student_test": {"$ref": "#/$defs/file"},
     "marking_key": {
@@ -18,7 +18,8 @@
         }
       ]
     },
-    "curriculum_rationale": {"$ref": "#/$defs/file"}
+    "curriculum_rationale": {"$ref": "#/$defs/file"},
+    "design_manifest": {"$ref": "./design-manifest.schema.json"}
   },
   "$defs": {
     "sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"},

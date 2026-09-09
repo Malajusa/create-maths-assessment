@@ -6,6 +6,11 @@ Use this fail-closed workflow for every assessment creation or revision. The sou
 
 Before authoring slides, create `assessment-spec.json` with `schema_version: 1`. Start from `examples/benchmarks/year5-fractions-percentages-release-spec.json`; replace its content rather than copying its mathematics into an unrelated assessment.
 
+Resolve a visual profile before document construction. Visual profiles control presentation
+only and never override the validated assessment content. The default is
+`assets/visual-profiles/classic-assessment-v1.json` unless the brief contains an approved
+typed `visual_profile`.
+
 The specification must contain:
 
 - assessment title, assessed year levels and exact curriculum entries;
@@ -53,6 +58,13 @@ Use the specification as the content source for the student test, marking key an
 - Create the marking key by duplicating the completed test, then add only `qN-key-*` elements.
 - Use the stable names in `powerpoint-output.md` so geometry, fonts, fractions and duplication can be audited.
 - Use blank, unlined response space unless the specification records a mathematical reason for another structure.
+- Reserve contiguous response space before diagrams and decoration. Reflow a layout that
+  cannot satisfy the profile; do not silently shrink essential mathematical text to the
+  safety floor.
+- Page 1 question elements must remain inside their own question-cell region even when they
+  remain within overall slide bounds.
+- Treat required diagram scale, hierarchy and page balance as positive production
+  requirements, not merely the absence of clipping.
 - Keep curriculum codes, extensions, marks, answers and demand claims identical across all three files.
 
 ## 4. Complete two review passes
@@ -114,6 +126,10 @@ python scripts/audit_assessment_package.py \
 The auditor verifies the source preflight again, file integrity, A4 dimensions, slide/page counts, Page 1 positions, original test/key identity, stable names, explicit font minimums, mark labels, key coverage, `MARKING KEY` headers, fraction-component clearance, banned slash fractions, response-space agreement, prohibited unexplained labels, Q7/Q8 table use, page bounds, rationale tokens and the complete release ledger.
 
 It does not replace mathematical or pedagogical judgement. `READY` requires both the recorded review gates and the mechanical audit to pass.
+
+The Document Builder must also emit `design-manifest.json`, conforming to
+`schemas/design-manifest.schema.json`. Fresh review must compare that manifest with the
+actual render; a manifest assertion is evidence to inspect, not proof by itself.
 
 ## 7. Regression control
 

@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Assessment Visual Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_id",
+    "version",
+    "source_role",
+    "typography",
+    "page",
+    "extended_response",
+    "diagram",
+    "response_space",
+    "marking_key",
+    "rationale"
+  ],
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "source_role": {
+      "const": "visual_only"
+    },
+    "source_exemplar": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "typography": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assessment_title",
+        "task_heading",
+        "student_body",
+        "essential_diagram_label",
+        "mark_badge",
+        "footer"
+      ],
+      "properties": {
+        "assessment_title": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target_min_pt",
+            "target_max_pt",
+            "floor_pt"
+          ],
+          "properties": {
+            "target_min_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "target_max_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "floor_pt": {
+              "type": "number",
+              "minimum": 6
+            }
+          }
+        },
+        "task_heading": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target_min_pt",
+            "target_max_pt",
+            "floor_pt"
+          ],
+          "properties": {
+            "target_min_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "target_max_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "floor_pt": {
+              "type": "number",
+              "minimum": 6
+            }
+          }
+        },
+        "student_body": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target_min_pt",
+            "target_max_pt",
+            "floor_pt"
+          ],
+          "properties": {
+            "target_min_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "target_max_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "floor_pt": {
+              "type": "number",
+              "minimum": 6
+            }
+          }
+        },
+        "essential_diagram_label": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target_min_pt",
+            "target_max_pt",
+            "floor_pt"
+          ],
+          "properties": {
+            "target_min_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "target_max_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "floor_pt": {
+              "type": "number",
+              "minimum": 6
+            }
+          }
+        },
+        "mark_badge": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target_min_pt",
+            "target_max_pt",
+            "floor_pt"
+          ],
+          "properties": {
+            "target_min_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "target_max_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "floor_pt": {
+              "type": "number",
+              "minimum": 6
+            }
+          }
+        },
+        "footer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target_min_pt",
+            "target_max_pt",
+            "floor_pt"
+          ],
+          "properties": {
+            "target_min_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "target_max_pt": {
+              "type": "number",
+              "minimum": 6
+            },
+            "floor_pt": {
+              "type": "number",
+              "minimum": 6
+            }
+          }
+        }
+      }
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "a4_portrait",
+        "page1_grid",
+        "question_cell_padding_mm",
+        "gutter_mm"
+      ],
+      "properties": {
+        "a4_portrait": {
+          "const": true
+        },
+        "page1_grid": {
+          "const": "2_columns_x_3_rows"
+        },
+        "question_cell_padding_mm": {
+          "type": "number",
+          "minimum": 1
+        },
+        "gutter_mm": {
+          "type": "number",
+          "minimum": 1
+        }
+      }
+    },
+    "extended_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "q7_recipe",
+        "q8_recipe"
+      ],
+      "properties": {
+        "q7_recipe": {
+          "type": "string",
+          "minLength": 1
+        },
+        "q8_recipe": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "diagram": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum_area_ratio_when_required",
+        "dimension_label_min_target_pt",
+        "prefer_central_prominence"
+      ],
+      "properties": {
+        "minimum_area_ratio_when_required": {
+          "type": "number",
+          "minimum": 0.08,
+          "maximum": 0.65
+        },
+        "dimension_label_min_target_pt": {
+          "type": "number",
+          "minimum": 8
+        },
+        "prefer_central_prominence": {
+          "type": "boolean"
+        }
+      }
+    },
+    "response_space": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "calculation_default",
+        "written_explanation_default",
+        "multi_stage_default",
+        "reserve_before_layout"
+      ],
+      "properties": {
+        "calculation_default": {
+          "const": "blank_unlined"
+        },
+        "written_explanation_default": {
+          "enum": [
+            "blank_unlined",
+            "subtle_guides"
+          ]
+        },
+        "multi_stage_default": {
+          "enum": [
+            "single_blank_region",
+            "calculation_plus_decision"
+          ]
+        },
+        "reserve_before_layout": {
+          "const": true
+        }
+      }
+    },
+    "marking_key": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "duplicate_student_test",
+        "annotation_treatment",
+        "max_annotation_area_ratio"
+      ],
+      "properties": {
+        "duplicate_student_test": {
+          "const": true
+        },
+        "annotation_treatment": {
+          "enum": [
+            "integrated_response_regions",
+            "margin_callouts",
+            "restrained_overlay"
+          ]
+        },
+        "max_annotation_area_ratio": {
+          "type": "number",
+          "minimum": 0.05,
+          "maximum": 0.5
+        }
+      }
+    },
+    "rationale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hierarchy",
+        "curriculum_table",
+        "callouts"
+      ],
+      "properties": {
+        "hierarchy": {
+          "enum": [
+            "navy_two_level",
+            "strong_two_level"
+          ]
+        },
+        "curriculum_table": {
+          "const": true
+        },
+        "callouts": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

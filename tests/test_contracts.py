@@ -105,4 +105,4 @@ class V31RepositoryTests(unittest.TestCase):
         version = (ROOT / "VERSION").read_text().strip()
         pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
         self.assertEqual(version, pipeline["version"])
-        self.assertEqual("3.3.0", version)
+        self.assertEqual("3.4.0", version)

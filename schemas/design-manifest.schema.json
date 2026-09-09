@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Assessment Design Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_id",
+    "profile_version",
+    "profile_sha256",
+    "slides",
+    "assertions"
+  ],
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_exemplar": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "slides": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "slide_number",
+          "recipe",
+          "metrics"
+        ],
+        "properties": {
+          "slide_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "recipe": {
+            "type": "string",
+            "minLength": 1
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "minimum_student_body_pt",
+              "response_area_ratio"
+            ],
+            "properties": {
+              "assessment_title_pt": {
+                "type": "number",
+                "minimum": 0
+              },
+              "task_heading_pt": {
+                "type": "number",
+                "minimum": 0
+              },
+              "minimum_student_body_pt": {
+                "type": "number",
+                "minimum": 0
+              },
+              "minimum_essential_label_pt": {
+                "type": "number",
+                "minimum": 0
+              },
+              "diagram_area_ratio": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "response_area_ratio": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "key_annotation_area_ratio": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "assertions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hierarchy_clear",
+        "page_balance_reviewed",
+        "required_diagrams_prominent",
+        "response_space_matches_demand",
+        "key_annotations_integrated"
+      ],
+      "properties": {
+        "hierarchy_clear": {
+          "const": true
+        },
+        "page_balance_reviewed": {
+          "const": true
+        },
+        "required_diagrams_prominent": {
+          "const": true
+        },
+        "response_space_matches_demand": {
+          "const": true
+        },
+        "key_annotations_integrated": {
+          "const": true
+        }
+      }
+    }
+  }
+}

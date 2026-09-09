@@ -26,6 +26,16 @@ Do not copy an exemplar's outdated curriculum claim, mathematical error or super
 
 Before generation, extract an `exemplar_profile` describing only the relevant reusable characteristics. Downstream agents should consume that profile rather than repeatedly reinterpreting the source.
 
+For document production, convert reusable visual characteristics into a `visual_profile`
+conforming to `schemas/visual-profile.schema.json`. A visual exemplar is visual-only
+authority: never inherit its curriculum claims, question content, answers, difficulty
+claims or superseded rules.
+
+If no user-assigned visual exemplar is supplied, use
+`assets/visual-profiles/classic-assessment-v1.json` as the default production profile.
+Font floors are safety barriers; target ranges express design intent and must not be
+treated as interchangeable.
+
 ## Alternate versions
 
 When the user requests a Version B/practice version:

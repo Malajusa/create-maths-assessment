@@ -1,5 +1,5 @@
 {
-  "version": "3.3.0",
+  "version": "3.4.0",
   "entrypoint": "01-orchestrator-curriculum-resolver",
   "stages": [
     {
@@ -49,7 +49,8 @@
       "produces": [
         "student_test",
         "marking_key",
-        "curriculum_rationale"
+        "curriculum_rationale",
+        "design_manifest"
       ],
       "certifies": false
     },
@@ -61,7 +62,8 @@
         "approved_question_set",
         "student_test",
         "marking_key",
-        "curriculum_rationale"
+        "curriculum_rationale",
+        "design_manifest"
       ],
       "produces": "release_status",
       "certifies": true
