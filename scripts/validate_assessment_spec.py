@@ -10,9 +10,20 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from evidence_envelope import (
+    A_DEMAND_FEATURES,
+    DEFAULT_EVIDENCE_ENVELOPE,
+    DEFAULT_INDICATIVE_BANDS,
+    DEFAULT_QUESTION_MARKS,
+    validate_canonical_structure,
+)
+
 
 QUESTION_IDS = [f"q{i}" for i in range(1, 9)]
-EXPECTED_MARKS = dict(zip(QUESTION_IDS, [1, 1, 2, 2, 3, 3, 4, 4]))
+LEGACY_EXPECTED_MARKS = dict(zip(QUESTION_IDS, [1, 1, 2, 2, 3, 3, 4, 4]))
+# Retained for legacy imports; v4 specifications use DEFAULT_QUESTION_MARKS.
+EXPECTED_MARKS = LEGACY_EXPECTED_MARKS
+V4_EVIDENCE_MODEL = "criterion_component_estimate_v1"
 EXPECTED_POSITIONS = {
     "q1": "top_left",
     "q2": "top_right",
@@ -90,6 +101,31 @@ def _contains_banned_fraction_notation(value: Any) -> bool:
     return bool(SLASH_FRACTION.search(value) or any(ch in value for ch in VULGAR_FRACTIONS))
 
 
+def _canonical_indicative_bands() -> dict[str, list[int]]:
+    return {band: [bounds[0], bounds[1]] for band, bounds in DEFAULT_INDICATIVE_BANDS.items()}
+
+
+def _validate_v4_marks_header(errors: list[dict[str, str]], marks: dict[str, Any]) -> None:
+    if marks.get("total") != 25:
+        _error(errors, "E_MARK_TOTAL", "marks.total", "v4 criterion assessments must total 25 marks")
+    if _dict(marks.get("evidence_envelope")) != DEFAULT_EVIDENCE_ENVELOPE:
+        _error(
+            errors,
+            "E_EVIDENCE_ENVELOPE",
+            "marks.evidence_envelope",
+            "must equal D=5, C=8, B=5, A=7",
+        )
+    if _dict(marks.get("indicative_bands")) != _canonical_indicative_bands():
+        _error(
+            errors,
+            "E_INDICATIVE_BANDS",
+            "marks.indicative_bands",
+            "must equal E 0-4, D 5-9, C 10-15, B 16-20, A 21-25",
+        )
+    for issue in validate_canonical_structure():
+        _error(errors, "E_BOUNDARY_PROOF", "marks", issue)
+
+
 def _validate_visual_spec(
     errors: list[dict[str, str]], visual_spec: Any, representation: dict[str, Any], qid: str, path: str
 ) -> None:
@@ -148,6 +184,11 @@ def validate_spec(spec: Any) -> list[dict[str, str]]:
     if spec.get("schema_version") != 1:
         _error(errors, "E_SCHEMA", "schema_version", "must equal 1")
 
+    evidence_model = spec.get("evidence_model")
+    is_v4 = evidence_model == V4_EVIDENCE_MODEL
+    if evidence_model not in {None, V4_EVIDENCE_MODEL}:
+        _error(errors, "E_EVIDENCE_MODEL", "evidence_model", "has an unsupported evidence model")
+
     assessment = _dict(spec.get("assessment"))
     _require_text(errors, assessment.get("title"), "assessment.title")
     year_levels = _list(assessment.get("year_levels"))
@@ -188,19 +229,17 @@ def validate_spec(spec: Any) -> list[dict[str, str]]:
             authorisation = _dict(entry.get("authorisation"))
             if _text(authorisation.get("source")) != "user":
                 _error(errors, "E_EXTENSION", f"{path}.authorisation.source", "must record user authorisation")
-            _require_text(
-                errors,
-                authorisation.get("statement"),
-                f"{path}.authorisation.statement",
-                "E_EXTENSION",
-            )
+            _require_text(errors, authorisation.get("statement"), f"{path}.authorisation.statement", "E_EXTENSION")
             qids = _list(authorisation.get("question_ids"))
             if not qids or any(q not in QUESTION_IDS for q in qids):
                 _error(errors, "E_EXTENSION", f"{path}.authorisation.question_ids", "must list valid affected questions")
 
     marks = _dict(spec.get("marks"))
-    if marks.get("total") != 20:
-        _error(errors, "E_MARK_TOTAL", "marks.total", "must equal 20")
+    if is_v4:
+        _validate_v4_marks_header(errors, marks)
+    elif marks.get("total") != 20:
+        _error(errors, "E_MARK_TOTAL", "marks.total", "legacy specifications must equal 20 marks")
+
     topic_subtotals = _dict(marks.get("topic_subtotals"))
     if not topic_subtotals or any(not isinstance(v, int) or v <= 0 for v in topic_subtotals.values()):
         _error(errors, "E_TOPIC_TOTAL", "marks.topic_subtotals", "must contain positive integer subtotals")
@@ -220,12 +259,15 @@ def validate_spec(spec: Any) -> list[dict[str, str]]:
     if found_ids != QUESTION_IDS:
         _error(errors, "E_QUESTIONS", "questions", "must contain Q1-Q8 once and in order")
 
+    expected_marks_map = DEFAULT_QUESTION_MARKS if is_v4 else LEGACY_EXPECTED_MARKS
     calculated_topics: dict[str, int] = {}
+    v4_band_counts = {band: 0 for band in DEFAULT_EVIDENCE_ENVELOPE}
+
     for index, raw_question in enumerate(questions):
         q = _dict(raw_question)
         qid = _text(q.get("id")) or f"questions[{index}]"
         path = f"questions[{index}]"
-        expected_marks = EXPECTED_MARKS.get(qid)
+        expected_marks = expected_marks_map.get(qid)
         if q.get("marks") != expected_marks:
             _error(errors, "E_MARK_SEQUENCE", f"{path}.marks", f"{qid.upper()} must have {expected_marks} marks")
         topic = _require_text(errors, q.get("topic"), f"{path}.topic")
@@ -243,13 +285,7 @@ def validate_spec(spec: Any) -> list[dict[str, str]]:
                 if qid not in authorised_qids:
                     _error(errors, "E_EXTENSION", f"{path}.curriculum_codes", f"{code} is not authorised for {qid}")
 
-        for field in (
-            "prompt",
-            "answer",
-            "student_task_restatement",
-            "mathematical_action",
-            "diagnostic_purpose",
-        ):
+        for field in ("prompt", "answer", "student_task_restatement", "mathematical_action", "diagnostic_purpose"):
             value = _require_text(errors, q.get(field), f"{path}.{field}")
             if _contains_banned_fraction_notation(value):
                 _error(errors, "E_FRACTION_NOTATION", f"{path}.{field}", "contains slash or vulgar-fraction notation")
@@ -270,12 +306,26 @@ def validate_spec(spec: Any) -> list[dict[str, str]]:
         evidence_texts: list[str] = []
         for mark_index, raw_mark in enumerate(mark_evidence):
             mark = _dict(raw_mark)
+            mark_path = f"{path}.mark_evidence[{mark_index}]"
             mark_numbers.append(mark.get("mark"))
-            evidence = _require_text(
-                errors, mark.get("evidence"), f"{path}.mark_evidence[{mark_index}].evidence", "E_MARK_EVIDENCE"
-            )
+            evidence = _require_text(errors, mark.get("evidence"), f"{mark_path}.evidence", "E_MARK_EVIDENCE")
             if evidence:
                 evidence_texts.append(re.sub(r"\W+", " ", evidence.lower()).strip())
+            if is_v4:
+                band = mark.get("evidence_band")
+                if band not in DEFAULT_EVIDENCE_ENVELOPE:
+                    _error(errors, "E_EVIDENCE_BAND", f"{mark_path}.evidence_band", "must be D, C, B or A")
+                else:
+                    v4_band_counts[band] += 1
+                _require_text(errors, mark.get("band_rationale"), f"{mark_path}.band_rationale", "E_BAND_RATIONALE")
+                _require_text(errors, mark.get("why_not_lower_band"), f"{mark_path}.why_not_lower_band", "E_BAND_RATIONALE")
+                if band == "A" and mark.get("a_demand_feature") not in A_DEMAND_FEATURES:
+                    _error(
+                        errors,
+                        "E_A_DEMAND_FEATURE",
+                        f"{mark_path}.a_demand_feature",
+                        "A evidence requires a recognised high-demand feature",
+                    )
         if mark_numbers != list(range(1, (expected_marks or 0) + 1)):
             _error(errors, "E_MARK_EVIDENCE", f"{path}.mark_evidence", "must contain one ordered entry for every mark")
         if len(evidence_texts) != len(set(evidence_texts)):
@@ -366,6 +416,14 @@ def validate_spec(spec: Any) -> list[dict[str, str]]:
                 _error(errors, "E_Q8_DEPENDENCY", f"{path}.problem_solving.demand_features", "Q8 requires inference, a dependent result or interacting constraints")
             if problem.get("justified_conclusion") is not True:
                 _error(errors, "E_DEMAND", f"{path}.problem_solving.justified_conclusion", "must require a justified conclusion")
+
+    if is_v4 and v4_band_counts != DEFAULT_EVIDENCE_ENVELOPE:
+        _error(
+            errors,
+            "E_EVIDENCE_ENVELOPE",
+            "questions[*].mark_evidence",
+            f"observed evidence bands {v4_band_counts} must equal {DEFAULT_EVIDENCE_ENVELOPE}",
+        )
 
     if calculated_topics != topic_subtotals:
         _error(errors, "E_TOPIC_TOTAL", "marks.topic_subtotals", f"declared subtotals {topic_subtotals} do not match questions {calculated_topics}")
