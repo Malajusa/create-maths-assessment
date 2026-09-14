@@ -4,14 +4,14 @@
 
 Use this architecture for Q7 and Q8. It is derived from Mr Leahy's supplied problem-solving card archive: the main cards calibrate Q7 and the extension cards calibrate Q8.
 
-This reference governs question form. Use `q7-q8-demand-2025.md` to calibrate cognitive demand.
+This reference governs question form. Use `q7-q8-demand-2025.md` to calibrate cognitive demand and `evidence-band-standard.md` to classify each individual mark.
 
 ## Required architecture
 
 Use two independent, self-contained complex problems:
 
-- Q7 targets B-level reasoning and should resemble a clear main problem from the supplied archive.
-- Q8 targets A-level reasoning and should resemble the demand of an extension problem from the supplied archive.
+- Q7 targets principally B-level reasoning and should resemble a clear main problem from the supplied archive.
+- Q8 targets principally A-level reasoning and should resemble the demand of an extension problem from the supplied archive.
 - Q8 must not continue Q7's scenario or require Q7's information, method, working or answer.
 - The questions may assess the same curriculum topic, but each must provide all information needed to solve it independently.
 - Both questions are prose-first word problems. Students must extract the relevant values, conditions and relationships from sentences.
@@ -21,16 +21,23 @@ Use two independent, self-contained complex problems:
 
 ## Q7: main-problem demand
 
+In the canonical v4 architecture Q7 has **five marks** and is principally B evidence. The default placement is 4B + 1A, but that distribution is valid only when the observable evidence supports it.
+
 - Present one clear, self-contained mathematical situation.
 - Use a familiar direct response routine.
 - Require a mathematical decision, inference or chain of connected work, but do not prescribe the strategy.
-- Ask one central question, with a second closely connected response only when needed for visible four-mark evidence.
+- Ask one central question, with a second closely connected response only when needed for visible evidence.
 - Keep the working area blank and unlined.
+- Do not convert the problem into five procedural subquestions merely because five marks are available.
+
+A Q7 A mark must genuinely require stronger evidence than the B criteria, such as a non-obvious inference, evaluation or justification. If it does not, classify the evidence honestly and redesign/rebalance through the blueprint rather than inflating the band.
 
 ## Q8: extension-level demand
 
+In the canonical v4 architecture Q8 has **six marks** and is principally A evidence. Each individual mark must independently satisfy the evidence-band definition; question position does not make a routine calculation A evidence.
+
 - Present one clear, self-contained problem at a deeper level than Q7.
-- Increase demand through one or two purposeful features, such as:
+- Increase demand through purposeful features such as:
   - change or scale a value;
   - ask for a connected quantity or comparison;
   - reverse a process or infer a missing value;
@@ -42,6 +49,8 @@ Use two independent, self-contained complex problems:
 - Keep the task independent from Q7 and provide follow-through marking within Q8 where an early Q8 error can be used consistently.
 - Use at least three substantive demand features from the cognitive-demand reference, including at least one inference, dependent result or interacting constraint and a justified conclusion.
 - Do not treat a conceptually subtle but otherwise routine comparison as A-level without a connected dependency or constraint.
+
+Every A mark must identify an `a_demand_feature` consistent with the actual evidence required.
 
 ## Complexity without over-scaffolding
 
@@ -59,7 +68,19 @@ Avoid prompts that prescribe the pathway, such as:
 - `Work forwards from ... and backwards from ...`
 - `Test every possibility and prove none are missing.`
 
-Allocate four marks to meaningful mathematical evidence in the solution or representation. Do not create four visible subquestions merely to display four marks.
+Allocate the **five Q7 marks** and **six Q8 marks** to distinct meaningful mathematical evidence in the solution or representation. Do not manufacture marks by splitting one routine act, and do not create five/six visible subquestions merely to display the mark count.
+
+## Evidence-band integrity
+
+For every individual mark record:
+
+- observable evidence;
+- `evidence_band`;
+- `band_rationale`;
+- `why_not_lower_band`;
+- `a_demand_feature` for A evidence.
+
+Routine arithmetic, copying supplied facts, or completing a method already prescribed by the stem cannot be promoted solely because it occurs in Q7/Q8. If honest classification makes the whole assessment miss 5D / 8C / 5B / 7A, return the problem to the blueprint for legitimate redesign.
 
 ## Default rejected structures
 
@@ -72,8 +93,9 @@ Reject or replace a question when:
 - literacy or response-format novelty is a greater barrier than the mathematics;
 - Q8 is only a routine task with larger numbers and no deeper relationship;
 - Q8 refers to or depends on Q7's scenario, information, method or answer;
-- Q7 and Q8 use visibly different response protocols without a curriculum reason.
+- Q7 and Q8 use visibly different response protocols without a curriculum reason;
 - the relevant information is pre-sorted into a solution-ready table or labelled list instead of being extracted from natural prose;
+- mark criteria are split or relabelled merely to meet the evidence-envelope quota.
 
 ## Review test
 
@@ -84,11 +106,14 @@ Before approval, answer yes to all:
 3. Are both response routines familiar, direct and student-clear?
 4. Is the strategy left for the student to select?
 5. Does Q8 deepen the mathematics through relationships, conditions or inference rather than format novelty?
-6. Does each question provide four pieces of meaningful mathematical evidence without mechanical mark splitting?
-7. Are both working spaces blank and unlined?
-8. Can Q8 be understood and solved without reading or completing Q7?
-9. Must students extract the relevant information and relationships from natural prose sentences?
-10. Does any supporting display add mathematical interpretation rather than organise the solution for the student?
-11. Does Q8 include at least one genuine inference, dependency or interacting constraint as part of at least three substantive demand features?
+6. Does Q7 provide five distinct meaningful mark criteria without mechanical splitting?
+7. Does Q8 provide six distinct meaningful mark criteria without mechanical splitting?
+8. Does every individual mark's band match its observable evidence rather than its question position?
+9. Are both working spaces blank and unlined?
+10. Can Q8 be understood and solved without reading or completing Q7?
+11. Must students extract the relevant information and relationships from natural prose sentences?
+12. Does any supporting display add mathematical interpretation rather than organise the solution for the student?
+13. Does Q8 include at least one genuine inference, dependency or interacting constraint as part of at least three substantive demand features?
+14. Does every A mark have a defensible high-demand feature?
 
 If any answer is no, redesign before slide production.
