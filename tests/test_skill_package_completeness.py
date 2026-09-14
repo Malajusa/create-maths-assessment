@@ -12,6 +12,7 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "references/assessment-format.md",
             "references/assessment-production-contract.md",
             "references/assessment-quality-gates.md",
+            "references/evidence-band-standard.md",
             "references/curriculum-index.md",
             "references/curriculum-pre-primary.md",
             *[f"references/curriculum-year-{year}.md" for year in range(1, 11)],
@@ -24,7 +25,9 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "assets/year-4-5-ordering-comparing-fractions-quality-exemplar.pptx",
             "assets/year-6-transformations-quality-benchmark.pptx",
             "examples/benchmarks/regression-cases.json",
+            "scripts/evidence_envelope.py",
             "scripts/audit_assessment_package.py",
+            "scripts/audit_assessment_package_v4.py",
             "scripts/test_assessment_workflow.py",
             "scripts/validate_assessment_spec.py",
             "scripts/validate_visual_assets.py",
@@ -45,6 +48,7 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "references/assessment-format.md",
             "references/assessment-quality-gates.md",
             "references/assessment-production-contract.md",
+            "references/evidence-band-standard.md",
             "references/curriculum-index.md",
             "references/powerpoint-output.md",
             "references/mathematical-diagram-conventions.md",
@@ -56,18 +60,18 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             with self.subTest(link=link):
                 self.assertIn(link, skill)
 
-    def test_version_is_bumped_for_combined_distribution(self):
-        self.assertEqual("3.6.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
+    def test_version_is_v4_for_criterion_evidence_distribution(self):
+        self.assertEqual("4.0.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
 
     def test_each_stage_routes_to_its_required_production_reference(self):
         routes = {
-            "agents/01-orchestrator-curriculum-resolver.md": "references/curriculum-index.md",
-            "agents/02-assessment-blueprint.md": "references/assessment-format.md",
-            "agents/03-question-designer.md": "references/mathematical-diagram-conventions.md",
-            "agents/04-complex-problem-specialist.md": "references/q7-q8-problem-solving-standard.md",
-            "agents/05-maths-pedagogy-validator.md": "references/assessment-quality-gates.md",
-            "agents/06-document-builder.md": "references/powerpoint-output.md",
-            "agents/07-release-qa.md": "scripts/audit_assessment_package.py",
+            "agents/01-orchestrator-curriculum-resolver.md": "references/evidence-band-standard.md",
+            "agents/02-assessment-blueprint.md": "references/evidence-band-standard.md",
+            "agents/03-question-designer.md": "references/evidence-band-standard.md",
+            "agents/04-complex-problem-specialist.md": "references/evidence-band-standard.md",
+            "agents/05-maths-pedagogy-validator.md": "references/evidence-band-standard.md",
+            "agents/06-document-builder.md": "references/evidence-band-standard.md",
+            "agents/07-release-qa.md": "references/evidence-band-standard.md",
         }
 
         for agent_path, required_reference in routes.items():
