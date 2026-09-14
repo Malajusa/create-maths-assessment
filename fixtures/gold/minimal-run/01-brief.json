@@ -5,5 +5,6 @@
   "curriculum_targets": ["fixture-target"],
   "outputs": ["student_test_pptx", "marking_key_pptx", "curriculum_rationale_pdf"],
   "task_type": "alternate_version",
+  "architecture_mode": "source_preserved",
   "user_overrides": ["Preserve the source 20-mark architecture for this structural legacy fixture."]
 }
