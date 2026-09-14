@@ -89,10 +89,8 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(3, pipeline["max_targeted_repairs_per_barrier"])
         self.assertEqual("replace_approach", pipeline["after_max_repairs"])
 
-if __name__ == "__main__":
-    unittest.main()
 
-class V31RepositoryTests(unittest.TestCase):
+class RepositoryContractTests(unittest.TestCase):
     def test_runtime_controller_and_fixture_runner_exist(self):
         self.assertTrue((ROOT / "runtime/controller.py").exists())
         self.assertTrue((ROOT / "scripts/run_regression_fixtures.py").exists())
@@ -107,4 +105,8 @@ class V31RepositoryTests(unittest.TestCase):
         version = (ROOT / "VERSION").read_text().strip()
         pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
         self.assertEqual(version, pipeline["version"])
-        self.assertEqual("3.6.0", version)
+        self.assertEqual("4.0.0", version)
+
+
+if __name__ == "__main__":
+    unittest.main()
