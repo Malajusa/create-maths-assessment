@@ -56,7 +56,7 @@
       "items": {
         "type": "object",
         "additionalProperties": true,
-        "required": ["mark", "evidence", "evidence_band", "band_rationale", "why_not_lower_band"],
+        "required": ["mark", "evidence"],
         "properties": {
           "mark": {"type": "integer", "minimum": 1},
           "evidence": {"type": "string", "minLength": 1},
@@ -71,7 +71,11 @@
         "allOf": [
           {
             "if": {"properties": {"evidence_band": {"const": "A"}}, "required": ["evidence_band"]},
-            "then": {"required": ["a_demand_feature"]}
+            "then": {"required": ["band_rationale", "why_not_lower_band", "a_demand_feature"]}
+          },
+          {
+            "if": {"required": ["evidence_band"]},
+            "then": {"required": ["band_rationale", "why_not_lower_band"]}
           }
         ]
       }
