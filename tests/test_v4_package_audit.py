@@ -10,7 +10,7 @@ if str(SCRIPTS) not in sys.path:
 
 
 def load_auditor():
-    path = SCRIPTS / "audit_assessment_package.py"
+    path = SCRIPTS / "audit_assessment_package_v4.py"
     spec = importlib.util.spec_from_file_location("audit_v4", path)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
