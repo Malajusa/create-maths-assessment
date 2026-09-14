@@ -83,7 +83,12 @@
         "properties": {
           "total_marks": {"const": 25},
           "evidence_envelope": {"const": {"D": 5, "C": 8, "B": 5, "A": 7}},
-          "indicative_bands": {"const": {"E": [0, 4], "D": [5, 9], "C": [10, 15], "B": [16, 20], "A": [21, 25]}}
+          "indicative_bands": {"const": {"E": [0, 4], "D": [5, 9], "C": [10, 15], "B": [16, 20], "A": [21, 25]}},
+          "questions": {
+            "items": {
+              "required": ["band_distribution"]
+            }
+          }
         }
       }
     }
