@@ -1,4 +1,4 @@
-# Evidence-bound release protocol (v3.6)
+# Evidence-bound release protocol (v4.0)
 
 `record 07-release-qa` is the release-authorisation operation. Schema validation, a fixture PASS, an auditor's standalone output or a prose READY claim is not a substitute. No synthetic 'gold' fixture proves a classroom-ready assessment.
 
@@ -39,13 +39,20 @@ Different role names are not proof of independent execution. The runtime checks 
 
 ## Actual audit execution
 
-The controller invokes the repository's auditor with `sys.executable`, fixed arguments and no shell. It creates a fresh report, requires exit code 0, `status: READY` and an empty `issues` array, then rechecks every consumed file hash. It saves `artifacts/package-audit.json` only after these checks succeed. A cached report or a printed READY string cannot authorise release.
+The controller invokes a repository-owned auditor with `sys.executable`, fixed arguments and no shell. It creates a fresh report, requires exit code 0, `status: READY` and an empty `issues` array, then rechecks every consumed file hash. It saves `artifacts/package-audit.json` only after these checks succeed. A cached report or a printed READY string cannot authorise release.
 
-The supported manual preflight is:
+Auditor selection is determined only by the validated assessment specification:
+
+- `evidence_model: criterion_component_estimate_v1` → `scripts/audit_assessment_package_v4.py`;
+- legacy/source-preservation specifications without that model → `scripts/audit_assessment_package.py`.
+
+The v4 auditor reuses the mature legacy geometry, provenance, fraction, visual and ledger checks, substitutes the specification's validated mark counts, and adds the criterion-output checks. Callers cannot provide an arbitrary auditor command.
+
+### v4 manual preflight
 
 ```bash
 python scripts/validate_assessment_spec.py run/current/assessment-spec.json
-python scripts/audit_assessment_package.py \
+python scripts/audit_assessment_package_v4.py \
   --spec run/current/assessment-spec.json \
   --test run/current/Student_Test.pptx \
   --key run/current/Marking_Key.pptx \
@@ -57,16 +64,30 @@ python -m runtime.controller --run-dir run/current record 07-release-qa run/curr
 python -m runtime.controller --run-dir run/current status
 ```
 
+For a legacy/source-preservation package, use the same named flags with `scripts/audit_assessment_package.py` instead.
+
 Use actual filenames; these paths illustrate the interface. Install `requirements.txt` before auditing. Missing dependencies, rendering capability or independent-review capability are barriers, not permission to skip a check.
 
-The existing production auditor supports the canonical assessment format. An explicit alternative structure needs an appropriate validated production route; do not silently change the request to fit the default or bypass validation.
+The v4 audit route supports the canonical 25-mark criterion assessment format. An explicit alternative structure needs an appropriate validated production route; do not silently change the request to fit the default or bypass validation.
+
+## v4 evidence-output scope
+
+For `criterion_component_estimate_v1`, release evidence must support the following claims:
+
+- the assessment contains 25 validated marks and the approved 5D / 8C / 5B / 7A envelope;
+- the Marking Key shows the exact indicative component bands E 0–4, D 5–9, C 10–15, B 16–20, A 21–25;
+- the Curriculum Rationale states the structural guarantees of 5 C+, 3 B+ and 3 A marks at the C/B/A boundaries;
+- teacher-facing outputs describe the result as an indicative standard on the assessed component rather than the student's reporting grade;
+- the Student Test does not expose internal evidence-band metadata or teacher-only cut-off logic.
+
+These checks strengthen the assessment instrument. They do not transform task-level evidence into an official reporting-grade decision.
 
 ## Resume and delivery
 
-Reopening a stored READY run revalidates its evidence and reruns the audit. Missing or changed evidence blocks reuse of that claim. A pipeline-version mismatch requires an explicit new run/revalidation boundary; never edit the version in old state to pretend migration occurred.
+Reopening a stored READY run revalidates its evidence and reruns the correct auditor. Missing or changed evidence blocks reuse of that claim. A pipeline-version mismatch requires an explicit new run/revalidation boundary; never edit the version in old state to pretend migration occurred.
 
 After any relevant content, document, rendering or evidence change, rebuild/review the affected artefacts and re-record the affected stages. Do not reuse old hashes or reviews. Check current controller status immediately before providing exact file links.
 
 ## Verification scope
 
-Deterministic tests cover state transitions, hashes, paths, report wiring, render coverage and dependency-aware repair. Tests using a stub auditor are labelled as such. They do not demonstrate real curriculum alignment, independent model behaviour or classroom-quality visuals. A genuine end-to-end assessment run and independent review are still needed to establish those outcomes.
+Deterministic tests cover state transitions, hashes, paths, report wiring, render coverage, evidence-envelope invariants and dependency-aware repair. Tests using a stub auditor are labelled as such. They do not demonstrate real curriculum alignment, independent model behaviour or classroom-quality visuals. A genuine end-to-end assessment run and independent review are still needed to establish those outcomes.
