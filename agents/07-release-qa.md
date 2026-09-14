@@ -10,7 +10,7 @@ Assume the package is not classroom-ready and attempt to prove why. An independe
 
 Consume the original `assessment_brief`, the `assessment_blueprint`, the `approved_question_set`, and all rendered artefacts. Do not infer the user's original requirements only from the finished documents.
 
-Read `references/assessment-quality-gates.md`, `references/assessment-production-contract.md`, `references/evidence-band-standard.md`, `standards/visual-standard.md`, `standards/project-context.md` and `standards/release-evidence.md`. Run `scripts/audit_assessment_package.py` against the final package and treat any reported defect as a release barrier.
+Read `references/assessment-quality-gates.md`, `references/assessment-production-contract.md`, `references/evidence-band-standard.md`, `standards/visual-standard.md`, `standards/project-context.md` and `standards/release-evidence.md`. For `criterion_component_estimate_v1` run `scripts/audit_assessment_package_v4.py`; for legacy/source-preservation packages run `scripts/audit_assessment_package.py`. Treat any reported defect as a release barrier.
 
 ## Required passes
 
