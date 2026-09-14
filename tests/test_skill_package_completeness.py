@@ -25,6 +25,7 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "assets/year-4-5-ordering-comparing-fractions-quality-exemplar.pptx",
             "assets/year-6-transformations-quality-benchmark.pptx",
             "examples/benchmarks/regression-cases.json",
+            "examples/benchmarks/criterion-evidence-envelope-v4.json",
             "scripts/evidence_envelope.py",
             "scripts/audit_assessment_package.py",
             "scripts/audit_assessment_package_v4.py",
@@ -34,6 +35,9 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "schemas/visual-spec.schema.json",
             "schemas/visual-asset-manifest.schema.json",
             "assets/maths-visuals/v1/manifest.json",
+            "tests/scenarios/05-v4-band-inflation.md",
+            "tests/scenarios/06-v4-legacy-source-preservation.md",
+            "tests/scenarios/07-v4-architecture-barrier.md",
         ]
 
         missing = [path for path in required if not (ROOT / path).is_file()]
