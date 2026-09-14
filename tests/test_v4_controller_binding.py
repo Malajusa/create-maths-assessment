@@ -137,6 +137,27 @@ class V4ControllerBandBindingTests(unittest.TestCase):
         with self.assertRaisesRegex(PipelineError, "requires a recorded user override"):
             ctl.record("02-assessment-blueprint", legacy_blueprint())
 
+    def test_v4_blueprint_requires_band_distribution_on_every_question(self):
+        ctl = self.make_controller()
+        blueprint = canonical_v4_blueprint()
+        del blueprint["questions"][4]["band_distribution"]
+        with self.assertRaisesRegex(PipelineError, "schema validation failed"):
+            ctl.validate_stage_payload("02-assessment-blueprint", blueprint)
+
+    def test_v4_blueprint_question_distribution_must_equal_question_marks(self):
+        ctl = self.make_controller()
+        blueprint = canonical_v4_blueprint()
+        blueprint["questions"][5]["band_distribution"] = {"C": 3, "B": 1}
+        with self.assertRaisesRegex(PipelineError, "Q6 band distribution must total 5 marks"):
+            ctl.validate_stage_payload("02-assessment-blueprint", blueprint)
+
+    def test_v4_blueprint_distributions_must_sum_to_declared_envelope(self):
+        ctl = self.make_controller()
+        blueprint = canonical_v4_blueprint()
+        blueprint["questions"][5]["band_distribution"] = {"C": 3, "B": 2}
+        with self.assertRaisesRegex(PipelineError, "does not match evidence envelope"):
+            ctl.validate_stage_payload("02-assessment-blueprint", blueprint)
+
     def test_matching_q1_q6_band_distribution_passes(self):
         ctl = self.make_controller_with_blueprint()
         payload = {
