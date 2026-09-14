@@ -67,21 +67,22 @@ class SkillPackageCompletenessTests(unittest.TestCase):
     def test_version_is_v4_for_criterion_evidence_distribution(self):
         self.assertEqual("4.0.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
 
-    def test_each_stage_routes_to_its_required_production_reference(self):
+    def test_each_stage_preserves_its_original_production_reference_and_adds_v4_evidence_standard(self):
         routes = {
-            "agents/01-orchestrator-curriculum-resolver.md": "references/evidence-band-standard.md",
-            "agents/02-assessment-blueprint.md": "references/evidence-band-standard.md",
-            "agents/03-question-designer.md": "references/evidence-band-standard.md",
-            "agents/04-complex-problem-specialist.md": "references/evidence-band-standard.md",
-            "agents/05-maths-pedagogy-validator.md": "references/evidence-band-standard.md",
-            "agents/06-document-builder.md": "references/evidence-band-standard.md",
-            "agents/07-release-qa.md": "references/evidence-band-standard.md",
+            "agents/01-orchestrator-curriculum-resolver.md": "references/curriculum-index.md",
+            "agents/02-assessment-blueprint.md": "references/assessment-format.md",
+            "agents/03-question-designer.md": "references/mathematical-diagram-conventions.md",
+            "agents/04-complex-problem-specialist.md": "references/q7-q8-problem-solving-standard.md",
+            "agents/05-maths-pedagogy-validator.md": "references/assessment-quality-gates.md",
+            "agents/06-document-builder.md": "references/powerpoint-output.md",
+            "agents/07-release-qa.md": "scripts/audit_assessment_package.py",
         }
 
         for agent_path, required_reference in routes.items():
-            with self.subTest(agent=agent_path):
+            with self.subTest(agent=agent_path, reference=required_reference):
                 agent = (ROOT / agent_path).read_text(encoding="utf-8")
                 self.assertIn(required_reference, agent)
+                self.assertIn("references/evidence-band-standard.md", agent)
 
 
 if __name__ == "__main__":
