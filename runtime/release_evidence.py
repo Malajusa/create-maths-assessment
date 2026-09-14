@@ -14,6 +14,9 @@ from pathlib import Path
 from typing import Any
 
 
+V4_EVIDENCE_MODEL = "criterion_component_estimate_v1"
+
+
 class ReleaseEvidenceError(ValueError):
     """The current package cannot be authorised for release."""
 
@@ -27,6 +30,16 @@ def _object(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ReleaseEvidenceError(f"{path.name} must contain a JSON object")
     return value
+
+
+def _audit_script_for_spec(repo_root: Path, spec: dict[str, Any]) -> Path:
+    """Select the package auditor without allowing caller-controlled commands."""
+    filename = (
+        "audit_assessment_package_v4.py"
+        if spec.get("evidence_model") == V4_EVIDENCE_MODEL
+        else "audit_assessment_package.py"
+    )
+    return repo_root / "scripts" / filename
 
 
 def verify_release(repo_root: Path, run_dir: Path, build_path: Path,
@@ -136,7 +149,7 @@ def _verify(repo: Path, run: Path, build_path: Path, content_path: Path,
     if seen != expected:
         raise ReleaseEvidenceError("render review does not cover every final page")
 
-    script = repo / "scripts/audit_assessment_package.py"
+    script = _audit_script_for_spec(repo, spec)
     if not script.is_file():
         raise ReleaseEvidenceError("package audit executable is missing")
     with tempfile.TemporaryDirectory(prefix="release-audit-", dir=run) as temp:
