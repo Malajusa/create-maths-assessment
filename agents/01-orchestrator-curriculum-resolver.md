@@ -19,19 +19,26 @@ Resolve:
 - mathematical conventions;
 - assessment-specific constraints;
 - whether the task is new generation, revision, alternate version, practice version, marking key, or critical review;
-- whether `criterion_component_estimate_v1` applies.
+- the typed `architecture_mode` used by downstream runtime validation.
 
 ## Evidence-model routing
 
-Use the v4 **25-mark, 5D / 8C / 5B / 7A** model by default for a new Years 3–10 grade-estimating assessment.
+Use the v4 **25-mark, 5D / 8C / 5B / 7A** model by default for a new Years 3–10 grade-estimating assessment and record:
 
-Do not silently apply it to:
-- Pre-primary–Year 2 assessments;
-- Years 11–12/WACE assessments;
-- a key-only request for an exact supplied assessment;
-- an equivalent Version B or re-attempt based on a supplied assessment with a different source architecture.
+```text
+architecture_mode = criterion_component_estimate_v1
+```
 
-For key-only and Version B tasks, preserve the exact source mark structure unless the user explicitly requests migration. Record the selected evidence model or source-preservation rule in the brief so later agents do not infer it independently.
+Use the other typed modes only when their scope genuinely applies:
+
+- `source_preserved` — an exact supplied assessment, key-only request, equivalent Version B/re-attempt, or other source-bound task whose mark architecture must remain unchanged;
+- `early_years` — Pre-primary–Year 2 assessment architecture;
+- `course_specific` — Years 11–12/WACE course-specific architecture;
+- `explicit_user_override` — a new Years 3–10 task where the user has explicitly requested a different architecture. This mode requires the override to be recorded in `user_overrides`.
+
+Do not use `explicit_user_override` merely because an agent prefers another structure. Do not silently apply the v4 model to source-preserved, early-years or course-specific work.
+
+For key-only and Version B tasks, preserve the exact source mark structure unless the user explicitly requests migration. Record the selected architecture mode so later agents do not infer it independently.
 
 Derive information from canonical sources where possible instead of asking unnecessary questions.
 
