@@ -159,6 +159,23 @@ class PipelineController:
             marks = sum(question["marks"] for question in payload["questions"])
             if marks != payload["total_marks"]:
                 raise PipelineError("blueprint total_marks must equal the sum of question marks")
+            if payload.get("evidence_model") == V4_EVIDENCE_MODEL:
+                observed = {band: 0 for band in ("D", "C", "B", "A")}
+                for question in payload["questions"]:
+                    distribution = question.get("band_distribution")
+                    if not isinstance(distribution, dict):
+                        raise PipelineError(f"{question['id']} requires a v4 band distribution")
+                    distribution_total = sum(distribution.values())
+                    if distribution_total != question["marks"]:
+                        raise PipelineError(
+                            f"{question['id']} band distribution must total {question['marks']} marks"
+                        )
+                    for band in observed:
+                        observed[band] += distribution.get(band, 0)
+                if observed != payload["evidence_envelope"]:
+                    raise PipelineError(
+                        f"blueprint band distribution {observed} does not match evidence envelope {payload['evidence_envelope']}"
+                    )
 
         if stage_id == "03-question-designer":
             self._validate_questions(payload, [f"Q{i}" for i in range(1, 7)])
