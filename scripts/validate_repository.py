@@ -22,6 +22,8 @@ REQUIRED = [
     "tests/test_release_evidence.py",
     ".github/workflows/validate-skill.yml",
     "scripts/run_regression_fixtures.py",
+    "scripts/evidence_envelope.py",
+    "scripts/audit_assessment_package_v4.py",
     "schemas/question-set.schema.json",
     "schemas/approved-question-set.schema.json",
     "schemas/build-manifest.schema.json",
@@ -31,6 +33,7 @@ REQUIRED = [
     "standards/exemplar-policy.md",
     "standards/qa-barriers.md",
     "standards/visual-standard.md",
+    "references/evidence-band-standard.md",
     "references/contextual-illustration-standard.md",
     "assets/visual-tokens/assessment-visual-tokens-v1.json",
     "assets/maths-visuals/v1/manifest.json",
@@ -66,8 +69,8 @@ if len(stages) != 7 or len(set(stages)) != 7:
 version = (ROOT / "VERSION").read_text().strip()
 if pipeline["version"] != version:
     raise SystemExit("VERSION must match orchestration/pipeline.json version.")
-if version != "3.6.0":
-    raise SystemExit("Expected v3.6.0 repository contract.")
+if version != "4.0.0":
+    raise SystemExit("Expected v4.0.0 repository contract.")
 if not pipeline.get("runtime_enforced"):
     raise SystemExit("Pipeline must declare runtime_enforced=true.")
 if pipeline.get("controller") != "runtime/controller.py":
@@ -86,7 +89,16 @@ if pipeline["content_gate"].get("approved_artifact") != "approved_question_set":
     raise SystemExit("Content gate must define approved_question_set as its approved artefact.")
 
 skill = (ROOT / "SKILL.md").read_text()
-for phrase in ["Q7 and Q8 are independent", "READY", "NOT READY", "standards/project-context.md", "standards/release-evidence.md"]:
+for phrase in [
+    "Q7 and Q8 are independent",
+    "READY",
+    "NOT READY",
+    "standards/project-context.md",
+    "standards/release-evidence.md",
+    "references/evidence-band-standard.md",
+    "5D / 8C / 5B / 7A",
+    "25 marks",
+]:
     if phrase not in skill:
         raise SystemExit(f"SKILL.md missing required contract phrase: {phrase}")
 
