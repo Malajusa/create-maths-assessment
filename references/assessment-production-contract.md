@@ -143,10 +143,12 @@ Include every gate from `P01` to `P29` and `R01` to `R18` exactly once. The pack
 
 ## 6. Run the package audit
 
-After final rendering/visual inspection, run:
+After final rendering/visual inspection, use the auditor selected by the assessment specification.
+
+For v4 (`criterion_component_estimate_v1`):
 
 ```bash
-python scripts/audit_assessment_package.py \
+python scripts/audit_assessment_package_v4.py \
   --spec assessment-spec.json \
   --test Topic_Test.pptx \
   --key Topic_Marking_Key.pptx \
@@ -156,9 +158,15 @@ python scripts/audit_assessment_package.py \
   --report assessment-audit.json
 ```
 
-The auditor verifies source preflight again, file integrity, A4 dimensions, slide/page counts, Page 1 positions, test/key identity, stable names, font minimums, mark labels, key coverage, `MARKING KEY` headers, fraction clearance, banned slash fractions, response-space agreement, prohibited unexplained labels, Q7/Q8 table use, page bounds, rationale tokens and release ledger.
+For legacy/source-preservation packages, use the same named flags with:
 
-For v4 it must also verify mechanically available agreement on 25 total marks, approved evidence envelope/indicative bands and required teacher-facing rationale/key tokens, while rejecting internal grade metadata on the Student Test where detectable.
+```bash
+python scripts/audit_assessment_package.py ...
+```
+
+The mature auditor verifies source preflight, file integrity, A4 dimensions, slide/page counts, Page 1 positions, test/key identity, stable names, font minimums, mark labels, key coverage, `MARKING KEY` headers, fraction clearance, banned slash fractions, response-space agreement, prohibited unexplained labels, Q7/Q8 table use, page bounds, rationale tokens and release ledger.
+
+The v4 wrapper derives the expected mark counts from the validated specification, reuses those mature checks and additionally verifies the 25-mark evidence model, teacher-facing indicative score table, rationale envelope/boundary proof and absence of internal evidence metadata on the Student Test.
 
 The audit does not replace mathematical/pedagogical judgement. `READY` requires both recorded review gates and mechanical audit.
 
