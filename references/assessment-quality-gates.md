@@ -6,7 +6,7 @@
 1. Quality hierarchy
 2. Mandatory design matrix
 3. Coherence and variation rules
-4. Mark-allocation rules
+4. Evidence-band and mark-allocation rules
 5. Transformations benchmark
 6. Pre-production rejection gates
 7. Rendered-package release gates
@@ -16,198 +16,161 @@
 
 Readiness is binary: **READY** or **NOT READY**.
 
-- Any identified correction affecting curriculum alignment, mathematical accuracy, question meaning, natural wording, cognitive demand, diagnostic value, notation, visual representation, accessibility, response space, print legibility, marking reliability, file consistency or package completeness is a release barrier.
-- Do not use `minor`, `non-barrier`, `acceptable for now` or similar language to permit delivery while a known correction remains open. These terms may describe the effort required to fix an issue, never its readiness status.
+- Any identified correction affecting curriculum alignment, mathematical accuracy, question meaning, natural wording, cognitive demand, evidence-band validity, diagnostic value, notation, visual representation, accessibility, response space, print legibility, marking reliability, file consistency or package completeness is a release barrier.
+- Do not use `minor`, `non-barrier`, `acceptable for now` or similar language to permit delivery while a known correction remains open. These terms may describe effort, never readiness.
 - An optional stylistic preference is non-blocking only when no correction is recommended and it has no effect on use, interpretation, marking or print quality.
-- For a creation or revision task, fix every identified issue within scope and repeat the affected checks plus the complete rendered-package release pass.
-- For a review-only task, return **NOT READY** whenever any correction is required. Do not call the assessment ready with reservations.
-- Do not deliver, publish or save a final package until the release ledger contains zero open issues.
+- For creation/revision, fix every identified issue within scope and repeat the affected checks plus the complete rendered-package release pass.
+- For review-only, return **NOT READY** whenever any correction is required.
+- Do not deliver a final package until the release ledger contains zero open issues.
 
-Maintain the JSON release ledger defined in `assessment-production-contract.md` during authoring and review. Every gate must record `PASS`. A warning, conditional pass, unverified assumption or promised future print check counts as `FAIL` until resolved. A prose claim that checks passed is not a substitute for the ledger or the deterministic audit report.
+Maintain the JSON release ledger defined in `assessment-production-contract.md`. Every gate must record `PASS`. A warning, conditional pass, unverified assumption or promised future check counts as `FAIL` until resolved. Prose claims are not substitutes for the ledger or deterministic audit.
 
 ## 1. Quality hierarchy
 
 Judge assessment quality in this order:
 
-1. exact alignment to the taught curriculum;
-2. intentional balance across the essential concepts in the topic;
-3. coherent cumulative progression from accessible evidence to transfer and evaluation;
-4. diagnostic value for identifying specific misconceptions and next teaching steps;
-5. purposeful variation in mathematical action and representation;
-6. readable, consistent and printable page design.
+1. exact alignment to the taught/current curriculum;
+2. valid criterion evidence relative to the resolved expected standard;
+3. intentional balance across essential concepts;
+4. coherent cumulative progression from limited evidence through expected-standard evidence to transfer/evaluation;
+5. diagnostic value for misconceptions and next teaching steps;
+6. purposeful mathematical action and representation;
+7. readable, consistent and printable page design.
 
-Do not reverse this order. A collection of visibly different task formats is not stronger merely because it looks varied. A coherent sequence of recognition, construction, description, discrimination and composition can provide better evidence than unrelated task novelties.
+Do not reverse this order. A nominal 5D / 8C / 5B / 7A envelope is invalid if its mark labels do not match the mathematics actually elicited.
 
 ## 2. Mandatory design matrix
 
-Complete all eight rows of this matrix before authoring slides. Keep it as an internal planning artefact unless the user requests it, then adapt its evidence into the curriculum-rationale table.
+Complete all eight rows before authoring slides. For v4 the default matrix is:
 
-| Q | Marks | Curriculum concept | Observable evidence | Mathematical action | Representation | Diagnostic purpose | Dependency and follow-through | Mark evidence |
-|---|---:|---|---|---|---|---|---|---|
-| Q1 | 1 |  |  |  |  |  |  |  |
-| Q2 | 1 |  |  |  |  |  |  |  |
-| Q3 | 2 |  |  |  |  |  |  |  |
-| Q4 | 2 |  |  |  |  |  |  |  |
-| Q5 | 3 |  |  |  |  |  |  |  |
-| Q6 | 3 |  |  |  |  |  |  |  |
-| Q7 | 4 |  |  |  |  |  |  |  |
-| Q8 | 4 |  |  |  |  |  |  |  |
+| Q | Marks | Default band distribution | Curriculum concept | Observable evidence | Mathematical action | Representation | Diagnostic purpose | Dependency/follow-through | Mark evidence |
+|---|---:|---|---|---|---|---|---|---|---|
+| Q1 | 1 | 1D |  |  |  |  |  |  |  |
+| Q2 | 1 | 1D |  |  |  |  |  |  |  |
+| Q3 | 1 | 1D |  |  |  |  |  |  |  |
+| Q4 | 2 | 2D |  |  |  |  |  |  |  |
+| Q5 | 4 | 4C |  |  |  |  |  |  |  |
+| Q6 | 5 | 4C + 1B |  |  |  |  |  |  |  |
+| Q7 | 5 | 4B + 1A |  |  |  |  |  |  |  |
+| Q8 | 6 | 6A |  |  |  |  |  |  |  |
 
-Use precise actions such as identify, construct, calculate, represent, describe, compare, infer, critique, reverse and justify. In the last column, list the distinct evidence for every allocated mark.
+Use precise actions such as identify, construct, calculate, represent, describe, compare, infer, critique, reverse, evaluate and justify.
 
-Before approval, also list the topic's essential concepts and record whether each is:
+For each individual v4 mark record `evidence`, `evidence_band`, `band_rationale`, `why_not_lower_band`, and an `a_demand_feature` for every A mark.
 
-- directly assessed;
-- indirectly assessed through a connected question; or
-- intentionally omitted, with a reason.
+Before approval, list essential concepts and record whether each is directly assessed, indirectly assessed or intentionally omitted with a reason. Do not let one convenient representation/procedure dominate because it is easy to lay out or mark.
 
-Do not let one convenient representation or procedure dominate merely because it is easy to lay out or mark.
-
-Before slide production, add a short readiness record for each question covering:
-
-- a plain-language restatement of what the student must determine;
-- the independently verified answer and solution path;
-- why the wording has only one reasonable mathematical interpretation;
-- whether a visual model is mathematically purposeful, intentionally omitted or required;
-- the exact evidence earning each mark; and
-- for Q7 and Q8, the information students must extract from the prose and the demand features that prevent the task from being a routine Q5/Q6 item.
+Before slide production add a readiness record for each question covering task restatement, independently verified answer/solution, one reasonable interpretation, visual purpose/omission, exact mark evidence and band rationale, and Q7/Q8 prose-extraction/demand features.
 
 ## 3. Coherence and variation rules
 
+For v4, design **C first** as satisfactory independent evidence of the resolved year-level expectation, then legitimate D evidence below that anchor and B/A evidence through deeper application.
+
 Plan for cumulative evidence:
 
-- Q1-Q2 establish accessible foundations or distinguish essential properties.
-- Q3-Q4 require accurate construction, calculation, representation or interpretation.
-- Q5-Q6 connect procedures with descriptions, verification, comparison or a second representation.
-- Q7 establishes one clear main problem and interrupts routine application through inference, comparison, reverse process or transfer.
-- Q8 presents one independent, self-contained A-level problem and deepens the mathematics through a changed value, condition or target, a missing relationship, a reverse process or a connected evaluation. It must not extend or depend on Q7.
+- Q1–Q4 provide five meaningful D marks towards the same current-year construct rather than unrelated prerequisite trivia.
+- Q5 normally provides direct C evidence.
+- Q6 normally consolidates C and introduces a legitimate B opportunity.
+- Q7 is one clear main problem, principally B, interrupting routine application through transfer, inference, comparison, reverse process or explanation.
+- Q8 is one independent A-level problem deepening the mathematics through connected conditions, missing relationships, reverse process, evaluation or justification. It must not extend or depend on Q7.
 
-Use variety to expose different mathematical evidence, not to decorate the assessment.
+Use variety to expose different mathematical evidence, not decoration. Accept repeated actions only where they deliberately contrast concepts, reveal an invariant, isolate a misconception or build a coherent progression.
 
-Accept repeated mathematical actions when they:
+## 4. Evidence-band and mark-allocation rules
 
-- deliberately contrast two concepts;
-- reveal whether a student preserves an invariant;
-- isolate a known misconception;
-- extend one process into a more demanding connected process; or
-- create a coherent sequence that prepares for Q7 and Q8.
+Read `evidence-band-standard.md`.
 
-Reject or revise repetition when adjacent questions merely change the numbers, shapes, names or context while eliciting the same evidence. As a warning sign, review any draft where more than half of Q1-Q6 use the same mathematical action without an explicit diagnostic rationale.
+**D:** meaningful but limited/partial evidence towards the current year-level construct.
 
-Across the complete assessment, require several substantive actions such as recognition, construction, description, comparison, inference, evaluation and justification. Do not maximise the action count at the expense of topic coherence.
+**C:** satisfactory independent evidence of the current year-level expectation; the anchor band.
 
-## 4. Mark-allocation rules
+**B:** transfer, independent strategy selection, connection, interpretation, comparison, reverse process or explanation beyond routine C performance.
 
-Assign marks to meaningful mathematical evidence:
+**A:** non-obvious inference, adaptation, interacting constraints, evaluation, sustained reasoning, reconciliation or justification within the authorised curriculum.
 
-- the correct concept or relationship;
-- a viable model, construction or strategy;
-- an important intermediate dependency;
-- accurate completion;
-- verification, comparison or justification.
+Never assign a higher band merely because of question position, arithmetic size, decimals, number of operations, more words, response length, subpart count or unfamiliar story context.
 
-Do not split one routine act mechanically across vertices, digits, rows, objects or written steps. For example, a three-mark rotation construction should normally distinguish:
+Assign marks to meaningful mathematical evidence: concept/relationship, viable model/strategy, important intermediate dependency, accurate completion, verification, comparison, evaluation or justification. Do not split one routine act mechanically across vertices, digits, rows, objects or written steps.
 
-1. correct centre and angle or a valid construction method;
-2. correct direction/orientation and preservation of the figure;
-3. complete accurate final image.
-
-Award one mark per vertex only when locating individual image points is itself the explicitly intended evidence.
+For v4 the complete validated mark set must total **25 marks** and **5D / 8C / 5B / 7A**. Score bands are E 0–4, D 5–9, C 10–15, B 16–20, A 21–25. The structure must force at least 5 C+, 3 B+ and 3 A marks at the C/B/A boundaries. If honest banding prevents this envelope, redesign; do not reclassify weak evidence.
 
 ## 5. Transformations benchmark
 
-For Year 6 transformations, inspect `../assets/year-6-transformations-quality-benchmark.pptx`. Treat it as a benchmark for curriculum coverage, diagram quality and page hierarchy. Do not copy its misconception-critique or transformation-card response formats into unrelated topics, and do not let it override the direct problem-solving architecture.
-
-The benchmark is strong because it:
-
-- balances translation, reflection and rotation;
-- builds from recognition through construction and description to discrimination and composition;
-- uses Q7 to expose misconceptions about transformation type, rotation angle, centre and orientation;
-- uses Q8 to determine an unknown order of transformations, construct the intermediate image, verify with coordinates, reverse the order and explain why the result changes;
-- uses the Cartesian plane as mathematical evidence rather than decoration, provided coordinates were part of the taught unit;
-- keeps diagrams at a consistent functional scale and reserves substantial space for the task.
-
-Use this progression as the Year 6 transformations design target:
-
-| Stage | Evidence |
-|---|---|
-| Q1-Q2 | Recognise and distinguish essential transformation properties |
-| Q3-Q5 | Accurately construct translation, reflection and rotation |
-| Q6 | Describe or connect transformations precisely |
-| Q7 | Diagnose and correct a misconception using centre, angle and orientation evidence |
-| Q8 | Determine, test and justify the order of composed transformations |
-
-Do not copy the benchmark mechanically. Adapt the progression to the exact content taught. Omit coordinate verification when Cartesian coordinates have not been taught as part of the unit.
+For Year 6 transformations inspect `../assets/year-6-transformations-quality-benchmark.pptx`. Treat it as a benchmark for curriculum coverage, diagram quality and page hierarchy, not as authority for v4 mark values or response formats. Re-blueprint a v4 transformations assessment so every mark satisfies the current evidence-band definitions.
 
 ## 6. Pre-production rejection gates
 
-Reject the draft before PowerPoint production if any answer is no:
+The release ledger retains **P01–P29**. For v4, the new evidence checks are incorporated into these gates rather than adding new gate IDs.
 
-1. Does the concept list show intentional topic coverage rather than accidental emphasis?
-2. Does every question have a distinct diagnostic purpose?
-3. Can the progression be stated as one coherent cumulative sequence?
-4. Does any repeated action have an explicit contrast, diagnostic or progression reason?
-5. Does every mark represent meaningful mathematical evidence rather than mechanical task fragments?
-6. Do Q7 and Q8 meet the cognitive-demand reference without relying on untaught content?
-7. Will incorrect responses identify useful reteaching needs?
-8. Can a student at the assessed year level tell exactly what to do, how many responses to give, where to record them and what evidence is required without teacher paraphrasing?
-9. Does the proposed page layout give the required diagram, construction, working and explanation enough blank, unlined space, with no generic ruled lines or pre-divided working steps?
-10. Do all mathematical diagrams follow `mathematical-diagram-conventions.md`, including whole-shape placement, triangle vertices and transformed-image labels?
-11. Does every symbolic fraction and mixed numeral use a built-up numerator-over-denominator form with a horizontal vinculum, with no forward-slash, diagonal-slash or vulgar-fraction substitute?
-12. Does each upper question use a response structure students have practised or that the user has explicitly approved, and has any rejected question family been replaced rather than cosmetically rewritten?
-13. Are Q7 and Q8 independent, self-contained complex problems, with Q7 targeting B-level reasoning and Q8 targeting A-level reasoning?
-14. Does Q8 deepen the mathematics without switching to an exhaustive-search proof, person-claim critique, unfamiliar response protocol or prescribed solution pathway?
-15. Can Q8 be understood and solved without reading or completing Q7?
-16. Are Q7 and Q8 prose-first word problems in which students must extract the relevant quantities, conditions and relationships from sentences, rather than receiving a pre-organised solution table, list or labelled data display?
-17. If a table, diagram, graph, number line or model appears in Q7 or Q8, is it itself mathematical evidence to interpret rather than a device that removes the need to unpack the written situation?
-18. Does every sentence read naturally aloud as age-appropriate classroom English, without compressed pseudo-table wording, awkward repetition or an artificial list disguised as a sentence?
-19. Where a visual representation is central to the concept or needed to vary the evidence, does the draft include a meaningful, editable mathematical model rather than relying only on symbols and prose?
-20. For every fraction, is there planned visible white space between the numerator and the vinculum, with no contact or perceived contact at normal A4 viewing size?
-21. Does Q8 satisfy at least three substantive demand features, including at least one inference, dependency or interacting constraint, and require a justified conclusion? Conceptual subtlety or extra arithmetic alone is insufficient.
-22. Has every item been independently solved, with all values, units, diagrams, conclusions and mark allocations checked against the exact question wording?
-23. Is the exact Page 1 order fixed as Q1 top-left, Q2 top-right, Q3 middle-left, Q4 middle-right, Q5 bottom-left and Q6 bottom-right?
-24. Can the marking key be added to an exact duplicate of the final test without shrinking, obscuring or changing any student-facing element?
-25. Does the rationale describe the actual questions, answers, demand and mark evidence without overstating curriculum coverage or achievement-level demand?
-26. Does every marked response require the student to interpret, derive, construct, decide or justify something that is not already stated or made automatic by the stem or stimulus?
-27. Is each question's mark value proportional to the mathematical work demanded, so Q5-Q6 do not award three marks for three supplied or obvious observations?
-28. Is every response label, final-answer box, table, ruled area or other scaffold mathematically necessary, explicitly justified in the specification and proportionate to the response? Blank, unlined space is the default.
-29. Does a validated `assessment-spec.json` contain the exact prompt, independently checked answer, solution path, mark evidence, representation purpose, response-space decision and curriculum alignment for every question, including every user-authorised extension or exception?
+Reject the draft if any answer is no:
+
+1. **P01:** Does the concept list show intentional topic coverage rather than accidental emphasis?
+2. **P02:** Does every question have a distinct diagnostic purpose?
+3. **P03:** Can the progression be stated as one coherent cumulative sequence, with C explicitly anchored to satisfactory current-year achievement when v4 applies?
+4. **P04:** Does any repeated action have an explicit contrast, diagnostic or progression reason?
+5. **P05:** Does every mark represent meaningful distinct evidence; and for v4 do the 25 marks carry valid `evidence_band`, `band_rationale`, `why_not_lower_band`, required A-demand features, and total exactly 5D / 8C / 5B / 7A with E/D/C/B/A bands 0–4/5–9/10–15/16–20/21–25 and structural 5/3/3 boundary proof?
+6. **P06:** Do Q7/Q8 meet cognitive-demand requirements without untaught content, with Q7 principally B and Q8 principally A under honest individual-mark classification?
+7. **P07:** Will incorrect responses identify useful reteaching needs?
+8. **P08:** Can a student tell exactly what to do, response count/location and required evidence without teacher paraphrasing?
+9. **P09:** Does layout provide sufficient blank, unlined space without generic pre-divided working steps?
+10. **P10:** Do all diagrams follow `mathematical-diagram-conventions.md`?
+11. **P11:** Does every symbolic fraction/mixed numeral use built-up horizontal-vinculum notation with visible clearance?
+12. **P12:** Does each upper question use a practised/approved response structure, and has any rejected question family been genuinely replaced?
+13. **P13:** Are Q7/Q8 independent, self-contained complex problems with genuine B/A reasoning rather than band inflation from question position?
+14. **P14:** Does Q8 deepen mathematics without unfamiliar puzzle protocol, exhaustive-search proof or prescribed pathway?
+15. **P15:** Can Q8 be understood/solved without reading/completing Q7?
+16. **P16:** Are Q7/Q8 prose-first, requiring extraction of relevant quantities/conditions/relationships from sentences?
+17. **P17:** If Q7/Q8 uses a display, is it mathematical evidence rather than a solution organiser?
+18. **P18:** Does every sentence read naturally aloud as age-appropriate classroom English?
+19. **P19:** Where a visual is central, is it meaningful, editable and large enough to use?
+20. **P20:** Does every fraction have planned numerator-to-vinculum white space?
+21. **P21:** Does Q8 have at least three substantive demand features including inference/dependency/interacting constraint and a justified conclusion, and do claimed A marks actually depend on valid A-demand features?
+22. **P22:** Has every item been independently solved, including values, units, diagrams, conclusions, mark allocation and evidence-band allocation?
+23. **P23:** Is Page 1 fixed Q1 top-left, Q2 top-right, Q3 middle-left, Q4 middle-right, Q5 bottom-left, Q6 bottom-right?
+24. **P24:** Can the Marking Key be added to an exact duplicate of the final test without shrinking/obscuring/changing student-facing elements?
+25. **P25:** Does the rationale describe actual questions, answers, demand and mark evidence; and for v4 the 5D / 8C / 5B / 7A envelope, structural boundary proof and task-level indicative interpretation without overstating curriculum/reporting-grade claims?
+26. **P26:** Does every marked response require the student to derive, construct, decide, interpret or justify something not supplied by the stem/stimulus?
+27. **P27:** Is each mark proportional to actual mathematical evidence, with no mechanical splitting or band inflation from arithmetic size/literacy/question position?
+28. **P28:** Is every response label/box/table/ruled area mathematically necessary, justified and proportionate?
+29. **P29:** Does validated `assessment-spec.json` contain exact prompt, answer, solution, mark evidence, representation purpose, response-space decision, curriculum alignment and, where v4 applies, complete evidence-model/envelope/indicative-band/mark-band metadata; and does legacy/source-preservation routing remain explicit where v4 does not apply?
 
 ## 7. Rendered-package release gates
 
-After authoring, apply **all 29 pre-production gates again** to the rendered student test, rendered marking key and rendered rationale. Then reject the package if any answer below is no:
+The release ledger retains **R01–R18**. Apply all P01–P29 gates again to rendered artefacts, then reject if any answer is no:
 
-1. Are both PowerPoints exactly A4 portrait and exactly three slides in the required page sequence?
-2. Does rendered Page 1 use the exact `1–2 / 3–4 / 5–6` cell order?
-3. Are the test and marking key identical in slide order, question wording, diagrams, original marks, response spaces and page geometry, with only teacher answers and annotations added?
-4. Is `MARKING KEY` visible on every marking-key page, with no dropped headers or export omissions?
-5. Are all student instructions and response expectations readable at actual A4 size, with student body text at least 10.5 pt unless a larger mathematical label standard applies?
-6. Are all marking-key answers, worked solutions and mark annotations readable at actual A4 size, high contrast and at least 10 pt? Shorten or reposition annotations instead of reducing their type.
-7. Does a 100%-scale A4 render show no clipping, overflow, collisions, crowding, weak contrast, tiny diagrams or insufficient response space? A zoomed digital view alone is not evidence of print legibility.
-8. Does every fraction show clear numerator-to-vinculum white space at both normal page view and zoomed inspection, with no numerator touching or appearing to touch the bar?
-9. Are required visual models large, accurate, editable, greyscale-safe and genuinely useful for eliciting the intended mathematics?
-10. Do Q7 and Q8 still present their information through natural prose sentences, with supporting visuals only where those visuals are part of the mathematics?
-11. Does the marking key show the independently verified answer, four distinct marks for Q7 and Q8, acceptable alternatives, units and follow-through where appropriate, without covering the task?
-12. Do the rationale, test and key agree exactly on curriculum codes, question descriptions, values, answers, mark totals and demand claims?
-13. Does the rationale have no blank, unnecessary spill page, clipped table, orphaned heading or unreadably dense text?
-14. Have the overflow checker, package-integrity checks and slide/page count checks passed without treating automated success as a substitute for visual or pedagogical review?
-15. Does a final student-perspective read-through find every question natural, unambiguous and solvable without teacher paraphrasing?
-16. Does the release ledger contain zero failures, warnings, conditional passes or deferred fixes?
-17. Do the source specification, stable element names and package audit prove the required page positions, fraction-component clearances, response-space choices, font minimums and test/key duplication rather than leaving them to memory or visual estimation alone?
-18. Have both the authoring QA pass and the fresh artifact-only review passed, with their evidence and review mode recorded separately in the release ledger?
+1. **R01:** Are both PowerPoints A4 portrait and exactly three slides in required sequence unless an approved exception exists?
+2. **R02:** Does Page 1 use exact `1–2 / 3–4 / 5–6` cell order?
+3. **R03:** Are test/key identical in slide order, question wording, diagrams, original marks, response spaces and base geometry, with only teacher material added?
+4. **R04:** Is `MARKING KEY` visible on every key page?
+5. **R05:** Are student instructions/response expectations readable at actual A4 size and above required floors?
+6. **R06:** Are key answers/solutions/criteria readable at actual A4 size and above required floors?
+7. **R07:** Does a 100%-scale render show no clipping, collisions, crowding, weak contrast, tiny diagrams or insufficient response space?
+8. **R08:** Do fractions retain clear numerator-to-vinculum spacing?
+9. **R09:** Are required visual models large, accurate, editable, greyscale-safe and mathematically useful?
+10. **R10:** Do Q7/Q8 remain natural prose-first tasks with supporting visuals only where mathematically necessary?
+11. **R11:** Does the Marking Key show one distinct usable criterion for every allocated mark, acceptable alternatives/units/follow-through; and for v4 an exact indicative score table E 0–4, D 5–9, C 10–15, B 16–20, A 21–25 without obscuring the task?
+12. **R12:** Do rationale/test/key agree exactly on curriculum, values, answers, totals and demand; and for v4 does the rationale accurately show 5D / 8C / 5B / 7A, structural 5/3/3 proof and 'indicative assessed component, not reporting grade' limitation while the Student Test exposes no internal band metadata?
+13. **R13:** Does the rationale have no blank spill page, clipped table, orphaned heading or unreadably dense text?
+14. **R14:** Have overflow/package-integrity/page-count checks passed without substituting for visual/pedagogical review?
+15. **R15:** Does a final student-perspective read-through find every question natural, unambiguous and solvable without teacher paraphrasing?
+16. **R16:** Does the release ledger contain zero failures, warnings, conditional passes or deferred fixes, including evidence-envelope defects?
+17. **R17:** Do source spec, stable names and package audit prove required page positions, fraction clearances, response-space choices, font minimums, test/key duplication and, for v4, final mark/envelope/teacher-output agreement rather than leaving them to memory?
+18. **R18:** Have both authoring QA and fresh artifact-only review passed with separately recorded evidence/review mode?
 
-A file that passes automated overflow checks can still fail release because its mathematics, demand, wording, visuals, notation, annotations, response space, test/key fidelity or rationale alignment is below standard. Fix the issue and rerun the complete rendered-package release pass; do not deliver with a caveat.
+A file can pass automation and still fail because mathematics, evidence bands, demand, wording, visuals, notation, annotations, response space, test/key fidelity or rationale alignment is below standard. Fix and rerun the full release pass.
 
 ## 8. Required evidence and audit execution
 
-For creation and revision, retain these working artefacts until release:
+For creation/revision retain until release:
 
-- the validated `assessment-spec.json`;
-- the JSON release ledger with `P01`-`P29` and `R01`-`R18` all recorded as `PASS`;
-- the final deterministic audit report;
-- rendered images or PDFs used for the 100%-scale visual inspection.
+- validated `assessment-spec.json`;
+- JSON release ledger with exactly `P01`–`P29` and `R01`–`R18` recorded once each as `PASS`;
+- final deterministic audit report;
+- full-resolution rendered images/PDFs used for visual inspection;
+- for v4, approved question set containing mark-level evidence-band metadata.
 
-The specification validator and package auditor are compulsory controls. Run them as described in `assessment-production-contract.md`. Automated checks do not judge natural language, curriculum validity, mathematical demand or visual usefulness; those remain human-review gates and must be supported by specific evidence in both review passes.
-# Visual evidence gate
+The specification validator and package auditor are compulsory controls. Automated checks do not judge natural language, curriculum validity, mathematical demand or visual usefulness; those remain review gates supported by specific evidence.
 
-Apply `standards/visual-standard.md` to every visual. Confirm that its declared purpose and removal effect match the assessed construct, mathematical information is accurate, colour is not the sole cue, print dimensions are legible and Q7/Q8 demand is preserved. A decorative, untraceable or solution-ready visual fails the content gate.
+## Visual evidence gate
+
+Apply `standards/visual-standard.md` to every visual. Confirm purpose/removal effect matches the construct, mathematical information is accurate, colour is not the sole cue, print dimensions are legible and Q7/Q8 demand is preserved. Decorative, untraceable or solution-ready visuals fail the content gate.

@@ -52,7 +52,33 @@
     },
     "marking": {
       "type": "array",
-      "minItems": 1
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["mark", "evidence"],
+        "properties": {
+          "mark": {"type": "integer", "minimum": 1},
+          "evidence": {"type": "string", "minLength": 1},
+          "evidence_band": {"type": "string", "enum": ["D", "C", "B", "A"]},
+          "band_rationale": {"type": "string", "minLength": 1},
+          "why_not_lower_band": {"type": "string", "minLength": 1},
+          "a_demand_feature": {
+            "type": "string",
+            "enum": ["inference", "adaptation", "interacting_constraints", "evaluation", "sustained_reasoning", "justification"]
+          }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"evidence_band": {"const": "A"}}, "required": ["evidence_band"]},
+            "then": {"required": ["band_rationale", "why_not_lower_band", "a_demand_feature"]}
+          },
+          {
+            "if": {"required": ["evidence_band"]},
+            "then": {"required": ["band_rationale", "why_not_lower_band"]}
+          }
+        ]
+      }
     },
     "misconceptions": {
       "type": "array"

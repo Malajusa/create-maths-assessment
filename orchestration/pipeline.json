@@ -1,5 +1,5 @@
 {
-  "version": "3.6.0",
+  "version": "4.0.0",
   "entrypoint": "01-orchestrator-curriculum-resolver",
   "stages": [
     {
@@ -91,7 +91,8 @@
     "mathematical_error": "generating_agent",
     "ambiguity": "generating_agent",
     "excessive_scaffolding": "generating_agent",
-    "difficulty_calibration": "02-assessment-blueprint"
+    "difficulty_calibration": "02-assessment-blueprint",
+    "evidence_band": "02-assessment-blueprint"
   },
   "max_targeted_repairs_per_barrier": 3,
   "after_max_repairs": "replace_approach",

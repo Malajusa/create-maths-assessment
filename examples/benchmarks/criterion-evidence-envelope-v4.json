@@ -1,0 +1,53 @@
+{
+  "evidence_model": "criterion_component_estimate_v1",
+  "scope": "new Years 3-10 grade-estimating mathematics assessments",
+  "total_marks": 25,
+  "evidence_envelope": {
+    "D": 5,
+    "C": 8,
+    "B": 5,
+    "A": 7
+  },
+  "indicative_bands": {
+    "E": [0, 4],
+    "D": [5, 9],
+    "C": [10, 15],
+    "B": [16, 20],
+    "A": [21, 25]
+  },
+  "minimum_forced_target_evidence": {
+    "C_or_higher_at_C_cutoff": 5,
+    "B_or_higher_at_B_cutoff": 3,
+    "A_at_A_cutoff": 3
+  },
+  "default_question_pattern": [
+    {"id": "Q1", "marks": 1, "band_distribution": {"D": 1}},
+    {"id": "Q2", "marks": 1, "band_distribution": {"D": 1}},
+    {"id": "Q3", "marks": 1, "band_distribution": {"D": 1}},
+    {"id": "Q4", "marks": 2, "band_distribution": {"D": 2}},
+    {"id": "Q5", "marks": 4, "band_distribution": {"C": 4}},
+    {"id": "Q6", "marks": 5, "band_distribution": {"C": 4, "B": 1}},
+    {"id": "Q7", "marks": 5, "band_distribution": {"B": 4, "A": 1}},
+    {"id": "Q8", "marks": 6, "band_distribution": {"A": 6}}
+  ],
+  "band_definitions": {
+    "D": "Meaningful but limited or partial evidence towards the current year-level construct.",
+    "C": "Satisfactory independent evidence of the resolved current year-level expectation; the anchor band.",
+    "B": "Stronger independent application through transfer, strategy selection, connection, interpretation, comparison, reverse process or explanation beyond routine C performance.",
+    "A": "Qualitatively stronger reasoning through non-obvious inference, adaptation, interacting constraints, evaluation, sustained reasoning, reconciliation or justification within the authorised curriculum."
+  },
+  "a_demand_features": [
+    "inference",
+    "adaptation",
+    "interacting_constraints",
+    "evaluation",
+    "sustained_reasoning",
+    "justification"
+  ],
+  "output_scope": {
+    "student_test_shows_internal_bands": false,
+    "marking_key_includes_indicative_table": true,
+    "curriculum_rationale_explains_structural_proof": true,
+    "estimate_is_reporting_grade": false
+  }
+}

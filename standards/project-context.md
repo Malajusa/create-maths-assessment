@@ -8,21 +8,40 @@ These are enduring decisions from the Maths assessments project, not a new curri
 |---|---|---|
 | 29 July 2026: output and key requests | Student Test and Marking Key in A4 portrait PowerPoint; Curriculum Rationale in PDF. The key duplicates the exact final test and adds solutions and marks. | A key-only request for an uploaded presentation does not authorise a replacement assessment or three unnecessary new documents. |
 | 29 July 2026: quality comparison and labelling | Use the user-approved benchmark dimensions, not the model's preferred aesthetic. Observe mathematical labelling conventions; put a shape identifier centrally unless that obstructs the mathematics. | Do not infer which similarly named upload was preferred. Vertex labels and shape identifiers have different purposes. |
-| 13–18 August 2026: Q7/Q8 corrections | Two independent, meaningful, prose-first problems. Q7 targets B-level reasoning and Q8 A-level reasoning. Students extract information and choose a strategy. | Q8 does not extend Q7, reuse its required answer, or depend on its model. Intended demand is not an automatic grade conversion. |
-| 25 August 2026: repeated reviews | Previously dismissed 'non-barrier' defects are release barriers. Remove unnecessary instructions, labels, boxes and artificial wording. | A question is not complex merely because it is wordy, worth four marks or uses larger numbers. |
+| 13–18 August 2026: Q7/Q8 corrections | Two independent, meaningful, prose-first problems. Q7 targets B-level reasoning and Q8 A-level reasoning. Students extract information and choose a strategy. | Q8 does not extend Q7, reuse its required answer, or depend on its model. Intended demand is not an automatic reporting-grade conversion. |
+| 25 August 2026: repeated reviews | Previously dismissed 'non-barrier' defects are release barriers. Remove unnecessary instructions, labels, boxes and artificial wording. | A question is not complex merely because it is wordy, worth several marks or uses larger numbers. |
 | 8–9 September 2026: failed deliveries and false READY | Require real files, current evidence, complete rendered inspection and actual audit execution. Report missing or failed stages truthfully. | A plan, a fixture, a source-code test pass or a document existing is not classroom-release approval. |
 | 9 September 2026: visual-system approval | Preserve the newer correctness/QA architecture while restoring the approved assessment-native visual standard. Use the visual specifications, profile, tokens and geometry/provenance checks already in the repository. | Older exemplars are visual-only where designated; do not import their old curriculum or weaker assessment demand. |
 | 9 September 2026: judging standards | Use the supplied 2016 judging standards as loose calibration for Pre-primary to Year 6, alongside current curriculum. | They are not a strict checklist, not 2026 curriculum authority, and not a reason to import superseded content. Year 7 judging-standard work was deferred, not Year 7 assessment creation. |
+| **14 September 2026: criterion evidence envelope** | New Years 3–10 grade-estimating assessments use a **25-mark** criterion envelope: **5D / 8C / 5B / 7A**, with indicative component bands E 0–4, D 5–9, C 10–15, B 16–20, A 21–25. Individual marks carry the evidence band. | This estimates the standard demonstrated on the assessed component; it is not the student's semester/reporting grade. Legacy exact-source assessments, PP–Y2 and WACE are not silently migrated. |
 
-## Generation requirements
+## Current generation requirements
 
-Preserve the default eight-question, 20-mark structure: 1, 1, 2, 2, 3, 3, 4, 4. Follow the canonical Page 1 six-cell placement and separate Q7/Q8 pages, rather than inventing a new reading order. Match demand, mark allocation and response space; do not turn varied tasks into repeated calculation templates.
+For a new Years 3–10 assessment using `criterion_component_estimate_v1`, use the default eight-question mark sequence **1, 1, 1, 2, 4, 5, 5, 6** and the whole-assessment envelope **5D / 8C / 5B / 7A**. Follow the canonical Page 1 six-cell placement and separate Q7/Q8 pages.
 
-Before layout, Agents 02–04 must carry the intended evidence, response-space needs, visual purpose and demand-preservation decisions in the existing blueprint/question/visual contracts. The document builder must not invent these to fill an empty template.
+The earlier **20-mark 1,1,2,2,3,3,4,4** structure is now a **legacy** project architecture. Preserve it when working from an exact legacy source assessment or equivalent Version B unless the user explicitly requests migration. Do not rewrite historical exemplars solely to make them resemble v4.
+
+Before layout, Agents 02–04 must carry the intended evidence, response-space needs, visual purpose and demand-preservation decisions in the blueprint/question/visual contracts. In v4 each individual mark also carries `evidence_band`, `band_rationale` and `why_not_lower_band`; A marks carry an A-demand feature. The document builder must not invent these to fill an empty template.
+
+C is the current-year expected-standard anchor. D is meaningful but limited/partial evidence towards the same construct. B requires transfer or stronger independent application beyond routine C performance. A requires non-obvious, flexible or justified reasoning within the authorised curriculum. Do not use larger numbers, more text, extra arithmetic or question position as evidence of a higher band.
 
 Q7/Q8 must begin with a situation students can interpret. A useful supporting diagram or number line is permitted, but a solution-ready table, forced decomposition or instruction-by-instruction recipe must not do the intended reasoning for them. Routine conversions with a story attached, or an abstract factor-pair exercise labelled 'complex', do not establish the required demand. Explain the actual inference, interacting constraints, transfer or justified conclusion in the teacher-facing evidence.
 
 Use Australian English. Preserve the requested mathematical scope and verified curriculum codes. Make the rationale describe the final questions rather than the original ambition. Do not invent curriculum claims, prerequisite requirements, classroom conditions or teacher instructions.
+
+## Component estimate and teacher responsibility
+
+The v4 score is deliberately designed as a robust estimate of performance on the assessed component. It supports moderation and contributes evidence to a broader reporting judgement; it does not automate that judgement.
+
+Teacher responsibilities remain outside this skill:
+
+- deciding how much weight to give this assessment alongside other evidence;
+- moderating borderline or unusual response patterns;
+- reflecting on whether an item functioned as intended;
+- deciding when an equivalent re-attempt is appropriate;
+- determining the eventual reporting grade.
+
+The skill's responsibility is to make the instrument strong enough that the raw score is normally informative without a second post-hoc grading algorithm.
 
 ## Visual and marking-key floor
 
@@ -32,7 +51,9 @@ Every question-owned element stays in its own cell. Reject misaligned right-colu
 
 The marking key must preserve student wording, numbers, diagrams, order and base layout. Add integrated, readable worked solutions and distinct observable mark criteria. Reject solution panels that obscure the student diagram or response structure, cramped explanations, overlapping criteria, and marking instructions requiring a teacher to invent the allocation.
 
-For an uploaded assessment, record the exact source filename and hash and work from that file, not a remembered or similarly named version. For an equivalent Version B, retain structure, constructs, demand, representation type and mark scheme while changing the requested values; independently solve the new values and update the exact matching key and rationale where requested.
+The Student Test must not display internal D/C/B/A evidence-band metadata. A v4 Marking Key may show teacher-facing band annotations and the indicative component score table where this remains readable. The Curriculum Rationale explains the evidence envelope and structural boundary proof.
+
+For an uploaded assessment, record the exact source filename and hash and work from that file, not a remembered or similarly named version. For an equivalent Version B, retain structure, constructs, demand, representation type and mark scheme while changing the requested values; independently solve the new values and update the exact matching key and rationale where requested. A v4 re-attempt preserves the 25-mark total, 5D/8C/5B/7A envelope and cut-offs as well as the mathematical construct.
 
 ## Topic-specific precedents, not universal templates
 

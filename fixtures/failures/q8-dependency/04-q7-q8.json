@@ -4,21 +4,20 @@
       "id": "Q7",
       "marks": 4,
       "target_level": "B",
-      "curriculum_targets": [
-        "fixture-target"
-      ],
+      "curriculum_targets": ["fixture-target"],
       "primary_skill": "fixture-skill",
       "student_prompt": "Fixture question 7",
       "data": [],
       "visual_spec": null,
-      "expected_solution": {
-        "answer": 7
-      },
+      "expected_solution": {"answer": 7},
       "alternative_valid_methods": [],
       "marking": [
         {
-          "marks": 4,
-          "evidence": "fixture evidence"
+          "mark": 1,
+          "evidence": "Q7 evidence",
+          "evidence_band": "B",
+          "band_rationale": "Transfer fixture evidence.",
+          "why_not_lower_band": "Requires stronger-than-routine fixture reasoning."
         }
       ],
       "misconceptions": [],
@@ -28,27 +27,25 @@
       "id": "Q8",
       "marks": 4,
       "target_level": "A",
-      "curriculum_targets": [
-        "fixture-target"
-      ],
+      "curriculum_targets": ["fixture-target"],
       "primary_skill": "fixture-skill",
       "student_prompt": "Fixture question 8",
       "data": [],
       "visual_spec": null,
-      "expected_solution": {
-        "answer": 8
-      },
+      "expected_solution": {"answer": 8},
       "alternative_valid_methods": [],
       "marking": [
         {
-          "marks": 4,
-          "evidence": "fixture evidence"
+          "mark": 1,
+          "evidence": "Q8 evidence",
+          "evidence_band": "A",
+          "band_rationale": "High-demand fixture evidence.",
+          "why_not_lower_band": "Requires a justified inference beyond B evidence.",
+          "a_demand_feature": "inference"
         }
       ],
       "misconceptions": [],
-      "depends_on": [
-        "Q7"
-      ]
+      "depends_on": ["Q7"]
     }
   ]
 }

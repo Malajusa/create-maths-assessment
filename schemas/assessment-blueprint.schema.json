@@ -5,6 +5,33 @@
   "required": ["total_marks", "questions"],
   "properties": {
     "total_marks": {"type": "integer", "minimum": 1},
+    "evidence_model": {
+      "type": "string",
+      "enum": ["criterion_component_estimate_v1"]
+    },
+    "evidence_envelope": {
+      "type": "object",
+      "required": ["D", "C", "B", "A"],
+      "additionalProperties": false,
+      "properties": {
+        "D": {"type": "integer", "minimum": 0},
+        "C": {"type": "integer", "minimum": 0},
+        "B": {"type": "integer", "minimum": 0},
+        "A": {"type": "integer", "minimum": 0}
+      }
+    },
+    "indicative_bands": {
+      "type": "object",
+      "required": ["E", "D", "C", "B", "A"],
+      "additionalProperties": false,
+      "properties": {
+        "E": {"$ref": "#/$defs/scoreRange"},
+        "D": {"$ref": "#/$defs/scoreRange"},
+        "C": {"$ref": "#/$defs/scoreRange"},
+        "B": {"$ref": "#/$defs/scoreRange"},
+        "A": {"$ref": "#/$defs/scoreRange"}
+      }
+    },
     "questions": {
       "type": "array",
       "minItems": 1,
@@ -18,10 +45,52 @@
           "evidence": {"type": "string"},
           "target_level": {"type": "string"},
           "response_form": {"type": "string"},
+          "band_distribution": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "D": {"type": "integer", "minimum": 0},
+              "C": {"type": "integer", "minimum": 0},
+              "B": {"type": "integer", "minimum": 0},
+              "A": {"type": "integer", "minimum": 0}
+            }
+          },
           "visual_requirements": {"type": "array", "items": {"type": "string"}},
           "prohibited_scaffolding": {"type": "array", "items": {"type": "string"}}
         }
       }
     }
-  }
+  },
+  "$defs": {
+    "scoreRange": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "integer", "minimum": 0},
+        {"type": "integer", "minimum": 0}
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"evidence_model": {"const": "criterion_component_estimate_v1"}},
+        "required": ["evidence_model"]
+      },
+      "then": {
+        "required": ["evidence_envelope", "indicative_bands"],
+        "properties": {
+          "total_marks": {"const": 25},
+          "evidence_envelope": {"const": {"D": 5, "C": 8, "B": 5, "A": 7}},
+          "indicative_bands": {"const": {"E": [0, 4], "D": [5, 9], "C": [10, 15], "B": [16, 20], "A": [21, 25]}},
+          "questions": {
+            "items": {
+              "required": ["band_distribution"]
+            }
+          }
+        }
+      }
+    }
+  ]
 }

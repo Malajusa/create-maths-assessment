@@ -1,372 +1,288 @@
 # Mr Leahy's mathematics assessment specification
 
-## Contents
-
-1. Assessment purpose
-2. Fixed 20-mark structure
-3. Question architecture
-4. Higher-achievement evidence
-5. Curriculum alignment
-6. Page design
-7. Marking and grades
-8. Accessibility and administration
-9. Mixed-year assessments
-10. Moderation and instructional use
-11. Final checks
-
 ## 1. Assessment purpose
 
-Build a shared source of curriculum evidence, not merely a worksheet or collection of routine sums. The assessment must make A-E judgements explainable from visible student evidence and must also identify what should be retaught or extended.
+Build a shared source of curriculum evidence, not merely a worksheet or collection of routine sums. For new Years 3–10 grade-estimating assessments, the raw score should provide a strong **indicative A–E estimate for the assessed component** because the marks have been deliberately allocated to D/C/B/A evidence. The result is not the student's semester/reporting grade.
 
-Begin with the evidence needed for a defensible judgement:
+Begin with:
 
-1. WA Curriculum content description
-2. Achievement Standard or Judging Standard
-3. Evidence students must produce
-4. Task and marking criteria
-5. Moderation
+1. current WA Curriculum content description;
+2. relevant current achievement expectation;
+3. observable evidence students must produce;
+4. question and mark design;
+5. independent validation and moderation use.
 
 Quality principles:
 
 - **Aligned:** assess the nominated curriculum.
 - **Accessible:** remove irrelevant barriers without revealing the strategy.
-- **Extensible:** allow students to show depth and transfer.
+- **Criterion-referenced:** define evidence relative to the expected standard, not cohort rank or arbitrary percentages.
 - **Evidentiary:** require visible calculations, representations, explanations or justifications.
-- **Markable:** connect every mark to an observable element.
-- **Manageable:** keep administration and moderation practical.
+- **Markable:** connect every mark to one distinct observable criterion.
+- **Diagnostic:** incorrect responses should expose useful misconceptions.
+- **Manageable:** support classroom marking, moderation and equivalent re-attempts.
 
-## 2. Fixed 20-mark structure
+Read `evidence-band-standard.md` for the normative D/C/B/A definitions.
 
-| Questions | Marks | Main demand | Main purpose |
-|---|---:|---|---|
-| Q1-Q2 | 1 each | Basic fluency | Recognise, recall, count, identify or calculate |
-| Q3-Q4 | 2 each | Procedural accuracy | Produce two connected pieces of evidence |
-| Q5-Q6 | 3 each | Routine application | Apply the concept through a short sequence |
-| Q7 | 4 | Reasoning and transfer | Apply taught mathematics in a less familiar form |
-| Q8 | 4 | Complex justification | Solve a multi-part or multi-constraint problem and justify |
+## 2. Default Years 3–10 criterion structure
 
-Mark sequence: **1, 1, 2, 2, 3, 3, 4, 4**.
+For a new assessment using `criterion_component_estimate_v1`:
 
-Page sequence:
+| Question | Marks | Default evidence allocation |
+|---|---:|---|
+| Q1 | 1 | 1D |
+| Q2 | 1 | 1D |
+| Q3 | 1 | 1D |
+| Q4 | 2 | 2D |
+| Q5 | 4 | 4C |
+| Q6 | 5 | 4C + 1B |
+| Q7 | 5 | 4B + 1A |
+| Q8 | 6 | 6A |
 
-- Page 1: Q1-Q6 in six table cells ordered exactly Q1 top-left, Q2 top-right, Q3 middle-left, Q4 middle-right, Q5 bottom-left and Q6 bottom-right
-- Page 2: Q7
-- Page 3: Q8
+Mark sequence: **1, 1, 1, 2, 4, 5, 5, 6 = 25 marks**.
 
-Use more pages only when accessibility, large diagrams or the requested output format makes this necessary. Preserve the question and mark architecture.
+Whole-assessment evidence envelope: **5D / 8C / 5B / 7A**.
 
-## 3. Question architecture
+Indicative standard on the assessed component:
 
-Before applying the question architecture, complete the mandatory design matrix and quality hierarchy in `assessment-quality-gates.md`. Question variety is subordinate to curriculum balance, cumulative progression and diagnostic purpose.
+| Raw score | Indicative standard |
+|---|---|
+| 0–4 | E |
+| 5–9 | D |
+| 10–15 | C |
+| 16–20 | B |
+| 21–25 | A |
 
-Student clarity is non-negotiable. For every question:
+These are not universal percentage bands. They are valid because the evidence envelope structurally guarantees that:
 
-- use a direct action verb and wording suitable for the assessed year level;
-- make the required response count and endpoint explicit;
-- make it visually obvious where each response belongs;
-- state any required explanation, representation, unit, label or justification;
-- order multiple actions as short numbered or bulleted steps;
-- remove ambiguous referents, hidden assumptions, unnecessary context and dense clauses; and
-- confirm that a student can identify the task without teacher interpretation, while leaving the mathematical strategy unprompted.
+- C at 10 requires at least 5 C-or-higher marks;
+- B at 16 requires at least 3 B-or-higher marks;
+- A at 21 requires at least 3 A marks.
 
-Do not confuse difficult mathematics with difficult reading. Revise any item that permits materially different interpretations of what the student must do.
-Read every item aloud. A sentence that is technically understandable but artificial, compressed or awkward is not ready for use.
+The default per-question band placement may change when the mathematics genuinely warrants it, but the whole assessment remains 5D / 8C / 5B / 7A unless the user explicitly authorises an architecture exception.
 
-### Q1 - one-mark entry
+## 3. Page structure
 
-Assess one direct element of basic knowledge or fluency. Use a clear, low-reading-load question.
+Default page sequence remains:
 
-### Q2 - recognition or comparison
+- Page 1: Q1–Q6 in six cells ordered Q1 top-left, Q2 top-right, Q3 middle-left, Q4 middle-right, Q5 bottom-left and Q6 bottom-right;
+- Page 2: Q7;
+- Page 3: Q8.
 
-Assess another accessible element, ideally a different representation or aspect of the same concept.
+Use more pages only when accessibility, large diagrams or an explicit requested format requires it. The Student Test must not display internal D/C/B/A evidence labels.
 
-### Q3 - two connected elements
+## 4. Evidence bands
 
-Typical divisions include:
+### D — meaningful limited evidence
 
-- equation and answer;
-- representation and value;
-- calculation and correct unit;
-- two related calculations or identifications.
+D represents meaningful but limited/partial evidence towards the same year-level construct. It may use simpler familiar instances, recognition of essential relationships or partial completion of the expected process. D is not merely an easy mark and must not be filled with irrelevant prerequisite content.
 
-### Q4 - procedural understanding
+### C — the expected-standard anchor
 
-Require two observable elements of a process or convention. Avoid duplicating Q3 in different numbers.
+C represents satisfactory, independent evidence of the current year-level expectation for the assessed subset. Design C evidence first. A student meeting the year-level expectation should reasonably be able to earn these marks without extension content or artificial puzzle demands.
 
-### Q5 - three-part routine application
+### B — transfer and stronger independent application
 
-Use a familiar situation with three markable components, such as two calculations followed by a comparison or decision.
+B requires something beyond routine C performance: transfer, independent method selection, reverse process, meaningful comparison, connection, interpretation or explanation where the method is not already supplied.
 
-### Q6 - representation or interpretation
+### A — flexible, non-routine and justified reasoning
 
-Apply the concept to a diagram, grid, table, number line, data display or short context. Do not add a separate working box unless it is genuinely required.
-For three marks, require three connected pieces of mathematical interpretation or application. Reject an item when the stimulus directly states the answers, the conclusion follows without using the nominated mathematics, or the marks reward students for repeating supplied facts.
+A requires qualitatively stronger reasoning within authorised curriculum: non-obvious inference, adaptation, interacting constraints, evaluation, sustained reasoning, reconciliation of information or representations, or mathematical justification.
 
-Across Q1-Q6, use repetition only where it deliberately contrasts concepts, diagnoses a misconception or extends a connected process. Do not require arbitrary novelty: a systematic sequence may reuse construction or description when each use produces different mathematical evidence.
+Above-standard evidence means depth and flexibility, not next-year curriculum.
 
-### Q7 - reasoning and transfer
+## 5. Mark-level evidence contract
 
-Use Q7 as a main-problem task in the architecture described in `q7-q8-problem-solving-standard.md`. Stay within taught content but require connected reasoning in one clear situation. Useful mathematical actions include:
+The individual mark criterion is the authoritative evidence-band unit. Each mark must record:
 
-- calculate several results, then order or compare them;
-- find and explain equivalent results;
-- interpret more than one representation;
-- identify an error and correct it;
-- choose a strategy and explain why it works.
+- observable evidence;
+- `evidence_band` D/C/B/A;
+- `band_rationale`;
+- `why_not_lower_band`;
+- `a_demand_feature` for A marks.
 
-Choose from these actions using evidence of what students have practised. Do not treat them as interchangeable response formats. A less familiar Q7 may change the representation, context, information arrangement or combination of requirements while retaining a familiar response routine. Do not introduce a new classification, proof convention or response protocol unless the user confirms it has been taught or explicitly approves it.
+Do not infer evidence band from question number. A routine calculation in Q8 remains routine evidence unless the calculation itself genuinely requires higher-order reasoning.
 
-If the user rejects a question type or says it has not been practised, move to a different structure in the list. Changing only the character, claim, values, context or wording is not a valid revision because it preserves the rejected question family.
+Do not create marks by mechanically splitting one act across digits, vertices, rows, objects or written steps. Allocate marks to distinct concepts, decisions, representations, dependencies, accurate completion, comparison or justification.
 
-Require a non-obvious mathematical decision, connection or inference. A student should need to do more than identify the operation and complete a familiar calculation.
+## 6. Question architecture
 
-Allocate four marks to four visible elements. A useful pattern is:
+Before writing student-facing wording, complete the design matrix in `assessment-quality-gates.md`.
 
-1. interpret the relationship or select relevant information;
-2. use a suitable representation or method;
-3. obtain a correct intermediate or comparative result;
-4. state, explain or justify the conclusion.
+For every question define:
 
-Q7 often supplies important B-grade evidence.
+- curriculum concept;
+- observable evidence;
+- mathematical action;
+- representation;
+- diagnostic purpose;
+- dependency/follow-through;
+- response form and space;
+- mark evidence and evidence-band rationale.
 
-Present the situation through natural prose sentences so students must identify the relevant information and relationships. Do not replace this interpretation demand with a table or list that names the role of each value. Include a supporting representation only when students must interpret that representation as part of the mathematics.
+Student clarity remains non-negotiable. Use age-appropriate Australian English, direct action verbs, clear response endpoints and only necessary context. Do not confuse difficult mathematics with difficult reading.
 
-### Q8 - complex application and justification
+### Q1–Q4
 
-Use Q8 as an independent, self-contained A-level problem. It must not extend or depend on Q7's context, information, method or answer. Increase the demand through one or two mathematical conditions or targets while preserving a familiar response routine. Use a coherent situation containing multiple connected conditions. A robust evidence pattern is:
+Provide five meaningful D marks in total. These questions should expose limited or partial access to the same curriculum construct rather than unrelated prerequisite trivia.
 
-1. interpret the situation;
-2. select relevant information;
-3. calculate or model a solution;
-4. explain, justify or evaluate the conclusion.
+### Q5
 
-Q8 often supplies the strongest A-grade evidence. It must remain solvable from taught knowledge.
+Normally provides four direct C marks. It should demonstrate satisfactory independent performance on the year-level expectation through familiar but meaningful mathematics.
 
-Present Q8 as a separate prose-first word problem whose relevant information must be extracted from sentences. Do not continue Q7 or organise Q8's values into a solution-ready table. Supporting visuals are allowed only when they contribute genuine mathematical evidence.
+### Q6
 
-Require a planned and sustained chain of reasoning. Use at least three of these demand features:
+Normally provides four C marks plus one B opportunity. It should consolidate expected-standard performance and introduce legitimate transfer/interpretation without artificially increasing reading load.
 
-- multiple interacting constraints;
-- information shown in different forms;
-- missing values that must be inferred;
-- a process that must be reversed;
-- more than one mathematical concept or representation;
-- an unfamiliar but fair application;
-- comparison or evaluation of possible conclusions;
-- a reasonableness check or justification.
+### Q7
 
-A routine word problem is not promoted to Q8 merely by using larger numbers, decimals, more text or extra arithmetic.
-An unrelated investigation is not promoted to Q8 merely because it uses an exhaustive search, proof convention, multiple cards or numerous subparts.
-Conceptual subtlety alone is also insufficient when the task has no inference, dependency or interacting constraint. If the curriculum description is narrow, deepen the within-scope relationships; do not merely assert that a routine item is A-level.
+Q7 is an independent main problem, principally B-level. Use the architecture in `q7-q8-problem-solving-standard.md`. Students should extract relevant information, select a strategy and communicate reasoning. The default allocation is four B marks plus one A mark only when that A mark genuinely requires deeper reasoning.
 
-## 4. Higher-achievement evidence
+### Q8
 
-Q7 and Q8 are not merely harder sums. Allow students to identify, represent, reason, solve, compare, explain and justify.
+Q8 is an independent extension-level problem, principally A-level. It must not extend or depend on Q7. Require a planned chain of reasoning with at least three substantive demand features, including an inference, dependency or interacting constraint, and a justified conclusion. The default allocation is six A marks, but each mark must independently satisfy the A definition.
 
-Above-standard evidence may come from:
+If the mathematics cannot support the default placement honestly, redesign or redistribute legitimate bands while preserving the whole 5D / 8C / 5B / 7A envelope. Do not relabel routine evidence to fill a quota.
 
-- unfamiliar presentation;
-- multiple constraints;
+## 7. Q7/Q8 demand rules
+
+Q7 and Q8 are not merely harder sums.
+
+Useful higher-demand features include:
+
 - independent strategy selection;
+- information extraction from natural prose;
+- multiple interacting constraints;
+- missing values that must be inferred;
+- reversing a process;
 - combining representations;
-- identifying relevant and irrelevant information;
-- evaluating reasonableness;
-- comparing possible solutions;
-- justifying a conclusion.
+- comparing/evaluating possible conclusions;
+- reasonableness checks;
+- justified conclusions.
 
-Do not assume that above standard means next-year content. Use higher-year content only when deliberately requested or clearly justified.
+Reject difficulty created solely by larger numbers, decimals, more words, unfamiliar response protocols, exhaustive-search conventions or decorative complexity.
 
-Use the strongest 2025 assessment examples as the cognitive-demand benchmark. See `q7-q8-demand-2025.md`. Those examples inform difficulty and problem structure only; the current 2026 curriculum remains the alignment authority.
+Q7 and Q8 are self-contained and independent. Q8 must be understandable and solvable without reading or completing Q7.
 
-## 5. Curriculum alignment
+## 8. Curriculum alignment
 
 Record:
 
 - year level;
-- content code and exact description;
-- relevant Achievement Standard language;
+- content code and exact current description;
+- relevant achievement-standard language;
 - intended evidence;
-- question numbers producing that evidence.
+- question numbers and mark criteria producing that evidence.
 
 Do not claim complete curriculum coverage from one short assessment. State the assessed subset accurately.
 
-For each question, confirm that success depends on the nominated mathematics rather than excessive reading, general knowledge or an untaught convention.
+The 2016 Judging Standards may be used only as loose calibration where applicable. They do not override current curriculum or user-supplied authority.
 
-## 6. Page design
+## 9. Page design
 
-Page 1 uses a six-cell grid, but cells need not be identical. Allocate space according to the expected response.
+Page 1 uses the six-cell grid, but cells need not be equal. Allocate space according to the expected response.
 
 Use:
 
 - clear question numbers and mark values;
-- built-up symbolic fractions with the numerator above the denominator and a horizontal vinculum; for mixed numerals, place the whole-number part beside the built-up fraction and align both parts clearly;
-- large, sharp and correctly scaled diagrams;
+- built-up symbolic fractions with horizontal vincula;
+- large, accurate and editable mathematical diagrams;
 - visible units and labels;
-- mathematical labels placed according to `mathematical-diagram-conventions.md`;
 - sufficient blank, unlined working space;
-- a compact final-answer field only when it is mathematically useful and its need is recorded in the assessment specification;
 - consistent typography and margins;
 - uncluttered student-facing language.
 
-Where a visual model is central to the concept, include a purposeful editable representation that students must interpret, complete or use. In fraction assessments, include meaningful fraction models in Q1-Q6 unless there is a documented curriculum or brief reason not to; symbolic calculations alone do not provide adequate representational evidence.
+Avoid decorative graphics, slash-form fractions, tiny diagrams, duplicated instructions, redundant working boxes, ruled reasoning lines, arbitrary response labels and ambiguous visual scale.
 
-Avoid:
+A visual central to the construct must be mathematically purposeful and must not reveal the strategy intended to be assessed.
 
-- decorative or unrelated graphics;
-- forward-slash fractions, diagonal fraction-slash notation and single-character vulgar-fraction glyphs in place of a vinculum;
-- numerators touching or appearing to touch the vinculum at normal A4 viewing size;
-- tiny diagrams;
-- cramped equal-sized cells;
-- duplicated instructions;
-- redundant working boxes;
-- ruled writing lines, dotted guides, repeated underscores or pre-divided step boxes in calculation, reasoning or explanation working areas;
-- ambiguous visual scale;
-- final-answer fields too small for the required evidence.
+## 10. Marking and component estimate
 
-Keep calculation, reasoning and explanation space open rather than ruled. Use tables, grids, diagrams or labelled fields only when that structure is part of the mathematical response, not as generic working-out scaffolding.
-Treat blank, unlined response space as the default. Do not add `Working and check`, `Strategy:`, `Answer:` or a bordered answer field merely to occupy space or repeat an obvious response location. Record the mathematical purpose of every exception in `assessment-spec.json`.
+Write the answer key while writing each question. For every mark identify:
 
-For multiple-choice items, build distractors from likely misconceptions. Review whether any incorrect option can be eliminated without doing the mathematics.
-
-## 7. Marking and grades
-
-Write the answer key while writing each question. For every mark, identify:
-
-- the evidence required;
+- evidence required;
 - acceptable alternatives;
-- unit or label requirements;
+- unit/label expectations;
 - partial credit;
-- follow-through treatment;
-- minimum sufficient explanation.
+- follow-through where appropriate;
+- minimum sufficient explanation;
+- evidence band and rationale.
 
-Do not award all marks solely for a final answer when the question is intended to assess several elements.
-Do not manufacture multiple marks by splitting one routine response across vertices, digits, rows or written steps. Allocate marks to distinct concepts, decisions, representations, intermediate dependencies, accuracy and justification.
+The score-to-standard estimate is deliberately simple **after** the assessment has been engineered correctly. No extra post-hoc grade gate is required for the canonical envelope.
 
-Use totals alongside the evidence pattern. Routine accuracy alone may not provide defensible B/A evidence. Q7 and Q8 are important discriminating evidence, but no single question should act as an automatic grade gate unless an approved grading policy explicitly requires this.
+The Marking Key may state, for example:
 
-Criteria must describe visible mathematics, not effort, neatness, behaviour or assumed ability.
+> 18/25 — indicative B-standard performance on this assessed component.
 
-## 8. Accessibility and administration
+It must not state or imply:
 
-When suitable, accept:
+> The student's Mathematics reporting grade is B.
 
-- written answers;
-- drawings;
-- concrete materials;
-- counters or ten-frames;
-- oral explanations;
-- teacher notes;
-- photographs of models.
+Teacher moderation, re-attempt decisions, reflection on item efficacy and synthesis with other evidence remain outside this task-level classification.
 
-Use teacher-read delivery when decoding is not being assessed. Record the type of support used.
+## 11. Accessibility and administration
 
-Neutral prompts may ask the student to show, model or explain their thinking. Prompts must not:
+Where suitable, accept written answers, drawings, concrete materials, oral explanations, teacher notes or photographs of models when these preserve the intended construct.
 
-- name the operation or strategy;
-- identify the relevant numbers;
-- identify information to ignore;
-- correct an error;
-- reteach the concept during the task.
+Neutral prompts may ask a student to show or explain thinking. Prompts must not identify the operation, relevant numbers, information to ignore, correction required or solution strategy.
 
-## 9. Mixed-year assessments
+Adjustments should remove irrelevant barriers without changing the mathematics being assessed.
 
-Only use one assessment across adjacent year levels when the previous year's topic has valid curriculum overlap with the higher-year topic.
+## 12. Mixed-year assessments
 
-### Valid-overlap test
+Use a combined assessment only when adjacent year levels have genuine curriculum overlap. Align evidence separately to each year. Do not treat higher-year content as automatic evidence of a lower-year A.
 
-Before drafting, read both year-level curriculum files and confirm all of the following:
+Where a mixed-year assessment uses the v4 envelope, C must still be anchored explicitly to the resolved expected standard for each assessed cohort; if one shared envelope cannot support valid interpretation for both year levels, use parallel assessments instead.
 
-1. The higher-year content continues, applies or depends on the previous year's concept.
-2. The relationship is visible in the content descriptions, Achievement Standards or the mathematical dependency between them.
-3. One coherent topic can elicit identifiable evidence for both year levels.
-4. The assessment does not need unrelated content to claim alignment for either year.
+## 13. Re-attempts and equivalent versions
 
-The following are not sufficient by themselves:
+For a v4 equivalent Version B/re-attempt preserve:
 
-- both topics sit within the same broad strand;
-- the previous-year content is useful general revision;
-- the topics can be placed in the same test;
-- higher-year questions could be treated as automatic extension for lower-year students.
+- 25 total marks;
+- 5D / 8C / 5B / 7A;
+- component cut-offs;
+- curriculum constructs;
+- representation type where material;
+- cognitive demand;
+- mark criteria and evidence-band demand.
 
-If the valid-overlap test fails, do not produce one combined assessment. Explain why and offer:
+Change values, names or contexts only in ways that preserve equivalence. Independently solve all changed values.
 
-- separate year-level assessments; or
-- parallel versions that share layout, context or selected questions while retaining distinct curriculum alignment.
+For an uploaded legacy assessment, preserve its original structure unless the user explicitly requests migration to v4.
 
-### Structure when overlap is valid
+## 14. Moderation and instructional use
 
-Use an inclusive progression:
+These assessments are primarily moderation-quality evidence instruments, not canonical report-grade allocators. After administration teachers may:
 
-- Q1-Q3: previous-year expected-standard evidence that genuinely overlaps the higher-year topic;
-- Q4-Q6: higher-year expected-standard evidence;
-- Q7-Q8: deeper reasoning, transfer and justification within the coherent topic.
+1. independently mark samples;
+2. compare mark interpretation;
+3. inspect boundary responses;
+4. identify wording/item problems;
+5. reflect on whether the assessment elicited the intended evidence;
+6. offer an equivalent re-attempt where appropriate;
+7. combine this evidence with other valid evidence for reporting.
 
-Align questions explicitly to each year level rather than describing the whole assessment as equally aligned to both. Allow all students to attempt every question.
+The skill does not automate those teacher judgements.
 
-Use separate alignment and judgement criteria for each year level. Never:
+## 15. Final checks
 
-- invent or overstate alignment;
-- count previous-year evidence as direct evidence of the higher-year standard;
-- treat success on higher-year content as automatic evidence of a lower-year A;
-- add loosely related content simply to keep both year levels on one paper.
+Before content approval confirm:
 
-## 10. Moderation and instructional use
+- current curriculum codes/descriptions are exact;
+- total marks and envelope are correct;
+- each individual mark has observable, distinct evidence;
+- every band classification is justified from evidence rather than question position;
+- C marks represent the expected year-level standard;
+- B marks genuinely require transfer/selection/interpretation/connection/explanation;
+- A marks genuinely require non-obvious inference/adaptation/constraints/evaluation/sustained reasoning/justification;
+- no grade boundary can be crossed without the structurally required target-band evidence;
+- Q7/Q8 remain independent and meaningful;
+- no marked response is supplied by the stem/stimulus;
+- wording reads naturally aloud;
+- response space matches demand;
+- visuals preserve demand and follow mathematical conventions;
+- the Marking Key can be applied consistently;
+- the Student Test contains no internal evidence-band metadata;
+- teacher-facing outputs describe results as indicative evidence for the assessed component, not a reporting grade.
 
-For a common assessment, agree on:
-
-- task;
-- administration window;
-- permitted materials and prompts;
-- marking criteria;
-- anchor samples.
-
-Moderation cycle:
-
-1. co-design the task and key;
-2. administer under comparable conditions;
-3. independently mark a sample;
-4. compare evidence against the criteria;
-5. resolve differences using exact calculations, representations and explanations;
-6. analyse item and misconception patterns;
-7. plan reteaching and extension.
-
-## 11. Final checks
-
-Apply the binary release rule in `assessment-quality-gates.md`: every correction identified by this list is a barrier. `READY` requires zero open issues; do not use a qualified readiness judgement.
-
-- Curriculum codes and descriptions are exact.
-- Every mark represents observable evidence.
-- No marked response is already stated in, or made automatic by, the question stem or stimulus.
-- Each question's mark value is proportional to the mathematical work and evidence it actually demands.
-- Topic coverage is intentional and balanced against the assessed curriculum subset.
-- Every question has a diagnostic purpose.
-- Difficulty and cognitive demand rise coherently.
-- Repeated actions have a clear contrast, diagnostic or progression rationale.
-- Q7 assesses reasoning or transfer.
-- Q8 assesses complex application and justification.
-- Q7 cannot be solved by merely choosing an obvious operation and calculating.
-- Q7 uses a response structure students have practised or that the user has explicitly approved.
-- Q7 is one clear, self-contained B-level problem and Q8 is one clear, self-contained A-level problem.
-- Q8 can be understood and solved without reading or completing Q7.
-- A revised question does not preserve a question family the user has rejected.
-- Q8 requires a planned chain of reasoning with at least three substantive demand features.
-- Q8 includes at least one genuine inference, dependent result or interacting constraint in addition to its other demand features.
-- Q8 deepens the mathematics without introducing an unrelated puzzle, unfamiliar response protocol or prescribed solution pathway.
-- Four-mark questions contain four markable elements.
-- All values, diagrams and solutions have been independently checked.
-- Every symbolic fraction and mixed numeral uses a built-up fraction with a horizontal vinculum; no slash-form fraction remains in the test, marking key or curriculum rationale.
-- Every numerator has visible clearance above its vinculum at normal A4 size.
-- Whole-shape, vertex, side, angle, image and coordinate labels follow `mathematical-diagram-conventions.md`.
-- Units and expected precision are explicit.
-- Distractors are plausible.
-- Every question makes the action, response count, response location and required evidence clear to a student at the assessed year level.
-- Language is no more complex than necessary and does not require teacher paraphrasing.
-- Response space matches the task and all working-out areas are blank and unlined.
-- Adjustments preserve the mathematical construct.
-- Another teacher could apply the key consistently.
-- Page 1 follows the exact `1–2 / 3–4 / 5–6` order.
-- Q7 and Q8 are prose-first word problems whose relevant information must be extracted from sentences.
-- All wording reads naturally aloud.
-- Required visual models are purposeful, accurate and large enough to use.
-- Student body text and marking annotations satisfy the actual-size minimums in `assessment-quality-gates.md`.
-- No release-ledger item remains open, conditional or deferred.
+Every identified correction is a release barrier under `assessment-quality-gates.md`.

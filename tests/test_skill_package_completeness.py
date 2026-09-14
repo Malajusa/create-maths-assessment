@@ -12,6 +12,7 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "references/assessment-format.md",
             "references/assessment-production-contract.md",
             "references/assessment-quality-gates.md",
+            "references/evidence-band-standard.md",
             "references/curriculum-index.md",
             "references/curriculum-pre-primary.md",
             *[f"references/curriculum-year-{year}.md" for year in range(1, 11)],
@@ -24,13 +25,19 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "assets/year-4-5-ordering-comparing-fractions-quality-exemplar.pptx",
             "assets/year-6-transformations-quality-benchmark.pptx",
             "examples/benchmarks/regression-cases.json",
+            "examples/benchmarks/criterion-evidence-envelope-v4.json",
+            "scripts/evidence_envelope.py",
             "scripts/audit_assessment_package.py",
+            "scripts/audit_assessment_package_v4.py",
             "scripts/test_assessment_workflow.py",
             "scripts/validate_assessment_spec.py",
             "scripts/validate_visual_assets.py",
             "schemas/visual-spec.schema.json",
             "schemas/visual-asset-manifest.schema.json",
             "assets/maths-visuals/v1/manifest.json",
+            "tests/scenarios/05-v4-band-inflation.md",
+            "tests/scenarios/06-v4-legacy-source-preservation.md",
+            "tests/scenarios/07-v4-architecture-barrier.md",
         ]
 
         missing = [path for path in required if not (ROOT / path).is_file()]
@@ -45,6 +52,7 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "references/assessment-format.md",
             "references/assessment-quality-gates.md",
             "references/assessment-production-contract.md",
+            "references/evidence-band-standard.md",
             "references/curriculum-index.md",
             "references/powerpoint-output.md",
             "references/mathematical-diagram-conventions.md",
@@ -56,10 +64,10 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             with self.subTest(link=link):
                 self.assertIn(link, skill)
 
-    def test_version_is_bumped_for_combined_distribution(self):
-        self.assertEqual("3.6.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
+    def test_version_is_v4_for_criterion_evidence_distribution(self):
+        self.assertEqual("4.0.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
 
-    def test_each_stage_routes_to_its_required_production_reference(self):
+    def test_each_stage_preserves_its_original_production_reference_and_adds_v4_evidence_standard(self):
         routes = {
             "agents/01-orchestrator-curriculum-resolver.md": "references/curriculum-index.md",
             "agents/02-assessment-blueprint.md": "references/assessment-format.md",
@@ -71,9 +79,10 @@ class SkillPackageCompletenessTests(unittest.TestCase):
         }
 
         for agent_path, required_reference in routes.items():
-            with self.subTest(agent=agent_path):
+            with self.subTest(agent=agent_path, reference=required_reference):
                 agent = (ROOT / agent_path).read_text(encoding="utf-8")
                 self.assertIn(required_reference, agent)
+                self.assertIn("references/evidence-band-standard.md", agent)
 
 
 if __name__ == "__main__":
