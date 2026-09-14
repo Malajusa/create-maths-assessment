@@ -110,7 +110,7 @@ python -m runtime.controller --run-dir run/current status
 
 The controller validates schemas, dependency order, content/release gates, Q7/Q8 independence and Student Test → Marking Key provenance. Before READY it checks current artefact/evidence hashes and page-review coverage, executes the real package audit, and rejects missing or stale evidence. Reopening a READY run rechecks that evidence. A controller rejection cannot be bypassed by qualitative judgement.
 
-Use the complete command interface in `standards/release-evidence.md` for `scripts/validate_assessment_spec.py` and `scripts/audit_assessment_package.py`; the package auditor requires named flags, not a lone positional specification path.
+Use the complete command interface in `standards/release-evidence.md`. Always run `scripts/validate_assessment_spec.py`; for `criterion_component_estimate_v1` packages use `scripts/audit_assessment_package_v4.py`, while legacy/source-preservation packages use `scripts/audit_assessment_package.py`. Both auditors require named flags rather than a lone positional specification path.
 
 On interruption, inspect the last recorded stage and existing files, then resume from valid evidence. Do not claim background progress or completion without deliverables. Before delivery, verify and link to the exact current files.
 
