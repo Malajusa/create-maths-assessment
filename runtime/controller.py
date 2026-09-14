@@ -12,6 +12,9 @@ from referencing import Registry, Resource
 from runtime.release_evidence import ReleaseEvidenceError, verify_release
 
 
+V4_EVIDENCE_MODEL = "criterion_component_estimate_v1"
+
+
 class PipelineError(RuntimeError):
     """Raised when a pipeline transition or artefact violates the contract."""
 
@@ -206,6 +209,32 @@ class PipelineController:
             if payload["status"] == "NOT READY" and count == 0:
                 raise PipelineError("NOT READY requires at least one open barrier")
 
+    def _validate_against_brief(self, stage_id: str, payload: Any) -> None:
+        if stage_id != "02-assessment-blueprint":
+            return
+        brief_path = self.state["artifacts"].get("01-orchestrator-curriculum-resolver")
+        if not brief_path:
+            return
+        brief = self._load_json(self.run_dir / brief_path)
+        architecture_mode = brief.get("architecture_mode")
+        user_overrides = brief.get("user_overrides", [])
+        if architecture_mode == "explicit_user_override" and not user_overrides:
+            raise PipelineError("explicit_user_override architecture requires a recorded user override")
+
+        years = brief.get("year_levels", [])
+        default_v4 = (
+            brief.get("task_type") == "new"
+            and isinstance(years, list)
+            and bool(years)
+            and all(type(year) is int and 3 <= year <= 10 for year in years)
+            and architecture_mode != "explicit_user_override"
+        )
+        typed_v4 = architecture_mode == V4_EVIDENCE_MODEL
+        if (default_v4 or typed_v4) and payload.get("evidence_model") != V4_EVIDENCE_MODEL:
+            raise PipelineError(
+                "new Years 3–10 assessments require criterion_component_estimate_v1 unless an explicit user architecture override is recorded"
+            )
+
     def _validate_approved_question_set_against_drafts(self, payload: Any) -> None:
         if "approved_question_set" not in payload:
             return
@@ -248,7 +277,7 @@ class PipelineController:
             return
         blueprint = self._load_json(self.run_dir / blueprint_path)
         expected = {q["id"]: q for q in blueprint["questions"]}
-        is_v4 = blueprint.get("evidence_model") == "criterion_component_estimate_v1"
+        is_v4 = blueprint.get("evidence_model") == V4_EVIDENCE_MODEL
         for question in payload["questions"]:
             qid = question["id"]
             if qid not in expected:
@@ -272,6 +301,7 @@ class PipelineController:
             raise PipelineError(f"cannot record {stage_id}; expected stage {expected}")
 
         self.validate_stage_payload(stage_id, payload)
+        self._validate_against_brief(stage_id, payload)
         self._validate_against_blueprint(stage_id, payload)
         if stage_id == "05-maths-pedagogy-validator":
             self._validate_approved_question_set_against_drafts(payload)
@@ -315,6 +345,7 @@ class PipelineController:
         if attempts > maximum:
             raise PipelineError("targeted repair limit exceeded; replace the approach")
         self.validate_stage_payload(owner, replacement_payload)
+        self._validate_against_brief(owner, replacement_payload)
         self._validate_against_blueprint(owner, replacement_payload)
         if owner == "05-maths-pedagogy-validator":
             self._validate_approved_question_set_against_drafts(replacement_payload)
