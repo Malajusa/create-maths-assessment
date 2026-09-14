@@ -114,8 +114,6 @@ class PipelineController:
     def _validate_schema(self, schema_name: str, payload: Any) -> None:
         schema_path = (self.repo_root / "schemas" / schema_name).resolve()
         schema = self._load_json(schema_path)
-        # Give schemas a file URI at validation time so relative $ref values
-        # (for example ./question.schema.json) resolve deterministically.
         effective_schema = dict(schema)
         effective_schema.setdefault("$id", schema_path.as_uri())
         registry = Registry()
@@ -220,6 +218,28 @@ class PipelineController:
         if payload["approved_question_set"]["questions"] != q1_q6 + q7_q8:
             raise PipelineError("approved_question_set must exactly match the validated Q1-Q8 drafts")
 
+    @staticmethod
+    def _observed_band_distribution(question: dict[str, Any]) -> dict[str, int]:
+        counts = {band: 0 for band in ("D", "C", "B", "A")}
+        for mark in question.get("marking", []):
+            if not isinstance(mark, dict):
+                continue
+            band = mark.get("evidence_band")
+            if band in counts:
+                counts[band] += 1
+        return {band: count for band, count in counts.items() if count}
+
+    @staticmethod
+    def _expected_band_distribution(question: dict[str, Any]) -> dict[str, int]:
+        distribution = question.get("band_distribution")
+        if not isinstance(distribution, dict):
+            return {}
+        return {
+            band: count
+            for band, count in distribution.items()
+            if band in {"D", "C", "B", "A"} and type(count) is int and count > 0
+        }
+
     def _validate_against_blueprint(self, stage_id: str, payload: Any) -> None:
         if stage_id not in {"03-question-designer", "04-complex-problem-specialist"}:
             return
@@ -227,13 +247,22 @@ class PipelineController:
         if not blueprint_path:
             return
         blueprint = self._load_json(self.run_dir / blueprint_path)
-        expected = {q["id"]: q["marks"] for q in blueprint["questions"]}
+        expected = {q["id"]: q for q in blueprint["questions"]}
+        is_v4 = blueprint.get("evidence_model") == "criterion_component_estimate_v1"
         for question in payload["questions"]:
             qid = question["id"]
             if qid not in expected:
                 raise PipelineError(f"{qid} is not present in the approved blueprint")
-            if question["marks"] != expected[qid]:
+            if question["marks"] != expected[qid]["marks"]:
                 raise PipelineError(f"{qid} marks do not match the approved blueprint")
+            if is_v4:
+                expected_bands = self._expected_band_distribution(expected[qid])
+                observed_bands = self._observed_band_distribution(question)
+                if observed_bands != expected_bands:
+                    raise PipelineError(
+                        f"{qid} band distribution does not match the approved blueprint: "
+                        f"expected {expected_bands}, observed {observed_bands}"
+                    )
 
     def record(self, stage_id: str, payload: Any) -> None:
         if self.state["blocked_gate"] == "content" and stage_id == "06-document-builder":
@@ -285,7 +314,6 @@ class PipelineController:
         maximum = self.pipeline["max_targeted_repairs_per_barrier"]
         if attempts > maximum:
             raise PipelineError("targeted repair limit exceeded; replace the approach")
-        # Validate before touching the recorded state or invalidating sibling work.
         self.validate_stage_payload(owner, replacement_payload)
         self._validate_against_blueprint(owner, replacement_payload)
         if owner == "05-maths-pedagogy-validator":
@@ -311,7 +339,6 @@ class PipelineController:
                 artifact_path.write_bytes(previous_bytes)
             self._save_state()
             raise
-
 
 
 def _cli() -> int:
