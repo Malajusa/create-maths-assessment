@@ -37,11 +37,7 @@ def make_v4_spec() -> dict:
     candidate["marks"]["total"] = 25
     candidate["marks"]["evidence_envelope"] = {"D": 5, "C": 8, "B": 5, "A": 7}
     candidate["marks"]["indicative_bands"] = {
-        "E": [0, 4],
-        "D": [5, 9],
-        "C": [10, 15],
-        "B": [16, 20],
-        "A": [21, 25],
+        "E": [0, 4], "D": [5, 9], "C": [10, 15], "B": [16, 20], "A": [21, 25]
     }
     allocations = {
         "q1": ["D"],
@@ -127,6 +123,18 @@ class EvidenceEnvelopeV4ContractTests(unittest.TestCase):
         question_properties = schema["properties"]["questions"]["items"]["properties"]
         self.assertIn("band_distribution", question_properties)
 
+    def test_machine_readable_envelope_benchmark_matches_runtime_constants(self):
+        evidence = load_evidence_module()
+        benchmark = json.loads(
+            (ROOT / "examples/benchmarks/criterion-evidence-envelope-v4.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(25, benchmark["total_marks"])
+        self.assertEqual(evidence.DEFAULT_EVIDENCE_ENVELOPE, benchmark["evidence_envelope"])
+        self.assertEqual(
+            {band: list(bounds) for band, bounds in evidence.DEFAULT_INDICATIVE_BANDS.items()},
+            benchmark["indicative_bands"],
+        )
+
     def test_legacy_20_mark_spec_remains_valid_without_v4_model(self):
         validator = load_validator_module()
         legacy = json.loads(
@@ -145,12 +153,26 @@ class EvidenceEnvelopeV4ContractTests(unittest.TestCase):
         codes = {item["code"] for item in validator.validate_spec(candidate)}
         self.assertIn("E_EVIDENCE_ENVELOPE", codes)
 
+    def test_v4_rejects_observed_band_counts_that_do_not_match_declared_envelope(self):
+        validator = load_validator_module()
+        candidate = make_v4_spec()
+        candidate["questions"][5]["mark_evidence"][-1]["evidence_band"] = "C"
+        codes = {item["code"] for item in validator.validate_spec(candidate)}
+        self.assertIn("E_EVIDENCE_ENVELOPE", codes)
+
     def test_v4_rejects_wrong_indicative_bands(self):
         validator = load_validator_module()
         candidate = make_v4_spec()
         candidate["marks"]["indicative_bands"]["A"] = [20, 25]
         codes = {item["code"] for item in validator.validate_spec(candidate)}
         self.assertIn("E_INDICATIVE_BANDS", codes)
+
+    def test_v4_rejects_missing_band_rationale(self):
+        validator = load_validator_module()
+        candidate = make_v4_spec()
+        del candidate["questions"][4]["mark_evidence"][0]["band_rationale"]
+        codes = {item["code"] for item in validator.validate_spec(candidate)}
+        self.assertIn("E_BAND_RATIONALE", codes)
 
     def test_v4_rejects_a_mark_without_demand_feature(self):
         validator = load_validator_module()
