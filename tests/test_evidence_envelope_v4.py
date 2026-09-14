@@ -5,6 +5,8 @@ import sys
 import unittest
 from pathlib import Path
 
+from jsonschema import Draft202012Validator, ValidationError
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 if str(SCRIPTS) not in sys.path:
@@ -109,12 +111,23 @@ class EvidenceEnvelopeV4ContractTests(unittest.TestCase):
         for token in ("5D / 8C / 5B / 7A", "0–4", "5–9", "10–15", "16–20", "21–25"):
             self.assertIn(token, text)
 
-    def test_question_schema_requires_mark_level_band_metadata(self):
+    def test_question_schema_supports_v4_band_metadata_without_forcing_it_on_legacy_questions(self):
         schema = json.loads((ROOT / "schemas/question.schema.json").read_text(encoding="utf-8"))
-        marking = schema["properties"]["marking"]
-        item = marking["items"]
-        self.assertEqual(["mark", "evidence", "evidence_band", "band_rationale", "why_not_lower_band"], item["required"])
+        item = schema["properties"]["marking"]["items"]
+        self.assertEqual(["mark", "evidence"], item["required"])
         self.assertEqual(["D", "C", "B", "A"], item["properties"]["evidence_band"]["enum"])
+
+        validator = Draft202012Validator(item)
+        validator.validate({"mark": 1, "evidence": "Legacy or early-years evidence without A–E metadata."})
+        with self.assertRaises(ValidationError):
+            validator.validate({"mark": 1, "evidence": "Band claimed without rationale.", "evidence_band": "B"})
+        validator.validate({
+            "mark": 1,
+            "evidence": "Valid v4 B evidence.",
+            "evidence_band": "B",
+            "band_rationale": "Requires transfer beyond routine C performance.",
+            "why_not_lower_band": "The method is not supplied and must be selected independently.",
+        })
 
     def test_blueprint_schema_carries_v4_evidence_contract(self):
         schema = json.loads((ROOT / "schemas/assessment-blueprint.schema.json").read_text(encoding="utf-8"))
