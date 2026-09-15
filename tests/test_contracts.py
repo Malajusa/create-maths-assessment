@@ -105,7 +105,7 @@ class RepositoryContractTests(unittest.TestCase):
         version = (ROOT / "VERSION").read_text().strip()
         pipeline = json.loads((ROOT / "orchestration/pipeline.json").read_text())
         self.assertEqual(version, pipeline["version"])
-        self.assertEqual("4.0.0", version)
+        self.assertEqual("4.0.1", version)
 
 
 if __name__ == "__main__":
