@@ -27,8 +27,8 @@ class ReleasePackagingTests(unittest.TestCase):
             root = Path(tmp)
             (root / "VERSION").write_text("4.0.1\n", encoding="utf-8")
             (root / "SKILL.md").write_text("skill contents\n", encoding="utf-8")
-            output_zip = root / "dist" / "create-maths-assessment-v4.0.1.zip"
-            files = self.packaging.collect_files(root, output_zip)
+            output_dir = root / "dist"
+            files = self.packaging.collect_files(root, output_dir)
             manifest = self.packaging.build_manifest(root, files, "4.0.1", "abc123")
 
             self.assertEqual("create-maths-assessment", manifest["skill"])
@@ -37,13 +37,27 @@ class ReleasePackagingTests(unittest.TestCase):
             self.assertIn("VERSION", manifest["files"])
             self.assertIn("SKILL.md", manifest["files"])
 
+    def test_output_directory_is_never_packaged(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "VERSION").write_text("4.0.1\n", encoding="utf-8")
+            (root / "SKILL.md").write_text("skill contents\n", encoding="utf-8")
+            output_dir = root / "dist"
+            output_dir.mkdir()
+            (output_dir / "old.zip").write_bytes(b"old")
+
+            files = self.packaging.collect_files(root, output_dir)
+            rels = {path.relative_to(root).as_posix() for path in files}
+            self.assertNotIn("dist/old.zip", rels)
+            self.assertIn("SKILL.md", rels)
+
     def test_verifier_accepts_unchanged_install_and_rejects_tampering(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / "VERSION").write_text("4.0.1\n", encoding="utf-8")
             (root / "SKILL.md").write_text("skill contents\n", encoding="utf-8")
-            output_zip = root / "dist" / "create-maths-assessment-v4.0.1.zip"
-            files = self.packaging.collect_files(root, output_zip)
+            output_dir = root / "dist"
+            files = self.packaging.collect_files(root, output_dir)
             manifest = self.packaging.build_manifest(root, files, "4.0.1", "abc123")
             manifest_path = root / "INSTALL_MANIFEST.json"
             manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
