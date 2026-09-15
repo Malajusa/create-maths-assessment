@@ -32,12 +32,17 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             "scripts/test_assessment_workflow.py",
             "scripts/validate_assessment_spec.py",
             "scripts/validate_visual_assets.py",
+            "scripts/release_package.py",
+            "scripts/verify_install.py",
+            "scripts/check_release_acceptance.py",
             "schemas/visual-spec.schema.json",
             "schemas/visual-asset-manifest.schema.json",
             "assets/maths-visuals/v1/manifest.json",
             "tests/scenarios/05-v4-band-inflation.md",
             "tests/scenarios/06-v4-legacy-source-preservation.md",
             "tests/scenarios/07-v4-architecture-barrier.md",
+            "docs/acceptance/v4.0.1-release-acceptance.md",
+            "docs/release-installation.md",
         ]
 
         missing = [path for path in required if not (ROOT / path).is_file()]
@@ -64,8 +69,8 @@ class SkillPackageCompletenessTests(unittest.TestCase):
             with self.subTest(link=link):
                 self.assertIn(link, skill)
 
-    def test_version_is_v4_for_criterion_evidence_distribution(self):
-        self.assertEqual("4.0.0", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
+    def test_release_version_is_v401(self):
+        self.assertEqual("4.0.1", (ROOT / "VERSION").read_text(encoding="utf-8").strip())
 
     def test_each_stage_preserves_its_original_production_reference_and_adds_v4_evidence_standard(self):
         routes = {
