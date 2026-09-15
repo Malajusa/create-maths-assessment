@@ -21,9 +21,13 @@ REQUIRED = [
     "tests/test_project_context_runtime.py",
     "tests/test_release_evidence.py",
     ".github/workflows/validate-skill.yml",
+    ".github/workflows/package-release.yml",
     "scripts/run_regression_fixtures.py",
     "scripts/evidence_envelope.py",
     "scripts/audit_assessment_package_v4.py",
+    "scripts/release_package.py",
+    "scripts/verify_install.py",
+    "scripts/check_release_acceptance.py",
     "schemas/question-set.schema.json",
     "schemas/approved-question-set.schema.json",
     "schemas/build-manifest.schema.json",
@@ -43,6 +47,8 @@ REQUIRED = [
     "schemas/visual-spec.schema.json",
     "schemas/visual-asset-manifest.schema.json",
     "scripts/validate_visual_assets.py",
+    "docs/acceptance/v4.0.1-release-acceptance.md",
+    "docs/release-installation.md",
 ]
 REQUIRED += [f"agents/0{i}-{name}.md" for i, name in [
     (1, "orchestrator-curriculum-resolver"),
@@ -69,8 +75,8 @@ if len(stages) != 7 or len(set(stages)) != 7:
 version = (ROOT / "VERSION").read_text().strip()
 if pipeline["version"] != version:
     raise SystemExit("VERSION must match orchestration/pipeline.json version.")
-if version != "4.0.0":
-    raise SystemExit("Expected v4.0.0 repository contract.")
+if version != "4.0.1":
+    raise SystemExit("Expected v4.0.1 repository contract.")
 if not pipeline.get("runtime_enforced"):
     raise SystemExit("Pipeline must declare runtime_enforced=true.")
 if pipeline.get("controller") != "runtime/controller.py":

@@ -26,3 +26,13 @@ jobs:
         run: python scripts/validate_visual_assets.py
       - name: Regression fixtures
         run: python scripts/run_regression_fixtures.py
+      - name: Release packaging smoke test
+        shell: bash
+        run: |
+          python scripts/release_package.py --source-commit "$GITHUB_SHA" --output-dir dist-smoke
+          rm -rf /tmp/create-maths-assessment-smoke
+          mkdir -p /tmp/create-maths-assessment-smoke
+          unzip -q "dist-smoke/create-maths-assessment-v$(cat VERSION).zip" -d /tmp/create-maths-assessment-smoke
+          python /tmp/create-maths-assessment-smoke/scripts/verify_install.py \
+            --root /tmp/create-maths-assessment-smoke
+          (cd dist-smoke && sha256sum -c SHA256SUMS.txt)

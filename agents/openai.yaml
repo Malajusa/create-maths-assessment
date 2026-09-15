@@ -1,9 +1,7 @@
 interface:
   display_name: Create Maths Assessment
-  short_description: Build three-file maths assessment packages
-  default_prompt: 'Use $create-maths-assessment to create a curriculum-aligned three-file
-    package: A4 portrait PowerPoint test, duplicate worked marking-key PowerPoint,
-    and curriculum-rationale PDF.'
+  short_description: Create, revise, review and mark WA maths assessments
+  default_prompt: 'Use $create-maths-assessment for the requested Western Australian mathematics assessment workflow. For a new assessment, create the standard curriculum-aligned package unless the user requests a narrower output. For revisions, reviews, marking keys, equivalent versions or exact-source work, preserve the supplied source architecture and produce only the requested deliverables.'
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:
