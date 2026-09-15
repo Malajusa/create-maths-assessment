@@ -1,0 +1,47 @@
+name: Package manual skill
+
+on:
+  push:
+    branches:
+      - package/v4.0.0-manual-zip
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify release version
+        run: |
+          test "$(cat VERSION)" = "4.0.0"
+          test -f SKILL.md
+          test -f references/evidence-band-standard.md
+          test -f scripts/evidence_envelope.py
+          test -f scripts/audit_assessment_package_v4.py
+      - name: Build install ZIP
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+
+          root = Path('.')
+          out = root / 'create-maths-assessment-v4.0.0.zip'
+          excluded_roots = {'.git', '.github'}
+          with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+              for path in sorted(root.rglob('*')):
+                  if not path.is_file() or path == out:
+                      continue
+                  rel = path.relative_to(root)
+                  if rel.parts and rel.parts[0] in excluded_roots:
+                      continue
+                  zf.write(path, rel.as_posix())
+          print(out, out.stat().st_size)
+          PY
+          unzip -l create-maths-assessment-v4.0.0.zip | grep -E '(^| )SKILL.md$'
+          unzip -p create-maths-assessment-v4.0.0.zip VERSION | grep -Fx '4.0.0'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: create-maths-assessment-v4.0.0-manual-install
+          path: create-maths-assessment-v4.0.0.zip
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
