@@ -23,8 +23,16 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def should_package(path: Path, root: Path, output_zip: Path) -> bool:
-    if not path.is_file() or path == output_zip:
+def is_within(path: Path, parent: Path) -> bool:
+    try:
+        path.resolve().relative_to(parent.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def should_package(path: Path, root: Path, output_dir: Path) -> bool:
+    if not path.is_file() or is_within(path, output_dir):
         return False
     rel = path.relative_to(root)
     if rel.parts and rel.parts[0] in EXCLUDED_ROOTS:
@@ -36,11 +44,11 @@ def should_package(path: Path, root: Path, output_zip: Path) -> bool:
     return True
 
 
-def collect_files(root: Path, output_zip: Path) -> list[Path]:
+def collect_files(root: Path, output_dir: Path) -> list[Path]:
     return [
         path
         for path in sorted(root.rglob("*"))
-        if should_package(path, root, output_zip)
+        if should_package(path, root, output_dir)
     ]
 
 
@@ -73,14 +81,14 @@ def main() -> int:
         raise SystemExit("source commit is required via --source-commit or GITHUB_SHA")
 
     output_dir = (root / args.output_dir).resolve()
-    output_dir.mkdir(parents=True, exist_ok=True)
     package_name = f"create-maths-assessment-v{version}.zip"
     output_zip = output_dir / package_name
 
-    files = collect_files(root, output_zip)
+    files = collect_files(root, output_dir)
     manifest = build_manifest(root, files, version, source_commit)
     manifest_bytes = (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8")
 
+    output_dir.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output_zip, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in files:
             archive.write(path, path.relative_to(root).as_posix())
